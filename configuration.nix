@@ -91,6 +91,13 @@
   #  wget
   neovim
   git
+   fishPlugins.done
+  fishPlugins.fzf-fish
+  fishPlugins.forgit
+  fishPlugins.pure
+  fzf
+  fishPlugins.grc
+  grc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

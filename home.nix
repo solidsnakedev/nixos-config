@@ -24,4 +24,26 @@
     userName = "solidsnakedev";
     userEmail = "jona.ca.eng@gmail.com";
   };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    extraConfig = ''
+    set number relativenumber
+    '';
+    plugins = with pkgs.vimPlugins; [
+     fzf-vim
+        gitv
+        vim-airline
+        vim-fugitive
+        vim-nix
+        vim-sensible
+        vim-surround
+        vim-unimpaired
+        vim-vinegar
+    ];
+    };
 }
