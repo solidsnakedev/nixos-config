@@ -22,6 +22,8 @@
   home.packages = with pkgs; [
     wget
     nixpkgs-fmt
+    neofetch
+    onefetch
   ];
 
 
@@ -50,6 +52,8 @@
       vim-surround
       vim-unimpaired
       vim-vinegar
+      nerdtree
+      vim-devicons
     ];
   };
 
