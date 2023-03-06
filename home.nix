@@ -20,6 +20,7 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    wget
     nixpkgs-fmt
   ];
 
@@ -50,5 +51,9 @@
       vim-unimpaired
       vim-vinegar
     ];
+  };
+
+  programs.bat = {
+    enable = true;
   };
 }
