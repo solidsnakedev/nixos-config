@@ -14,9 +14,9 @@
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-	  vscode-server.nixosModule
-	  ({ config, pkgs, ... }: {
-          services.vscode-server.enable = true;
+          vscode-server.nixosModule
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
           })
           ./configuration.nix
           home-manager.nixosModules.home-manager

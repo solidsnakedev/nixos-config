@@ -18,7 +18,12 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  
+
+  home.packages = with pkgs; [
+    nixpkgs-fmt
+  ];
+
+
   programs.git = {
     enable = true;
     userName = "solidsnakedev";
@@ -32,18 +37,18 @@
     vimAlias = true;
     vimdiffAlias = true;
     extraConfig = ''
-    set number relativenumber
+      set number relativenumber
     '';
     plugins = with pkgs.vimPlugins; [
-     fzf-vim
-        gitv
-        vim-airline
-        vim-fugitive
-        vim-nix
-        vim-sensible
-        vim-surround
-        vim-unimpaired
-        vim-vinegar
+      fzf-vim
+      gitv
+      vim-airline
+      vim-fugitive
+      vim-nix
+      vim-sensible
+      vim-surround
+      vim-unimpaired
+      vim-vinegar
     ];
-    };
+  };
 }

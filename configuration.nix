@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       #(fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master")
     ];
@@ -76,7 +77,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-    #  thunderbird
+      #  thunderbird
     ];
     shell = pkgs.fish;
   };
@@ -87,26 +88,26 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  neovim
-  git
-   fishPlugins.done
-  fishPlugins.fzf-fish
-  fishPlugins.forgit
-  fishPlugins.pure
-  fzf
-  fishPlugins.grc
-  grc
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    neovim
+    git
+    fishPlugins.done
+    fishPlugins.fzf-fish
+    fishPlugins.forgit
+    fishPlugins.pure
+    fzf
+    fishPlugins.grc
+    grc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   programs.fish.enable = true;
 
@@ -114,7 +115,6 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.permitRootLogin = "yes";
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -128,7 +128,7 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-  
+
   # services.vscode-server.enable = true;
 
   nix = {
@@ -137,5 +137,5 @@
       experimental-features = nix-command flakes ca-derivations
     '';
   };
-  nix.settings.trusted-users = [ "root" "homeserver"];
+  nix.settings.trusted-users = [ "root" "homeserver" ];
 }
