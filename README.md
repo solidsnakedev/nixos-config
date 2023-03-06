@@ -10,3 +10,7 @@ Clone this repo, then
 ```
 sudo nixos-rebuild switch --flake /home/homeserver/nixos-config/#
 ```
+
+## Enable vscode server
+[link](https://github.com/msteen/nixos-vscode-server)
+
