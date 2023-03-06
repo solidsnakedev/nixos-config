@@ -21,6 +21,8 @@
 
   home.packages = with pkgs; [
     wget
+    jq
+    nixpkgs-lint
     nixpkgs-fmt
     neofetch
     onefetch
