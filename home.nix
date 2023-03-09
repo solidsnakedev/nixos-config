@@ -90,9 +90,7 @@
       enable = true;
       settings = {
         "suggest.noselect" = true;
-        "suggest.enablePreview" = true;
         "suggest.enablePreselect" = false;
-        "suggest.disableKind" = true;
         languageserver = {
           haskell = {
             command = "haskell-language-server";
@@ -129,6 +127,11 @@
         '';
       }
 
+      # Coc plugins
+      coc-tsserver
+      coc-json
+      coc-snippets
+
       # Language support
       vim-nix
       {
@@ -149,6 +152,8 @@
       # tmux integration
       vim-tmux-navigator
 
+      # Sorround support
+      vim-surround
       # Comments
       {
         plugin = comment-nvim;
@@ -364,6 +369,8 @@
       set clipboard=unnamedplus   " using system clipboard
       set ttyfast                 " Speed up scrolling in Vim
       set list listchars=tab:▸▸,trail:·
+      inoremap jk <Esc>
+      inoremap kj <Esc>
 
       " --------------------------------------------------------
       " COC-VIM TAB SETTINGS START
