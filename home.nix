@@ -113,13 +113,20 @@
     extraPackages = [
       pkgs.nodejs # coc requires nodejs
       pkgs.ripgrep # telescope live_grep and grep_string requires ripgrep
+      pkgs.lazygit
     ];
 
     plugins = with pkgs.vimPlugins; [
       # Basic settings
       sensible
       # Git support
-      vim-gitgutter
+      {
+        plugin = lazygit-nvim;
+        type = "lua";
+        config = ''
+          nmap("<leader>gg", ":LazyGit<cr>")
+        '';
+      }
       # Language support
       vim-nix
       {
