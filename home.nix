@@ -60,7 +60,7 @@
         extraConfig = ''
           set -g @dracula-plugins "cpu-usage ram-usage network-bandwidth time weather"
           set -g @dracula-show-powerline true
-          '';
+        '';
       }
     ];
     extraConfig = ''
@@ -124,7 +124,7 @@
       {
         plugin = lazygit-nvim;
         type = "lua";
-        config = ''
+        config = '' 
           nmap("<leader>gg", ":LazyGit<cr>")
         '';
       }
@@ -157,6 +157,14 @@
           require('Comment').setup()
         '';
       }
+      # Autopair like VSCode
+      {
+        plugin = nvim-autopairs;
+        type = "lua";
+        config = ''
+          require('nvim-autopairs').setup {}
+          '';
+        }
 
       # Syntax Support
       (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
@@ -194,6 +202,7 @@
         '';
       }
 
+      # File/Grep Search
       {
         plugin = telescope-nvim;
         type = "lua";
@@ -204,12 +213,42 @@
           nmap("<leader>fh", ":Telescope help_tags<cr>")
         '';
       }
-      # Theme
-      {
 
-        plugin = tokyonight-nvim;
+      # WildMenu
+      {
+        plugin = wilder-nvim;
+        type = "lua";
         config = ''
-          colorscheme tokyonight
+          local wilder = require('wilder')
+          wilder.setup({
+            modes = {':', '/', '?'},
+            accept_key = '<Right>',
+            reject_key = '<Left>',
+          })
+
+          wilder.set_option('renderer', wilder.popupmenu_renderer(
+            wilder.popupmenu_border_theme({
+              highlights = {
+                border = 'Normal', -- highlight to use for the border
+              },
+              -- 'single', 'double', 'rounded' or 'solid'
+              -- can also be a list of 8 characters, see :h wilder#popupmenu_border_theme() for more details
+              border = 'rounded',
+            })
+          )) 
+          wilder.set_option('renderer', wilder.popupmenu_renderer({
+            highlighter = wilder.basic_highlighter(),
+            left = {' ', wilder.popupmenu_devicons()},
+            right = {' ', wilder.popupmenu_scrollbar()},
+          }))
+        '';
+      }
+
+      # Dracula Theme
+      {
+        plugin = dracula-vim;
+        config = ''
+          		colorscheme dracula
         '';
       }
       # Airline theme
@@ -219,7 +258,7 @@
         config = ''
           require('lualine').setup {
             options = {
-              theme = 'tokyonight'
+              theme = 'dracula'
             }
           }
         '';
@@ -317,7 +356,7 @@
       set wildmenu
 
       " Make wildmenu behave like similar to Bash completion.
-      set wildmode=list:longest
+      " set wildmode=longest:list,full
 
       set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
       set autoindent              " indent a new line the same amount as the line just typed
