@@ -163,8 +163,8 @@
         type = "lua";
         config = ''
           require('nvim-autopairs').setup {}
-          '';
-        }
+        '';
+      }
 
       # Syntax Support
       (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
