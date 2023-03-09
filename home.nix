@@ -190,10 +190,17 @@
 
   programs.tmux = {
     enable = true;
-    plugins = with pkgs; [
-      tmuxPlugins.cpu
-      tmuxPlugins.vim-tmux-navigator
-      tmuxPlugins.better-mouse-mode
+    clock24 = true;
+    plugins = with pkgs.tmuxPlugins ; [
+      vim-tmux-navigator
+      better-mouse-mode
+      {
+        plugin = dracula;
+        extraConfig = ''
+                          set -g @dracula-plugins "cpu-usage ram-usage network-bandwidth time weather"
+          				set -g @dracula-show-powerline true
+          			'';
+      }
     ];
     extraConfig = ''
       #Configure True Colors
@@ -209,8 +216,7 @@
       bind | split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
-
-      '';
+    '';
   };
 
   programs.direnv = {
