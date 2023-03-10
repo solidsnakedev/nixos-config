@@ -108,9 +108,9 @@
       };
     };
     extraPackages = [
-      pkgs.nodejs # coc requires nodejs
+      pkgs.nodejs  # coc requires nodejs
       pkgs.ripgrep # telescope live_grep and grep_string requires ripgrep
-      pkgs.lazygit
+      pkgs.lazygit # lazygit-nvim requires lazygit
     ];
 
     plugins = with pkgs.vimPlugins; [
