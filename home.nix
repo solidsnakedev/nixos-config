@@ -311,9 +311,6 @@
       " Highlight cursor line underneath the cursor horizontally.
       set cursorline
 
-      " Highlight cursor line underneath the cursor vertically.
-      set cursorcolumn
-
       " Set shift width to 2 spaces.
       set shiftwidth=2
 
@@ -369,8 +366,14 @@
       set clipboard=unnamedplus   " using system clipboard
       set ttyfast                 " Speed up scrolling in Vim
       set list listchars=tab:▸▸,trail:·
+      
+      " allow to move blocks up or down with arrow key
       inoremap jk <Esc>
       inoremap kj <Esc>
+      nnoremap <down> :m .+1<CR>==
+      nnoremap <up> :m .-2<CR>==
+      vnoremap <down> :m '>+1<CR>gv=gv
+      vnoremap <up> :m '<-2<CR>gv=gv
 
       " --------------------------------------------------------
       " COC-VIM TAB SETTINGS START
