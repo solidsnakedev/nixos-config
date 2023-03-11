@@ -30,6 +30,7 @@
       nixpkgs-fmt
       neofetch
       onefetch
+      docker-compose
     ];
 
   programs.git = {

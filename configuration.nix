@@ -142,4 +142,9 @@
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
+
+  # Docker
+  virtualisation.docker = {
+    enable = true;
+  };
 }
