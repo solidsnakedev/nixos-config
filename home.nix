@@ -310,7 +310,7 @@
       set number
 
       " Highlight cursor line underneath the cursor horizontally.
-      set cursorline
+      " set cursorline
 
       " Set shift width to 2 spaces.
       set shiftwidth=2
