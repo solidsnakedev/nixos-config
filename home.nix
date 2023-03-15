@@ -368,13 +368,18 @@
       set ttyfast                 " Speed up scrolling in Vim
       set list listchars=tab:▸▸,trail:·
       
-      " allow to move blocks up or down with arrow key
+      " escape with key combination
       inoremap jk <Esc>
       inoremap kj <Esc>
+      
+      " allow to move blocks up or down with arrow key
       nnoremap <down> :m .+1<CR>==
       nnoremap <up> :m .-2<CR>==
       vnoremap <down> :m '>+1<CR>gv=gv
       vnoremap <up> :m '<-2<CR>gv=gv
+
+      " toggle hlsearch
+      nnoremap <Leader>h :set hlsearch! hlsearch?<CR>
 
       " --------------------------------------------------------
       " COC-VIM TAB SETTINGS START
