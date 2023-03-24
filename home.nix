@@ -24,6 +24,7 @@
       wget
       jq
       ripgrep
+      trashy
       nodejs
       ntfs3g
       nixpkgs-lint
