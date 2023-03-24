@@ -121,7 +121,7 @@
       };
     };
     extraPackages = [
-      pkgs.nodejs  # coc requires nodejs
+      pkgs.nodejs # coc requires nodejs
       pkgs.ripgrep # telescope live_grep and grep_string requires ripgrep
       pkgs.lazygit # lazygit-nvim requires lazygit
     ];
@@ -262,6 +262,20 @@
         '';
       }
 
+      # Dashboard
+      {
+        plugin = dashboard-nvim;
+        type = "lua";
+        config = ''
+          require('dashboard').setup({
+            config = {
+              week_header = {
+               enable = true,
+              },
+            },
+          })
+        '';
+      }
       # Dracula Theme
       {
         plugin = dracula-vim;
