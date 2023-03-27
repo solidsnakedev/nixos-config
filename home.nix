@@ -192,7 +192,6 @@
         plugin = bufferline-nvim;
         type = "lua";
         config = ''
-          vim.opt.termguicolors = true
           require("bufferline").setup( { 
             options = {
               mode = 'buffers',
@@ -298,6 +297,12 @@
     ];
 
     extraLuaConfig = ''
+      -- disable netrw at the very start of your init.lua (strongly advised)
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+
+      -- set termguicolors to enable highlight groups
+      vim.opt.termguicolors = true
 
       function map (mode, shortcut, command)
       vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
@@ -310,6 +315,7 @@
       function imap(shortcut, command)
       map('i', shortcut, command)
       end
+
 
     '';
 
@@ -405,7 +411,7 @@
       vnoremap <up> :m '<-2<CR>gv=gv
 
       " toggle hlsearch
-      nnoremap <Leader>h :set hlsearch! hlsearch?<CR>
+      nnoremap <Leader>h :nohl<CR>
 
       " --------------------------------------------------------
       " COC-VIM TAB SETTINGS START
