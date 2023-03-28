@@ -5,7 +5,6 @@
   # paths it should manage.
   home.username = "homeserver";
   home.homeDirectory = "/home/homeserver";
-
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -167,6 +166,7 @@
 
       # Sorround support
       vim-surround
+
       # Comments
       {
         plugin = comment-nvim;
@@ -175,6 +175,15 @@
           require('Comment').setup()
         '';
       }
+
+      {
+        plugin = todo-comments-nvim;
+        type = "lua";
+        config = ''
+          require('todo-comments').setup {}
+          '';
+      }
+
       # Autopair like VSCode
       {
         plugin = nvim-autopairs;
@@ -203,6 +212,15 @@
           nmap("<leader>b", ":BufferLineCycleNext<cr>")
           nmap("<leader>B", ":BufferLineCyclePrev<cr>")
         '';
+      }
+
+      # Better Buffer delete
+      {
+        plugin = bufdelete-nvim;
+        type = "lua";
+        config = ''
+          nmap("<leader>q", ":Bdelete<cr>")
+          '';
       }
 
       # Icons Tree
@@ -275,13 +293,22 @@
           })
         '';
       }
-      # Dracula Theme
+
+      # Tokyo Night Theme
       {
-        plugin = dracula-vim;
+        plugin = tokyonight-nvim;
+        type = "lua";
         config = ''
-          		colorscheme dracula
+          require('tokyonight').setup({
+            on_highlights = function(highlights, colors)
+              highlights.LineNr = { fg = colors.cyan, bold = false }
+              highlights.CursorLineNr = { fg = colors.orange, bold = true }
+            end,
+          })
+          vim.cmd[[colorscheme tokyonight-night]]
         '';
       }
+
       # Airline theme
       {
         plugin = lualine-nvim;
@@ -289,7 +316,7 @@
         config = ''
           require('lualine').setup {
             options = {
-              theme = 'dracula'
+              theme = 'tokyonight'
             }
           }
         '';
@@ -342,7 +369,7 @@
       set number
 
       " Highlight cursor line underneath the cursor horizontally.
-      " set cursorline
+      set cursorline
 
       " Set shift width to 2 spaces.
       set shiftwidth=2
