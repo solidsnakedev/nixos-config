@@ -181,7 +181,7 @@
         type = "lua";
         config = ''
           require('todo-comments').setup {}
-          '';
+        '';
       }
 
       # Autopair like VSCode
@@ -220,7 +220,7 @@
         type = "lua";
         config = ''
           nmap("<leader>q", ":Bdelete<cr>")
-          '';
+        '';
       }
 
       # Icons Tree
@@ -367,6 +367,9 @@
 
       " Add numbers to each line on the left-hand side.
       set number
+
+      " Add relativenumber
+      set relativenumber
 
       " Highlight cursor line underneath the cursor horizontally.
       set cursorline
