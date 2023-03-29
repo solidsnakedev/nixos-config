@@ -103,6 +103,10 @@
       settings = {
         "suggest.noselect" = true;
         "suggest.enablePreselect" = false;
+        "diagnostic.errorSign" = "✘";
+        "diagnostic.hintSign" = "";
+        "diagnostic.infoSign" = "";
+        "diagnostic.warningSign" = "∆";
         languageserver = {
           haskell = {
             command = "haskell-language-server";
@@ -304,7 +308,45 @@
               highlights.CursorLineNr = { fg = colors.orange, bold = true }
             end,
           })
-          vim.cmd[[colorscheme tokyonight-night]]
+        '';
+      }
+      papercolor-theme
+
+      {
+        plugin = sonokai;
+        type = "lua";
+        config = ''
+           vim.g.sonokai_diagnostic_text_highlight = 1
+          -- vim.cmd[[colorscheme sonokai]]
+        '';
+      }
+
+      {
+        plugin = vim-monokai-pro;
+        config = ''
+        '';
+      }
+
+      # Dracula Theme
+      {
+        plugin = dracula-vim;
+        config = ''
+        '';
+      }
+
+      {
+        plugin = nightfox-nvim;
+        type = "lua";
+        config = ''
+          require("nightfox").setup({
+            groups = {
+              all = {
+                LineNr = { fg = "cyan" },
+                CursorLineNr = { fg = "orange", style = "bold"};
+              },
+            },
+          })
+          vim.cmd[[colorscheme nightfox ]]
         '';
       }
 
@@ -315,7 +357,7 @@
         config = ''
           require('lualine').setup {
             options = {
-              theme = 'tokyonight'
+              theme = 'nightfox'
             }
           }
         '';
