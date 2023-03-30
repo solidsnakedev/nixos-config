@@ -208,22 +208,16 @@
           require("bufferline").setup( { 
             options = {
               mode = 'buffers',
+              themable = false,
               offsets = {
                   {filetype = 'NvimTree'}
               },
+              separator_style = "slant",
           }
           })
-          nmap("<leader>b", ":BufferLineCycleNext<cr>")
-          nmap("<leader>B", ":BufferLineCyclePrev<cr>")
-        '';
-      }
-
-      # Better Buffer delete
-      {
-        plugin = bufdelete-nvim;
-        type = "lua";
-        config = ''
-          nmap("<leader>q", ":Bdelete<cr>")
+          nmap("<leader><tab>", ":BufferLineCycleNext<cr>")
+          nmap("<leader><S-tab>", ":BufferLineCyclePrev<cr>")
+          nmap("<leader>bd", ":bd<cr>")
         '';
       }
 
@@ -236,7 +230,13 @@
         type = "lua";
         config = ''
           -- empty setup using defaults
-          require("nvim-tree").setup{ }
+          require("nvim-tree").setup{ 
+            actions = {
+              open_file = { 
+                quit_on_open = true,
+              },
+            },
+          }
           nmap("<leader>n", ":NvimTreeToggle<cr>")
         '';
       }
