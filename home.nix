@@ -252,6 +252,7 @@
           nmap("<leader>fh", ":Telescope help_tags<cr>")
         '';
       }
+      lightspeed-nvim
 
       # WildMenu
       {
@@ -346,7 +347,7 @@
               },
             },
           })
-          vim.cmd[[colorscheme nightfox ]]
+          vim.cmd("colorscheme nightfox")
         '';
       }
 
