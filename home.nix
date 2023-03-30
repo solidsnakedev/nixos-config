@@ -462,6 +462,9 @@
       " Enable auto completion menu after pressing TAB.
       set wildmenu
 
+      " Disable swap
+      set noswapfile
+
       " Make wildmenu behave like similar to Bash completion.
       " set wildmode=longest:list,full
 
