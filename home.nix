@@ -32,6 +32,7 @@
       onefetch
       docker-compose
       pciutils
+      bottom
     ];
 
   programs.git = {
