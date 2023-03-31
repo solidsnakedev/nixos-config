@@ -31,6 +31,7 @@
       neofetch
       onefetch
       docker-compose
+      pciutils
     ];
 
   programs.git = {
