@@ -130,6 +130,7 @@
       pkgs.nodejs # coc requires nodejs
       pkgs.ripgrep # telescope live_grep and grep_string requires ripgrep
       pkgs.lazygit # lazygit-nvim requires lazygit
+      pkgs.watchman # coc-tsserver, requires watchman to rename imports on file rename
     ];
 
     plugins = with pkgs.vimPlugins; [
