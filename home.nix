@@ -33,6 +33,7 @@
       docker-compose
       pciutils
       bottom
+      gnumake
     ];
 
   programs.git = {
@@ -149,6 +150,7 @@
       coc-tsserver
       coc-json
       coc-snippets
+      coc-eslint
 
       # Language support
       vim-nix
@@ -361,7 +363,15 @@
           require('lualine').setup {
             options = {
               theme = 'nightfox'
-            }
+            },
+            sections = {
+              lualine_a = {
+                {
+                  'filename',
+                  path = 1,
+                }
+              }
+            },
           }
         '';
       }
