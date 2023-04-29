@@ -1,5 +1,19 @@
 { config, pkgs, ... }:
 
+let
+  aiken-vim = pkgs.vimUtils.buildVimPlugin{
+    pname = "aiken";
+    version = "2023";
+    src = pkgs.fetchFromGitHub{
+      owner = "aiken-lang";
+      repo = "editor-integration-nvim";
+      rev = "259203266da4ef367a4a41baa60fe49177d55598";
+      sha256 = "sha256-vlhqunKmQTUGPCPq3sSW3QOKJgnAwQdFnGzWKEjGNzE=";
+    };
+  };
+
+in
+
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -123,6 +137,15 @@
             ];
             filetypes = [ "haskell" "lhaskell" ];
           };
+          aiken = {
+            command = "aiken";
+            args = ["lsp"];
+            trace.server = "verbose";
+            rootPatterns = [
+              "aiken.toml"
+            ];
+            filetypes = ["aiken"];
+          };
         };
       };
     };
@@ -134,7 +157,7 @@
     ];
 
     plugins = with pkgs.vimPlugins; [
-
+      aiken-vim
       # Basic settings
       sensible
 
@@ -152,6 +175,8 @@
       coc-json
       coc-snippets
       coc-eslint
+      jsonc-vim
+      
 
       # Language support
       vim-nix
