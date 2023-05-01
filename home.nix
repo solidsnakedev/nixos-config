@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  aiken-vim = pkgs.vimUtils.buildVimPlugin{
+  aiken-vim = pkgs.vimUtils.buildVimPlugin {
     pname = "aiken";
     version = "2023";
-    src = pkgs.fetchFromGitHub{
+    src = pkgs.fetchFromGitHub {
       owner = "aiken-lang";
       repo = "editor-integration-nvim";
       rev = "259203266da4ef367a4a41baa60fe49177d55598";
@@ -42,6 +42,7 @@ in
       ntfs3g
       nixpkgs-lint
       nixpkgs-fmt
+      nil
       neofetch
       onefetch
       docker-compose
@@ -139,12 +140,22 @@ in
           };
           aiken = {
             command = "aiken";
-            args = ["lsp"];
+            args = [ "lsp" ];
             trace.server = "verbose";
             rootPatterns = [
               "aiken.toml"
             ];
-            filetypes = ["aiken"];
+            filetypes = [ "aiken" ];
+          };
+          nix = {
+            command = "nil";
+            filetypes = [ "nix" ];
+            rootPatterns = [ "flake.nix" ];
+            settings = {
+              nil = {
+                formatting = { command = [ "nixpkgs-fmt" ]; };
+              };
+            };
           };
         };
       };
@@ -176,7 +187,7 @@ in
       coc-snippets
       coc-eslint
       jsonc-vim
-      
+
 
       # Language support
       vim-nix
