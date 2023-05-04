@@ -61,7 +61,60 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.fish.enable = true;
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = false;
+  };
+
+  programs.fish = {
+    enable = true;
+
+    shellAliases = {
+      l = "ls -la";
+      # update = "sudo nixos-rebuild switch";
+    };
+
+    plugins = [{
+      name = "foreign-env";
+      src = pkgs.fetchFromGitHub {
+        owner = "oh-my-fish";
+        repo = "plugin-foreign-env";
+        rev = "dddd9213272a0ab848d474d0cbde12ad034e65bc";
+        sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
+      };
+    }
+      {
+        name = "nix-env.fish";
+        src = pkgs.fetchFromGitHub {
+          owner = "lilyball";
+          repo = "nix-env.fish";
+          rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
+          sha256 = "RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
+        };
+      }];
+
+  };
+
+  # programs.zsh = {
+  #   enable = true;
+  #   shellAliases = {
+  #     ll = "ls -l";
+  #     # update = "sudo nixos-rebuild switch";
+  #   };
+  #   history = {
+  #     size = 10000;
+  #     path = "${config.xdg.dataHome}/zsh/history";
+  #   };
+  #   enableVteIntegration = true;
+  #   # zplug = {
+  #   #   enable = true;
+  #   #   plugins = [
+  #   #     { name = "zsh-users/zsh-autosuggestions"; } # Simple plugin installation
+  #   #     { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; } # Installations with additional options. For the list of options, please refer to Zplug README.
+  #   #   ];
+  #   # };
+  # };
 
   programs.bat = {
     enable = true;
