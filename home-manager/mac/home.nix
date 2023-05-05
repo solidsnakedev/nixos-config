@@ -65,6 +65,9 @@ in
     enable = true;
     enableFishIntegration = true;
     enableZshIntegration = false;
+    settings = {
+      command_timeout = 1000;
+    };
   };
 
   programs.fish = {
@@ -239,6 +242,9 @@ in
       coc-snippets
       coc-eslint
       jsonc-vim
+
+      #Markdown
+      markdown-preview-nvim
 
 
       # Language support
