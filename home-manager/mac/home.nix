@@ -77,7 +77,9 @@ in
       l = "ls -la";
       # update = "sudo nixos-rebuild switch";
     };
-
+    interactiveShellInit = ''
+      neofetch
+    '';
     plugins = [{
       name = "foreign-env";
       src = pkgs.fetchFromGitHub {
