@@ -48,6 +48,8 @@ in
       pciutils
       bottom
       gnumake
+      bore-cli
+      magic-wormhole-rs
     ];
 
   programs.git = {
