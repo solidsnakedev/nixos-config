@@ -62,7 +62,12 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      neofetch
+    '';
+  };
 
   programs.bat = {
     enable = true;
