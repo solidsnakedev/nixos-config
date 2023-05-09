@@ -126,10 +126,14 @@ in
       settings = {
         "suggest.noselect" = true;
         "suggest.enablePreselect" = false;
+        "suggest.floatConfig.border" = true;
+        "suggest.floatConfig.rounded" = true;
         "diagnostic.errorSign" = "✘";
         "diagnostic.hintSign" = "";
         "diagnostic.infoSign" = "";
         "diagnostic.warningSign" = "∆";
+        "hover.floatConfig.border" = true;
+        "hover.floatConfig.rounded" = true;
         languageserver = {
           haskell = {
             command = "haskell-language-server";
@@ -244,7 +248,17 @@ in
       }
 
       # Syntax Support
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''
+          require("nvim-treesitter.configs").setup({
+            highlight = {
+              enable = true,
+            },
+          })
+        '';
+      }
 
       # Buffer tabs
       {
