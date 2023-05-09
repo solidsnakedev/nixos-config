@@ -248,7 +248,17 @@ in
       }
 
       # Syntax Support
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''
+          require("nvim-treesitter.configs").setup({
+            highlight = {
+              enable = true,
+            },
+          })
+        '';
+      }
 
       # Buffer tabs
       {
