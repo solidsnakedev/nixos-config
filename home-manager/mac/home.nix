@@ -227,7 +227,6 @@ in
     ];
 
     plugins = with pkgs.vimPlugins; [
-      aiken-vim
       # Basic settings
       sensible
 
@@ -251,8 +250,9 @@ in
       markdown-preview-nvim
 
 
-      # Language support
+      # Language syntax highlight
       vim-nix
+      aiken-vim
       {
         plugin = haskell-vim;
         config = ''
@@ -301,7 +301,18 @@ in
       }
 
       # Syntax Support
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''
+          require("nvim-treesitter.configs").setup({
+            highlight = {
+              enable = true,
+            },
+          })
+        '';
+      }
 
       # Buffer tabs
       {
@@ -461,7 +472,7 @@ in
         config = ''
           require('lualine').setup {
             options = {
-              theme = 'nightfox'
+              theme = 'powerline_dark'
             },
             sections = {
               lualine_a = {
