@@ -430,6 +430,14 @@ in
         '';
       }
       papercolor-theme
+      {
+        plugin = material-nvim;
+        type = "lua";
+        config = ''
+          vim.g.material_style = "deep ocean"
+          vim.cmd("colorscheme material ")
+        '';
+      }
 
       {
         plugin = sonokai;
@@ -465,7 +473,7 @@ in
               },
             },
           })
-          vim.cmd("colorscheme carbonfox")
+          -- vim.cmd("colorscheme carbonfox")
         '';
       }
 
@@ -475,9 +483,9 @@ in
         type = "lua";
         config = ''
           require('lualine').setup {
-            options = {
-              theme = 'powerline_dark'
-            },
+            -- options = {
+            --   theme = 'powerline_dark'
+            -- },
             sections = {
               lualine_a = {
                 {
