@@ -426,7 +426,8 @@ in
                   'filename',
                   path = 1,
                 }
-              }
+              },
+              lualine_b = {'branch', 'diff', 'diagnostics', 'g:coc_status'}
             },
           }
         '';
