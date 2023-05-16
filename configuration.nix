@@ -141,6 +141,7 @@
     '';
   };
   nix.settings.trusted-users = [ "root" "homeserver" ];
+  nix.settings.auto-optimise-store = true;
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
