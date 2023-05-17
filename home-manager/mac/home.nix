@@ -80,7 +80,7 @@ in
       # update = "sudo nixos-rebuild switch";
     };
     interactiveShellInit = ''
-      neofetch
+      neofetch --disable packages
     '';
     plugins = [{
       name = "foreign-env";
@@ -430,6 +430,19 @@ in
         '';
       }
       papercolor-theme
+      {
+        plugin = material-nvim;
+        type = "lua";
+        config = ''
+          vim.g.material_style = "deep ocean"
+          require('material').setup({
+            custom_highlights = {
+              CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
+            }
+          })
+          vim.cmd("colorscheme material ")
+        '';
+      }
 
       {
         plugin = sonokai;
@@ -465,7 +478,7 @@ in
               },
             },
           })
-          vim.cmd("colorscheme carbonfox")
+          -- vim.cmd("colorscheme carbonfox")
         '';
       }
 
@@ -475,16 +488,17 @@ in
         type = "lua";
         config = ''
           require('lualine').setup {
-            options = {
-              theme = 'powerline_dark'
-            },
+            -- options = {
+            --   theme = 'powerline_dark'
+            -- },
             sections = {
               lualine_a = {
                 {
                   'filename',
                   path = 1,
                 }
-              }
+              },
+              lualine_b = {'branch', 'diff', 'diagnostics','g:coc_status'}
             },
           }
         '';
