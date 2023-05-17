@@ -80,7 +80,7 @@ in
       # update = "sudo nixos-rebuild switch";
     };
     interactiveShellInit = ''
-      neofetch
+      neofetch --disable packages
     '';
     plugins = [{
       name = "foreign-env";
@@ -435,6 +435,11 @@ in
         type = "lua";
         config = ''
           vim.g.material_style = "deep ocean"
+          require('material').setup({
+            custom_highlights = {
+              CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
+            }
+          })
           vim.cmd("colorscheme material ")
         '';
       }
@@ -492,7 +497,8 @@ in
                   'filename',
                   path = 1,
                 }
-              }
+              },
+              lualine_b = {'branch', 'diff', 'diagnostics','g:coc_status'}
             },
           }
         '';
