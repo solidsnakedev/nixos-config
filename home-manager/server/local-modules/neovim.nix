@@ -167,6 +167,7 @@ in
             options = {
               mode = 'buffers',
               themable = false,
+              numbers = 'buffer_id',
               offsets = {
                   {filetype = 'NvimTree'}
               },
