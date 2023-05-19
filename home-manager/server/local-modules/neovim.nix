@@ -30,8 +30,6 @@ in
         "diagnostic.hintSign" = "";
         "diagnostic.infoSign" = "";
         "diagnostic.warningSign" = "∆";
-        "diagnostic.virtualText" = true;
-        "diagnostic.virtualTextPrefix" = " -- ";
         "hover.floatConfig.border" = true;
         "hover.floatConfig.rounded" = true;
         languageserver = {
