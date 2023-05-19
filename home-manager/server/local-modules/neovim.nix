@@ -30,6 +30,8 @@ in
         "diagnostic.hintSign" = "";
         "diagnostic.infoSign" = "";
         "diagnostic.warningSign" = "∆";
+        "diagnostic.virtualText" = true;
+        "diagnostic.virtualTextPrefix" = " -- ";
         "hover.floatConfig.border" = true;
         "hover.floatConfig.rounded" = true;
         languageserver = {
@@ -101,7 +103,13 @@ in
       {
         plugin = haskell-vim;
         config = ''
-          let g:haskell_classic_highlighting = 1
+          let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+          let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+          let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+          let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+          let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+          let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+          let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
         '';
       }
 
@@ -270,6 +278,20 @@ in
       papercolor-theme
 
       {
+        plugin = material-nvim;
+        type = "lua";
+        config = ''
+          vim.g.material_style = "darker"
+          require('material').setup({
+            custom_highlights = {
+              CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
+            }
+          })
+          vim.cmd("colorscheme material ")
+        '';
+      }
+
+      {
         plugin = sonokai;
         type = "lua";
         config = ''
@@ -303,7 +325,7 @@ in
               },
             },
           })
-          vim.cmd("colorscheme nightfox")
+          -- vim.cmd("colorscheme nightfox")
         '';
       }
 
@@ -314,7 +336,7 @@ in
         config = ''
           require('lualine').setup {
             options = {
-              theme = 'nightfox'
+              theme = 'material'
             },
             sections = {
               lualine_a = {
