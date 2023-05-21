@@ -285,7 +285,7 @@ in
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
             }
           })
-          vim.cmd("colorscheme material ")
+          -- vim.cmd("colorscheme material ")
         '';
       }
 
@@ -293,8 +293,8 @@ in
         plugin = sonokai;
         type = "lua";
         config = ''
-           vim.g.sonokai_diagnostic_text_highlight = 1
-          -- vim.cmd[[colorscheme sonokai]]
+          vim.g.sonokai_diagnostic_text_highlight = 1
+          vim.cmd[[colorscheme sonokai]]
         '';
       }
 
