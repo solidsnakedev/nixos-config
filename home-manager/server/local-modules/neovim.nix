@@ -147,6 +147,7 @@ in
       }
 
       # Syntax Support
+      playground
       {
         plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
@@ -283,9 +284,11 @@ in
           require('material').setup({
             custom_highlights = {
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
+              Structure = { fg = '#89DDFF'},
+              Identifier = {fg = '#F78C6C'}
             }
           })
-          -- vim.cmd("colorscheme material ")
+          vim.cmd("colorscheme material ")
         '';
       }
 
@@ -294,7 +297,7 @@ in
         type = "lua";
         config = ''
           vim.g.sonokai_diagnostic_text_highlight = 1
-          vim.cmd[[colorscheme sonokai]]
+          -- vim.cmd[[colorscheme sonokai]]
         '';
       }
 
