@@ -107,6 +107,7 @@ in
           let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
           let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
           let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+          let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
         '';
       }
 
@@ -146,6 +147,7 @@ in
       }
 
       # Syntax Support
+      playground
       {
         plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
@@ -153,6 +155,8 @@ in
           require("nvim-treesitter.configs").setup({
             highlight = {
               enable = true,
+              disable = {"haskell"},
+              additional_vim_regex_highlighting = false,
             },
           })
         '';
@@ -273,10 +277,26 @@ in
       papercolor-theme
 
       {
+        plugin = material-nvim;
+        type = "lua";
+        config = ''
+          vim.g.material_style = "darker"
+          require('material').setup({
+            custom_highlights = {
+              CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
+              Structure = { fg = '#89DDFF'},
+              Identifier = {fg = '#F78C6C'}
+            }
+          })
+          vim.cmd("colorscheme material ")
+        '';
+      }
+
+      {
         plugin = sonokai;
         type = "lua";
         config = ''
-           vim.g.sonokai_diagnostic_text_highlight = 1
+          vim.g.sonokai_diagnostic_text_highlight = 1
           -- vim.cmd[[colorscheme sonokai]]
         '';
       }
@@ -306,7 +326,7 @@ in
               },
             },
           })
-          vim.cmd("colorscheme nightfox")
+          -- vim.cmd("colorscheme nightfox")
         '';
       }
 
@@ -317,7 +337,7 @@ in
         config = ''
           require('lualine').setup {
             options = {
-              theme = 'nightfox'
+              theme = 'material'
             },
             sections = {
               lualine_a = {
