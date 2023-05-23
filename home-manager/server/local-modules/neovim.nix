@@ -285,7 +285,9 @@ in
             custom_highlights = {
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
               Structure = { fg = '#89DDFF'},
-              Identifier = {fg = '#F78C6C'}
+              Identifier = { fg = '#F78C6C' },
+              CurSearch = { fg = '#000000', bg = '#89DDFF' },
+              Search = { fg = '#000000',bg = '#F78C6C' }
             }
           })
           vim.cmd("colorscheme material ")
