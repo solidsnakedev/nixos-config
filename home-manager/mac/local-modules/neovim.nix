@@ -157,6 +157,8 @@ in
           require("nvim-treesitter.configs").setup({
             highlight = {
               enable = true,
+              disable = {"haskell"},
+              additional_vim_regex_highlighting = false,
             },
           })
         '';
@@ -283,6 +285,8 @@ in
           require('material').setup({
             custom_highlights = {
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
+              Structure = { fg = '#89DDFF'},
+              Identifier = {fg = '#F78C6C'}
             }
           })
           vim.cmd("colorscheme material ")
