@@ -92,6 +92,7 @@ in
       coc-json
       coc-snippets
       coc-eslint
+      coc-prettier
       jsonc-vim
 
       #Markdown
@@ -173,7 +174,7 @@ in
             options = {
               mode = 'buffers',
               themable = false,
-              numbers = 'buffer_id',
+              numbers = 'ordinal',
               offsets = {
                   {filetype = 'NvimTree'}
               },
