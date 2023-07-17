@@ -128,9 +128,12 @@ in
         plugin = comment-nvim;
         type = "lua";
         config = ''
-          require('Comment').setup()
+          require('Comment').setup {
+              pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+          }
         '';
       }
+      nvim-ts-context-commentstring
 
       {
         plugin = todo-comments-nvim;
@@ -160,6 +163,9 @@ in
               enable = true,
               disable = {"haskell"},
               additional_vim_regex_highlighting = false,
+            },
+            context_commentstring = {
+              enable = true,
             },
           })
         '';
@@ -358,6 +364,8 @@ in
     ];
 
     extraLuaConfig = ''
+      -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+      vim.opt.updatetime = 100
       -- disable netrw at the very start of your init.lua (strongly advised)
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
