@@ -58,6 +58,8 @@
     };
     interactiveShellInit = ''
       neofetch --disable packages
+      export PATH="$PATH:/Users/jonathan/.aiken/bin"
+      eval "$(/opt/homebrew/bin/brew shellenv)"
     '';
     plugins = [{
       name = "foreign-env";
