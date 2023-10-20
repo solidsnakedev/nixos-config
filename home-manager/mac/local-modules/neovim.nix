@@ -32,6 +32,8 @@ in
         "diagnostic.warningSign" = "∆";
         "hover.floatConfig.border" = true;
         "hover.floatConfig.rounded" = true;
+        "tsserver.useLocalTsdk" = true;
+        "tsserver.tsdk"= "$./node_modules/typescript/lib";
         languageserver = {
           haskell = {
             command = "haskell-language-server";
