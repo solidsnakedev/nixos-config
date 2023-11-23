@@ -38,12 +38,21 @@
       gnumake
     ];
 
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = false;
+    settings = {
+      command_timeout = 1000;
+    };
+  };
+
   imports = [
-    ./../common-modules/fish.nix
-    ./../common-modules/direnv.nix
-    ./../common-modules/git.nix
-    ./../common-modules/tmux.nix
-    ./../common-modules/bat.nix
+    ./../../modules/fish.nix
+    ./../../modules/direnv.nix
+    ./../../modules/git.nix
+    ./../../modules/tmux.nix
+    ./../../modules/bat.nix
     ./local-modules/neovim.nix
   ];
 
