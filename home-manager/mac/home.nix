@@ -104,13 +104,22 @@
   #   # };
   # };
 
+   xdg.configFile.yabai = {
+    source = ../../config/yabai;
+    recursive = true;
+  };
+
+  xdg.configFile.skhd = {
+    source = ../../config/skhd;
+    recursive = true;
+  };
+
 
   imports = [
-    # ./../common-modules/fish.nix
-    ./../common-modules/direnv.nix
-    ./../common-modules/git.nix
-    ./../common-modules/tmux.nix
-    ./../common-modules/bat.nix
+    ./../../modules/direnv.nix
+    ./../../modules/git.nix
+    ./../../modules/tmux.nix
+    ./../../modules/bat.nix
     ./local-modules/neovim.nix
   ];
 
