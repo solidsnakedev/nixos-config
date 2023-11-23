@@ -14,7 +14,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -38,12 +38,21 @@
       gnumake
     ];
 
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = false;
+    settings = {
+      command_timeout = 1000;
+    };
+  };
+
   imports = [
-    ./../common-modules/fish.nix
-    ./../common-modules/direnv.nix
-    ./../common-modules/git.nix
-    ./../common-modules/tmux.nix
-    ./../common-modules/bat.nix
+    ./../../modules/fish.nix
+    ./../../modules/direnv.nix
+    ./../../modules/git.nix
+    ./../../modules/tmux.nix
+    ./../../modules/bat.nix
     ./local-modules/neovim.nix
   ];
 

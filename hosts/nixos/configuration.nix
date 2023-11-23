@@ -75,7 +75,7 @@
   users.users.homeserver = {
     isNormalUser = true;
     description = "home-server";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
       #  thunderbird
@@ -143,7 +143,7 @@
   nix.settings.trusted-users = [ "root" "homeserver" ];
   nix.settings.auto-optimise-store = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
@@ -151,4 +151,9 @@
   virtualisation.docker = {
     enable = true;
   };
+
+  # Enable tailscale. We manually authenticate when we want with
+  # "sudo tailscale up". If you don't use tailscale, you should comment
+  # out or delete all of this.
+  services.tailscale.enable = true;
 }
