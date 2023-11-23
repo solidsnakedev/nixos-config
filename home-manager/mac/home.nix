@@ -37,6 +37,8 @@
       gnumake
       bore-cli
       magic-wormhole-rs
+      commitizen
+      convco
     ];
 
 
