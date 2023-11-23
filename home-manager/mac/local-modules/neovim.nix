@@ -92,6 +92,7 @@ in
       coc-json
       coc-snippets
       coc-eslint
+      coc-prettier
       jsonc-vim
 
       #Markdown
@@ -127,9 +128,12 @@ in
         plugin = comment-nvim;
         type = "lua";
         config = ''
-          require('Comment').setup()
+          require('Comment').setup {
+              pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+          }
         '';
       }
+      nvim-ts-context-commentstring
 
       {
         plugin = todo-comments-nvim;
@@ -160,6 +164,9 @@ in
               disable = {"haskell"},
               additional_vim_regex_highlighting = false,
             },
+            context_commentstring = {
+              enable = true,
+            },
           })
         '';
       }
@@ -173,7 +180,7 @@ in
             options = {
               mode = 'buffers',
               themable = false,
-              numbers = 'buffer_id',
+              numbers = 'ordinal',
               offsets = {
                   {filetype = 'NvimTree'}
               },
@@ -286,7 +293,9 @@ in
             custom_highlights = {
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
               Structure = { fg = '#89DDFF'},
-              Identifier = {fg = '#F78C6C'}
+              Identifier = { fg = '#F78C6C' },
+              CurSearch = { fg = '#000000', bg = '#89DDFF' },
+              Search = { fg = '#000000',bg = '#F78C6C' }
             }
           })
           vim.cmd("colorscheme material ")
@@ -355,6 +364,8 @@ in
     ];
 
     extraLuaConfig = ''
+      -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+      vim.opt.updatetime = 100
       -- disable netrw at the very start of your init.lua (strongly advised)
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
