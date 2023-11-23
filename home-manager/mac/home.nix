@@ -104,7 +104,7 @@
   #   # };
   # };
 
-   xdg.configFile.yabai = {
+  xdg.configFile.yabai = {
     source = ../../config/yabai;
     recursive = true;
   };
