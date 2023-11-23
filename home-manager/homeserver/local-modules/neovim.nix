@@ -275,6 +275,7 @@ in
         '';
       }
       papercolor-theme
+      kanagawa-nvim
 
       {
         plugin = material-nvim;
