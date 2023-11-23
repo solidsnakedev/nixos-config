@@ -48,7 +48,12 @@
     enableZshIntegration = false;
     settings = {
       command_timeout = 1000;
+      character = {
+        success_symbol = "[𝝺](bold green)";
+        error_symbol = "[𝝺](bold red)";
+      };
     };
+
   };
 
   programs.fish = {
