@@ -1,0 +1,30 @@
+
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - h : yabai -m window --focus west
+alt - l : yabai -m window --focus east
+
+# rotate layout clocwise
+shift + alt - r : yabai -m space --rotate 270
+
+# swap layout
+shift + alt - s : yabai -m window --swap recent
+
+# maximize a window
+shift + alt - m  : yabai -m window --toggle zoom-fullscreen
+
+# float / unfloat window and center on screen
+shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+# Move focus container to workspace
+shift + alt - n : index=$(yabai -m query --spaces --display | jq  'first(.[] | select(.windows | length == 0) | .index)') && \
+                  yabai -m window --space ${index:-next}
+
+# increase window size
+shift + alt - h : yabai -m window --resize left:-20:0; yabai -m window --resize right:20:0
+shift + alt - j : yabai -m window --resize bottom:0:20
+shift + alt - k : yabai -m window --resize top:0:-20
+shift + alt - l : yabai -m window --resize right:-20:0; yabai -m window --resize left:20:0
+
+# open iterm
+alt - return : open -na /Applications/iTerm.app

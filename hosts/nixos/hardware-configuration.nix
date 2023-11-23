@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "vmd" "usb_storage" "usbhid" "sd_mod" ];
@@ -14,12 +15,14 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/fd9b4977-105e-494f-94cc-492519322c6c";
+    {
+      device = "/dev/disk/by-uuid/fd9b4977-105e-494f-94cc-492519322c6c";
       fsType = "ext4";
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/65E4-772C";
+    {
+      device = "/dev/disk/by-uuid/65E4-772C";
       fsType = "vfat";
     };
 

@@ -1,0 +1,42 @@
+# bsp or float (default: float)
+yabai -m config layout bsp
+
+# on or off (default: off)
+yabai -m config auto_balance on
+
+# New window spawns to the right if vertical split, or bottom if horizontal split
+yabai -m config window_placement second_child
+
+# Set all padding and gaps to 20pt (default: 0)
+yabai -m config top_padding    12
+yabai -m config bottom_padding 12
+yabai -m config left_padding   12
+yabai -m config right_padding  12
+yabai -m config window_gap     12
+
+# set mouse follows focus mode (default: off)
+yabai -m config mouse_follows_focus on
+
+yabai -m config focus_follows_mouse off
+
+yabai -m config mouse_drop_action swap
+
+# set mouse interaction modifier key (default: fn)
+yabai -m config mouse_modifier alt
+
+# set modifier + left-click drag to move window (default: move)
+yabai -m config mouse_action1 move
+
+# set modifier + right-click drag to resize window (default: resize)
+yabai -m config mouse_action2 resize
+
+# float system preferences
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
+yabai -m rule --add app="^Mail$" manage=off
+yabai -m rule --add app="^PenTablet$" manage=off
+yabai -m rule --add app="^Spotify$" manage=off
+yabai -m rule --add app="^zoom.us$" manage=off
+yabai -m rule --add app="^Calendar$" manage=off
+
