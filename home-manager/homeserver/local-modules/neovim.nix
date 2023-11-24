@@ -288,17 +288,19 @@ in
         type = "lua";
         config = ''
           vim.g.material_style = "palenight"
-          require('material').setup({
+          local material = require 'material'
+          local colors = require 'material.colors'
+          material.setup{
             custom_highlights = {
-              LineNr = { fg = '#6E98EB'},
-              CursorLineNr = { fg = '#89DDFF'},
+              LineNr = { fg = colors.main.paleblue },
+              CursorLineNr = { fg = colors.main.orange },
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
               Structure = { fg = '#89DDFF'},
               Identifier = { fg = '#F78C6C' },
               CurSearch = { fg = '#000000', bg = '#89DDFF' },
               Search = { fg = '#000000',bg = '#F78C6C' }
             }
-          })
+          }
           vim.cmd("colorscheme material ")
         '';
       }
