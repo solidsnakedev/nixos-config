@@ -215,7 +215,13 @@ in
           nmap("<leader>fh", ":Telescope help_tags<cr>")
         '';
       }
-      lightspeed-nvim
+
+      {
+        plugin = vim-easymotion;
+        config = ''
+          nmap s <Plug>(easymotion-s)
+        '';
+      }
 
       # WildMenu
       {
@@ -281,9 +287,11 @@ in
         plugin = material-nvim;
         type = "lua";
         config = ''
-          vim.g.material_style = "darker"
+          vim.g.material_style = "palenight"
           require('material').setup({
             custom_highlights = {
+              LineNr = { fg = '#6E98EB'},
+              CursorLineNr = { fg = '#89DDFF'},
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
               Structure = { fg = '#89DDFF'},
               Identifier = { fg = '#F78C6C' },
