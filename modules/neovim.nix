@@ -32,6 +32,8 @@ in
         "diagnostic.warningSign" = "∆";
         "hover.floatConfig.border" = true;
         "hover.floatConfig.rounded" = true;
+        "tsserver.useLocalTsdk" = true;
+        "tsserver.tsdk" = "$./node_modules/typescript/lib";
         languageserver = {
           haskell = {
             command = "haskell-language-server";
@@ -93,11 +95,16 @@ in
       coc-json
       coc-snippets
       coc-eslint
+      coc-prettier
       jsonc-vim
 
+      #Markdown
+      markdown-preview-nvim
 
-      # Language support
+
+      # Language syntax highlight
       vim-nix
+      aiken-vim
       {
         plugin = haskell-vim;
         config = ''
@@ -107,7 +114,6 @@ in
           let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
           let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
           let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-          let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
         '';
       }
 
@@ -125,9 +131,12 @@ in
         plugin = comment-nvim;
         type = "lua";
         config = ''
-          require('Comment').setup()
+          require('Comment').setup {
+              pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+          }
         '';
       }
+      nvim-ts-context-commentstring
 
       {
         plugin = todo-comments-nvim;
@@ -147,7 +156,7 @@ in
       }
 
       # Syntax Support
-      playground
+      # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       {
         plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
@@ -157,6 +166,9 @@ in
               enable = true,
               disable = {"haskell"},
               additional_vim_regex_highlighting = false,
+            },
+            context_commentstring = {
+              enable = true,
             },
           })
         '';
@@ -171,7 +183,7 @@ in
             options = {
               mode = 'buffers',
               themable = false,
-              numbers = 'buffer_id',
+              numbers = 'ordinal',
               offsets = {
                   {filetype = 'NvimTree'}
               },
@@ -287,13 +299,13 @@ in
         plugin = material-nvim;
         type = "lua";
         config = ''
-          vim.g.material_style = "palenight"
+          vim.g.material_style = "deep ocean"
           local material = require 'material'
           local colors = require 'material.colors'
           material.setup{
             custom_highlights = {
-              LineNr = { fg = colors.main.paleblue },
-              CursorLineNr = { fg = colors.main.orange },
+              LineNr = { fg = colors.main.darkblue },
+              CursorLineNr = { fg = colors.main.yellow },
               CocMenuSel = { fg = '#000000', bg = '#89DDFF' },
               Structure = { fg = '#89DDFF'},
               Identifier = { fg = '#F78C6C' },
@@ -309,7 +321,7 @@ in
         plugin = sonokai;
         type = "lua";
         config = ''
-          vim.g.sonokai_diagnostic_text_highlight = 1
+           vim.g.sonokai_diagnostic_text_highlight = 1
           -- vim.cmd[[colorscheme sonokai]]
         '';
       }
@@ -339,7 +351,7 @@ in
               },
             },
           })
-          -- vim.cmd("colorscheme nightfox")
+          -- vim.cmd("colorscheme carbonfox")
         '';
       }
 
@@ -349,9 +361,9 @@ in
         type = "lua";
         config = ''
           require('lualine').setup {
-            options = {
-              theme = 'material'
-            },
+            -- options = {
+            --   theme = 'powerline_dark'
+            -- },
             sections = {
               lualine_a = {
                 {
@@ -359,7 +371,7 @@ in
                   path = 1,
                 }
               },
-              lualine_b = {'branch', 'diff', 'diagnostics', 'g:coc_status'}
+              lualine_b = {'branch', 'diff', 'diagnostics','g:coc_status'}
             },
           }
         '';
@@ -367,6 +379,8 @@ in
     ];
 
     extraLuaConfig = ''
+      -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+      vim.opt.updatetime = 100
       -- disable netrw at the very start of your init.lua (strongly advised)
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1

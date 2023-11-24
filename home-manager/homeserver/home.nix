@@ -53,7 +53,7 @@
     ./../../modules/git.nix
     ./../../modules/tmux.nix
     ./../../modules/bat.nix
-    ./local-modules/neovim.nix
+    ./../../modules/neovim.nix
   ];
 
 }
