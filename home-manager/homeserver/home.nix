@@ -36,6 +36,7 @@
       pciutils
       bottom
       gnumake
+      gh
     ];
 
   programs.starship = {
