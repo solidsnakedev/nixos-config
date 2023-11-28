@@ -75,7 +75,7 @@
   users.users.homeserver = {
     isNormalUser = true;
     description = "home-server";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "lxd" ];
     packages = with pkgs; [
       firefox
       #  thunderbird
@@ -120,7 +120,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -149,6 +149,10 @@
 
   # Docker
   virtualisation.docker = {
+    enable = true;
+  };
+  # LXD
+  virtualisation.lxd = {
     enable = true;
   };
 
