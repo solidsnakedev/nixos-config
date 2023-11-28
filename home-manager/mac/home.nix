@@ -63,6 +63,7 @@
     shellAliases = {
       l = "ls -la";
       # update = "sudo nixos-rebuild switch";
+      home-switch = "home-manager switch --flake ~/nixos-config";
     };
     interactiveShellInit = ''
       neofetch --disable packages
