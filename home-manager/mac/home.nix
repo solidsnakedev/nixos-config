@@ -39,6 +39,7 @@
       magic-wormhole-rs
       commitizen
       convco
+      gh
     ];
 
 
