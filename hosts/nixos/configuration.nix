@@ -92,12 +92,12 @@
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
     git
-    fishPlugins.done
-    fishPlugins.fzf-fish
-    fishPlugins.forgit
-    fishPlugins.pure
+    # fishPlugins.done
+    # fishPlugins.fzf-fish
+    # fishPlugins.forgit
+    # fishPlugins.pure
     fzf
-    fishPlugins.grc
+    # fishPlugins.grc
     grc
   ];
 
@@ -150,6 +150,7 @@
   # Docker
   virtualisation.docker = {
     enable = true;
+    package = pkgs.docker_24;
   };
   # LXD
   virtualisation.lxd = {
