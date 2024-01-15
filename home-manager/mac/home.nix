@@ -40,6 +40,7 @@
       commitizen
       convco
       gh
+      eza
     ];
 
 
@@ -61,7 +62,7 @@
     enable = true;
 
     shellAliases = {
-      l = "ls -la";
+      l = "eza -lh --git --octal-permissions";
       # update = "sudo nixos-rebuild switch";
       home-switch = "home-manager switch --flake ~/nixos-config";
     };
