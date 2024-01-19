@@ -61,3 +61,16 @@ https://github.com/koekeishiya/skhd
 - Go To System Settings > Desktop & Dock > Mission Control
 - Turn off “Automatically Rearrange Spaces Based On Most Recent Use”
 - Only keep “Displays Have Separate Spaces” turned on here
+
+## Iterm colorscheme
+- Open iTerm2
+- Download my color profile by running the following command (will be added to Downloads folder):
+```
+curl https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/kanagawabones.itermcolors --output ~/Downloads/kanagawabones.itermcolors
+```
+- Open iTerm2 preferences
+- Go to Profiles > Colors
+- Import the downloaded color profile
+- Select the color profile
+
+> reference https://www.josean.com/posts/terminal-setup
