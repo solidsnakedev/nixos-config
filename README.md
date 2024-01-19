@@ -34,3 +34,19 @@ After the initial activation has completed successfully
 home-manager switch --flake .
 ```
 
+
+# MacOS only
+
+## Install iTerm
+https://iterm2.com/downloads.html
+## Install homebrew
+https://brew.sh/
+## Install Nerdfont
+```
+brew tap homebrew/cask-fonts
+brew install font-hack-nerd-font
+```
+## Install Yabai
+https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
+## Install skhd
+https://github.com/koekeishiya/skhd
