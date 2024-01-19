@@ -65,7 +65,7 @@ https://github.com/koekeishiya/skhd
 ## Iterm colorscheme
 - Open iTerm2
 - Download my color profile by running the following command (will be added to Downloads folder):
-```
+```bash
 curl https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/kanagawabones.itermcolors --output ~/Downloads/kanagawabones.itermcolors
 ```
 - Open iTerm2 preferences
@@ -74,3 +74,40 @@ curl https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/sch
 - Select the color profile
 
 > reference https://www.josean.com/posts/terminal-setup
+
+
+## Iterm set Fish shell
+- Open iTerm2
+- Open iTerm2 preferences
+- Go to profiles
+- Go to General
+- Go to Command -> Custom Shell
+- Insert `/Users/jonathan/.nix-profile/bin/fish`
+
+## Iterm set Natural text editing
+- Open iTerm2
+- Open iTerm2 preferences
+- Go to profiles
+- Go to Keys
+- Go to Key mappings
+- Go to Presets -> select `Natural Text Editing`
+
+## Iterm enable `Quit when all windows are closed`
+- Open iTerm2
+- Open iTerm2 preferences
+- Go to General
+- Go to Closing -> enable `Quit when all windows are closed`
+
+## Install VSCode
+- https://code.visualstudio.com/
+- Sync VSCode with GitHub account
+
+
+## VIM Vscode disable apple press and hold
+https://marketplace.visualstudio.com/items?itemName=vscodevim.vim
+
+- For VS Code
+```bash
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false 
+```
+- Restart laptop
