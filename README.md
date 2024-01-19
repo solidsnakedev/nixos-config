@@ -50,3 +50,14 @@ brew install font-hack-nerd-font
 https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
 ## Install skhd
 https://github.com/koekeishiya/skhd
+
+## Configure Displays
+- Configure MacOs Specific Settings
+- Open Several Desktops (~7) on Your Machine
+- Go To Keyboard Settings > Shortcuts > Mission Control
+- Expand Mission Control and Turn On Shortcuts for Switching Spaces 1-7 with “Ctrl + # Of Space”
+- Go to System Settings > Accessibility > Display
+- Turn On Reduce Motion
+- Go To System Settings > Desktop & Dock > Mission Control
+- Turn off “Automatically Rearrange Spaces Based On Most Recent Use”
+- Only keep “Displays Have Separate Spaces” turned on here
