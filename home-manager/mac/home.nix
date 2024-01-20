@@ -63,6 +63,7 @@
 
     shellAliases = {
       l = "eza -lh --git --octal-permissions";
+      ll = "eza -la --git --octal-permissions";
       # update = "sudo nixos-rebuild switch";
       home-switch = "home-manager switch --flake ~/nixos-config";
     };
