@@ -166,10 +166,7 @@ in
               enable = true,
               disable = {"haskell"},
               additional_vim_regex_highlighting = false,
-            },
-            context_commentstring = {
-              enable = true,
-            },
+            }
           })
         '';
       }
@@ -292,8 +289,24 @@ in
           })
         '';
       }
+
       papercolor-theme
-      kanagawa-nvim
+
+      {
+        plugin = kanagawa-nvim;
+        type = "lua";
+        config = ''
+          require('kanagawa').setup({
+            overrides = function(colors) -- add/modify highlights
+              return {
+                LineNr = { fg = colors.palette.dragonYellow , bg = "NONE"},
+                CursorLineNr = { fg = colors.palette.autumnYellow , bg = "NONE" },
+              }
+            end,
+          })
+            vim.cmd("colorscheme kanagawa")
+        '';
+      }
 
       {
         plugin = material-nvim;
@@ -313,7 +326,7 @@ in
               Search = { fg = '#000000',bg = '#F78C6C' }
             }
           }
-          vim.cmd("colorscheme material ")
+          -- vim.cmd("colorscheme material ")
         '';
       }
 
