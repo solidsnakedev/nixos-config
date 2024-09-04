@@ -7,9 +7,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+    };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, vscode-server, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, vscode-server, nixvim, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -30,7 +33,7 @@
       };
 
       "jonathan" = home-manager.lib.homeManagerConfiguration {
-        modules = [ ./home-manager/mac/home.nix ];
+        modules = [ ./home-manager/mac/home.nix nixvim.homeManagerModules.nixvim ];
         pkgs = nixpkgs.legacyPackages.aarch64-darwin; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
       };
