@@ -7,10 +7,6 @@
     # colorschemes.catppuccin.enable = true;
     colorschemes.kanagawa.enable = true;
     plugins = {
-      lualine = {
-        enable = true;
-      };
-      tmux-navigator.enable = true;
       lsp = {
         enable = true;
         servers = {
@@ -22,10 +18,15 @@
             enable = true;
             settings.diagnostics.globals = [ "vim" ];
           };
-          tsserver.enable = true;
+          # tsserver.enable = true;
         };
       };
-      # typescript-tools.enable = true;
+      typescript-tools = {
+        enable = true;
+        settings.exposeAsCodeAction = "all";
+      };
+      lualine.enable = true;
+      tmux-navigator.enable = true;
       lsp-format.enable = true;
       treesitter.enable = true;
       lazygit.enable = true;
@@ -41,6 +42,30 @@
       todo-comments.enable = true;
       surround.enable = true;
       lastplace.enable = true;
+      bufdelete.enable = true;
+      cmp-nvim-lsp.enable = true;
+      cmp-path.enable = true;
+      cmp-buffer.enable = true;
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+        settings = {
+          sources = [
+            { name = "nvim_lsp"; }
+            { name = "path"; }
+            { name = "buffer"; }
+          ];
+          mapping = {
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-u>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-d>" = "cmp.mapping.scroll_docs(4)";
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+          };
+        };
+      };
+
     };
 
     extraConfigLua = builtins.readFile ./init.lua;

@@ -55,6 +55,7 @@ vim.opt.clipboard = 'unnamedplus' -- Use system clipboard
 vim.opt.ttyfast = true            -- Speed up scrolling
 vim.opt.list = true               -- Show whitespace characters
 vim.opt.listchars = { tab = '▸▸', trail = '·' }
+vim.opt.signcolumn = "yes"
 
 -- map c and d to black hole registers
 map('n', 'd', '"_d')
@@ -86,9 +87,9 @@ nmap("gj", "<cmd>lua vim.diagnostic.goto_next()<cr>")
 -- nmap("<leader>gd", builtin.lsp_definitions)
 
 nmap("s", ":HopWord<cr>")
-nmap("<Tab>", ":BufferLineCycleNext<cr>")
-nmap("<S-Tab>", ":BufferLineCyclePrev<cr>")
-nmap("<leader>c", ":bd<cr>")
+nmap("<S-L>", ":BufferLineCycleNext<cr>")
+nmap("<S-H>", ":BufferLineCyclePrev<cr>")
+nmap("<leader>c", ":Bdelete<cr>")
 
 
 require("nvim-tree").setup {
