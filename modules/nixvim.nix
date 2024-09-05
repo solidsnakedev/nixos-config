@@ -8,6 +8,7 @@
     # colorschemes.tokyonight.enable = true;
     colorschemes.catppuccin.enable = true;
     plugins = {
+      rustaceanvim.enable = true;
       lsp = {
         enable = true;
         servers = {
@@ -19,6 +20,7 @@
             enable = true;
             settings.diagnostics.globals = [ "vim" ];
           };
+          # rust-analyzer.enable = true;
           # tsserver.enable = true;
         };
       };
