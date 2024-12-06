@@ -43,8 +43,8 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -133,7 +133,6 @@
   # services.vscode-server.enable = true;
 
   nix = {
-    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes ca-derivations
       substituters = https://cache.zw3rk.com https://cache.iog.io https://cache.nixos.org/
