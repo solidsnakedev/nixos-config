@@ -4,11 +4,34 @@
     enable = true;
     viAlias = true;
     vimAlias = true;
-    # colorschemes.kanagawa.enable = true;
-    # colorschemes.tokyonight.enable = true;
     colorschemes.catppuccin.enable = true;
     plugins = {
-      rustaceanvim.enable = true;
+      # ui
+      lualine.enable = true;
+      tmux-navigator.enable = true;
+      treesitter.enable = true;
+      lazygit.enable = true;
+      bufferline.enable = true;
+      nvim-autopairs.enable = true;
+      direnv.enable = true;
+      which-key.enable = true;
+      wilder.enable = true;
+      telescope.enable = true;
+      dressing.enable = true;
+      dashboard.enable = true;
+      hop.enable = true;
+      nvim-tree.enable = true;
+      todo-comments.enable = true;
+      surround.enable = true;
+      lastplace.enable = true;
+      bufdelete.enable = true;
+
+      # lsp
+      # rust-tools.enable = true;
+      typescript-tools = {
+        enable = true;
+        settings.exposeAsCodeAction = "all";
+      };
       lsp = {
         enable = true;
         servers = {
@@ -20,8 +43,8 @@
             enable = true;
             settings.diagnostics.globals = [ "vim" ];
           };
-          # rust-analyzer.enable = true;
-          # tsserver.enable = true;
+          rust-analyzer.enable = true;
+          hls.enable = true;
         };
       };
       lspsaga = {
@@ -29,36 +52,9 @@
         lightbulb.enable = false;
       };
       lspkind.enable = true;
-      typescript-tools = {
-        enable = true;
-        settings.exposeAsCodeAction = "all";
-      };
-      lualine.enable = true;
-      tmux-navigator.enable = true;
       lsp-format.enable = true;
-      treesitter.enable = true;
-      lazygit.enable = true;
-      bufferline.enable = true;
-      nvim-autopairs.enable = true;
-      direnv.enable = true;
-      which-key.enable = true;
-      wilder.enable = true;
-      telescope = {
-        enable = true;
-        # extensions.ui-select.enable = true;
-      };
-      dressing.enable = true;
-      dashboard.enable = true;
-      hop.enable = true;
-      nvim-tree.enable = true;
-      todo-comments.enable = true;
-      surround.enable = true;
-      lastplace.enable = true;
-      bufdelete.enable = true;
-      cmp-nvim-lsp.enable = true;
-      cmp-path.enable = true;
-      cmp-buffer.enable = true;
-      cmp_luasnip.enable = true;
+
+      # snippets
       nvim-snippets.enable = true;
       friendly-snippets.enable = true;
       luasnip = {
@@ -67,6 +63,12 @@
           enable_autosnippets = true;
         };
       };
+
+      # completions
+      cmp-nvim-lsp.enable = true;
+      cmp-path.enable = true;
+      cmp-buffer.enable = true;
+      cmp_luasnip.enable = true;
       cmp = {
         enable = true;
         autoEnableSources = true;
