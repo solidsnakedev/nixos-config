@@ -52,8 +52,9 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.nvidia.open = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -143,13 +144,12 @@
   nix.settings.auto-optimise-store = true;
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    fira-code
   ];
 
   # Docker
   virtualisation.docker = {
     enable = true;
-    package = pkgs.docker_24;
   };
   # LXD
   virtualisation.lxd = {
