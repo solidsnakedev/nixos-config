@@ -6,6 +6,7 @@
     vimAlias = true;
     colorschemes.catppuccin.enable = true;
     plugins = {
+      web-devicons.enable = true;
       # ui
       lualine.enable = true;
       tmux-navigator.enable = true;
@@ -22,7 +23,7 @@
       hop.enable = true;
       nvim-tree.enable = true;
       todo-comments.enable = true;
-      surround.enable = true;
+      vim-surround.enable = true;
       lastplace.enable = true;
       bufdelete.enable = true;
 
@@ -30,21 +31,28 @@
       # rust-tools.enable = true;
       typescript-tools = {
         enable = true;
-        settings.exposeAsCodeAction = "all";
+        settings.settings.exposeAsCodeAction = "all";
       };
       lsp = {
         enable = true;
         servers = {
-          nil-ls = {
+          nil_ls = {
             enable = true; # Enable nil_ls. You can use nixd or anything you want from the docs.
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
-          lua-ls = {
+          lua_ls = {
             enable = true;
             settings.diagnostics.globals = [ "vim" ];
           };
-          rust-analyzer.enable = true;
-          hls.enable = true;
+          rust_analyzer = {
+            enable = true;
+            installCargo = false;
+            installRustc = false;
+          };
+          hls = {
+            enable = true;
+            installGhc = false;
+          };
         };
       };
       lspsaga = {
