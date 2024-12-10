@@ -69,7 +69,7 @@ map('n', '<S-Up>', 'yyddkP')
 map('n', '<S-Down>', 'yyddp')
 nmap('<Leader>h', ':nohl<cr>') -- Toggle highlight search
 
-nmap("<leader>n", ":NvimTreeToggle<cr>")
+nmap("<leader>n", ":Neotree toggle<cr>")
 nmap("<leader>gg", ":LazyGit<cr>")
 nmap("<leader>ff", ":Telescope find_files<cr>")
 nmap("<leader>fg", ":Telescope live_grep<cr>")
@@ -93,16 +93,24 @@ nmap("<S-H>", ":BufferLineCyclePrev<cr>")
 nmap("<leader>c", ":Bdelete<cr>")
 
 
-require("nvim-tree").setup {
-  actions = {
-    open_file = {
-      quit_on_open = true,
-    },
+require("neo-tree").setup({
+  close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+  window = {
+    position = "right",
   },
-  view = {
-    side = "right"
+  event_handlers = {
+    {
+      event = "file_open_requested",
+      handler = function()
+        -- auto close
+        -- vim.cmd("Neotree close")
+        -- OR
+        require("neo-tree.command").execute({ action = "close" })
+      end
+    },
+
   }
-}
+})
 
 local wilder = require('wilder')
 wilder.setup({

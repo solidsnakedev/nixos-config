@@ -21,18 +21,22 @@
       dressing.enable = true;
       dashboard.enable = true;
       hop.enable = true;
-      nvim-tree.enable = true;
+      neo-tree = {
+        enable = true;
+        closeIfLastWindow = true;
+      };
       todo-comments.enable = true;
       vim-surround.enable = true;
       lastplace.enable = true;
       bufdelete.enable = true;
+      fidget.enable = true;
 
       # lsp
       # rust-tools.enable = true;
-      typescript-tools = {
-        enable = true;
-        settings.settings.exposeAsCodeAction = "all";
-      };
+      # typescript-tools = {
+      #   enable = true;
+      #   settings.settings.exposeAsCodeAction = "all";
+      # };
       lsp = {
         enable = true;
         servers = {
@@ -53,6 +57,7 @@
             enable = true;
             installGhc = false;
           };
+          ts_ls.enable = true;
         };
       };
       lspsaga = {
