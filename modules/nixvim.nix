@@ -20,7 +20,18 @@ in
 
     # Color Scheme
     # Use Catppuccin color scheme
-    colorschemes.catppuccin.enable = true;
+    colorschemes.catppuccin = {
+      enable = true;
+      settings = {
+        custom_highlights = ''
+          function(colors)
+            return {
+              LineNr = { fg = colors.overlay2, style = {} },
+            }
+          end
+        '';
+      };
+    };
     plugins = {
       # UI Enhancements
       # Add file type icons to various plugins
@@ -30,11 +41,19 @@ in
       # Seamless navigation between tmux and vim panes
       tmux-navigator.enable = true;
       # Improved syntax highlighting and parsing
-      treesitter.enable = true;
+      treesitter = {
+        enable = true;
+        settings = {
+          highlight.enable = true;
+          indent.enable = true;
+          incremental_selection.enable = true;
+        };
+      };
       # Git integration using lazygit
       lazygit.enable = true;
       # Adds a buffer line with tab-like interface
       bufferline.enable = true;
+      barbecue.enable = true;
       # Automatically close brackets, parentheses, and quotes
       nvim-autopairs.enable = true;
       # Integrate with direnv for environment management
@@ -42,7 +61,14 @@ in
       # Display key binding hints and help
       which-key.enable = true;
       # Enhanced command-line completion
-      wilder.enable = true;
+      noice = {
+        enable = true;
+        settings = {
+          presets = {
+            lsp_doc_border = true;
+          };
+        };
+      };
       # Powerful fuzzy finder and picker
       telescope.enable = true;
       # Improve the look of vim's native UI elements
@@ -63,15 +89,11 @@ in
       bufdelete.enable = true;
       # Show LSP progress and status
       fidget.enable = true;
+      notify.enable = true;
       # Improved text wrapping
       wrapping.enable = true;
-
-      # lsp
-      # rust-tools.enable = true;
-      # typescript-tools = {
-      #   enable = true;
-      #   settings.settings.exposeAsCodeAction = "all";
-      # };
+      # Automatically saves and restores session state
+      auto-session.enable = true;
 
       # Language Server Protocol (LSP)
       lsp = {
@@ -109,45 +131,51 @@ in
           ts_ls.enable = true;
         };
       };
-      # Enhanced LSP UI with code actions and more
-      lspsaga = {
-        enable = true;
-        # Disable lightbulb code action indicator
-        lightbulb.enable = false;
-      };
       # Add icons to completion menu
       lspkind.enable = true;
       # Automatic code formatting
       lsp-format.enable = true;
 
-      # Snippets
-      # Snippet management plugin
-      nvim-snippets.enable = true;
-      # Collection of pre-made snippets
-      friendly-snippets.enable = true;
-      # Snippet engine with auto-snippet support
-      luasnip = {
+      # Code Formatting with conform-nvim
+      conform-nvim = {
         enable = true;
         settings = {
-          # Enable automatic snippet expansion
-          enable_autosnippets = true;
+          notify_on_error = true;
+          format_on_save = {
+            lspFallback = true;
+            timeoutMs = 500;
+          };
+          formatters_by_ft = {
+            javascript = {
+              __unkeyed-1 = "prettierd";
+              __unkeyed-2 = "prettier";
+              stop_after_first = true;
+            };
+            typescript = {
+              __unkeyed-1 = "prettierd";
+              __unkeyed-2 = "prettier";
+              stop_after_first = true;
+            };
+            typescriptreact = {
+              __unkeyed-1 = "prettierd";
+              __unkeyed-2 = "prettier";
+              stop_after_first = true;
+            };
+            rust = [ "rustfmt" ];
+          };
         };
       };
 
-      # Autocompletion
-      # Use LSP as a completion source
-      cmp-nvim-lsp.enable = true;
-      # Add path completion
-      cmp-path.enable = true;
-      # Add buffer word completion
-      cmp-buffer.enable = true;
-      # Enable LuaSnip as a completion source
-      cmp_luasnip.enable = true;
-      # Completion engine configuration
+      # Autocompletion engine configuration
       cmp = {
         enable = true;
         autoEnableSources = true;
         settings = {
+          window =
+            {
+              completion.border = "rounded";
+              documentation.border = "rounded";
+            };
           # Automatically enable completion sources
           snippet.expand = ''
             function(args)
@@ -161,6 +189,7 @@ in
             { name = "buffer"; }
             { name = "luasnip"; }
             { name = "snippets"; }
+            { name = "friendly_snippets"; }
           ];
           # Completion key mappings
           mapping = {
@@ -179,6 +208,25 @@ in
           };
         };
       };
+
+      # Snippets
+      # Snippet engine with auto-snippet support
+      luasnip = {
+        enable = true;
+        settings = {
+          # Enable automatic snippet expansion
+          enable_autosnippets = true;
+        };
+      };
+      # Snippet management plugin
+      nvim-snippets = {
+        enable = true;
+        settings = {
+          friendly-snippets = true;
+        };
+      };
+      # Pre-configured Snippet Collection
+      friendly-snippets.enable = true;
 
     };
     # Load additional Lua configuration from init.lua

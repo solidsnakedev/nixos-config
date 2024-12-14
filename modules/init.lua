@@ -57,10 +57,6 @@ vim.opt.list = true               -- Show whitespace characters
 vim.opt.listchars = { tab = '▸▸', trail = '·' }
 vim.opt.signcolumn = "yes"
 
--- map c and d to black hole registers
-map('n', 'd', '"_d')
-map('n', 'c', '"_c')
-
 -- Key mappings
 imap('jk', '<Esc>') -- Escape using jk
 imap('kj', '<Esc>') -- Escape using kj
@@ -69,7 +65,7 @@ map('n', '<S-Up>', 'yyddkP')
 map('n', '<S-Down>', 'yyddp')
 nmap('<Leader>h', ':nohl<cr>') -- Toggle highlight search
 
-nmap("<leader>n", ":Neotree toggle<cr>")
+nmap("<leader>n", ":Neotree toggle reveal<cr>")
 nmap("<leader>gg", ":LazyGit<cr>")
 nmap("<leader>ff", ":Telescope find_files<cr>")
 nmap("<leader>fg", ":Telescope live_grep<cr>")
@@ -79,14 +75,9 @@ nmap("gd", ":Telescope lsp_definitions<cr>")
 nmap("gr", ":Telescope lsp_reference<cr>")
 nmap("gi", ":Telescope lsp_implementations<cr>")
 nmap("<leader>ac", "<cmd>lua vim.lsp.buf.code_action()<cr>")
--- nmap("<leader>ac", ":Lspsaga code_action<cr>")
 nmap("gp", "<cmd>lua vim.diagnostic.open_float()<cr>")
 nmap("gk", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 nmap("gj", "<cmd>lua vim.diagnostic.goto_next()<cr>")
-
-
--- nmap("<leader>gd", builtin.lsp_definitions)
-
 nmap("s", ":HopChar1<cr>")
 nmap("<S-L>", ":BufferLineCycleNext<cr>")
 nmap("<S-H>", ":BufferLineCyclePrev<cr>")
@@ -96,6 +87,7 @@ require("neo-tree").setup({
   close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
   window = {
     position = "right",
+    auto_expand_width = true,
   },
   event_handlers = {
     {
@@ -111,27 +103,24 @@ require("neo-tree").setup({
   }
 })
 
-local wilder = require('wilder')
-wilder.setup({
-  modes = { ':', '/', '?' },
-  accept_key = '<Right>',
-  reject_key = '<Left>',
-})
-
-wilder.set_option('renderer', wilder.popupmenu_renderer(
-  wilder.popupmenu_border_theme({
-    highlighter = wilder.basic_highlighter(),
-    highlights = {
-      border = 'Normal', -- highlight to use for the border
-      accent = wilder.make_hl('WilderAccent', 'Pmenu', { { a = 1 }, { a = 1 }, { foreground = '#f4468f' } }),
-    },
-    -- 'single', 'double', 'rounded' or 'solid'
-    -- can also be a list of 8 characters, see :h wilder#popupmenu_border_theme() for more details
-    border = 'rounded',
-    left = { ' ', wilder.popupmenu_devicons() },
-    right = { ' ', wilder.popupmenu_scrollbar() },
-  })
-))
+-- local wilder = require('wilder')
+-- wilder.setup({
+--   modes = { ':', '/', '?' },
+--   -- accept_key = '<Right>',
+--   -- reject_key = '<Left>',
+-- })
+--
+-- wilder.set_option('renderer', wilder.popupmenu_renderer(
+--   wilder.popupmenu_border_theme({
+--     highlighter = wilder.basic_highlighter(),
+--     highlights = {
+--       accent = wilder.make_hl('WilderAccent', 'Pmenu', { { a = 1 }, { a = 1 }, { foreground = '#f4468f' } }),
+--     },
+--     border = 'rounded',
+--     left = { ' ', wilder.popupmenu_devicons() },
+--     right = { ' ', wilder.popupmenu_scrollbar() },
+--   })
+-- ))
 
 require('dashboard').setup({
   config = {
