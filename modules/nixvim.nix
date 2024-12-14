@@ -87,8 +87,6 @@ in
       lastplace.enable = true;
       # Improved buffer deletion
       bufdelete.enable = true;
-      # Show LSP progress and status
-      fidget.enable = true;
       notify.enable = true;
       # Improved text wrapping
       wrapping.enable = true;
