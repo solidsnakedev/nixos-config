@@ -92,6 +92,7 @@ in
       wrapping.enable = true;
       # Automatically saves and restores session state
       auto-session.enable = true;
+      markdown-preview.enable = true;
 
       # Language Server Protocol (LSP)
       lsp = {
@@ -174,19 +175,12 @@ in
               completion.border = "rounded";
               documentation.border = "rounded";
             };
-          # Automatically enable completion sources
-          snippet.expand = ''
-            function(args)
-              require('luasnip').lsp_expand(args.body)
-            end
-          '';
-          # Define completion sources
+          performance.max_view_entries = 20;
           sources = [
             { name = "nvim_lsp"; }
+            { name = "luasnip"; }
             { name = "path"; }
             { name = "buffer"; }
-            { name = "luasnip"; }
-            { name = "snippets"; }
             { name = "friendly_snippets"; }
           ];
           # Completion key mappings
@@ -194,9 +188,9 @@ in
             # Show completion menu
             "<C-Space>" = "cmp.mapping.complete()";
             # Scroll documentation up
-            "<C-u>" = "cmp.mapping.scroll_docs(-4)";
+            "<S-k>" = "cmp.mapping.scroll_docs(-4)";
             # Scroll documentation down
-            "<C-d>" = "cmp.mapping.scroll_docs(4)";
+            "<S-j>" = "cmp.mapping.scroll_docs(4)";
             # Confirm selection
             "<CR>" = "cmp.mapping.confirm({ select = true })";
             # Navigate completion menu (previous item)
@@ -216,16 +210,8 @@ in
           enable_autosnippets = true;
         };
       };
-      # Snippet management plugin
-      nvim-snippets = {
-        enable = true;
-        settings = {
-          friendly-snippets = true;
-        };
-      };
       # Pre-configured Snippet Collection
       friendly-snippets.enable = true;
-
     };
     # Load additional Lua configuration from init.lua
     extraConfigLua = builtins.readFile ./init.lua;

@@ -8,17 +8,22 @@
     baseIndex = 1;
     # customPaneNavigationAndResize = true;
     plugins = with pkgs.tmuxPlugins ; [
-      vim-tmux-navigator
+      # {
+      #   plugin = dracula;
+      #   extraConfig = ''
+      #     set -g @dracula-plugins "cpu-usage ram-usage time"
+      #     set -g @dracula-show-battery false
+      #     set -g @dracula-show-powerline true
+      #     set -g @dracula-refresh-rate 10
+      #     set -g @dracula-show-flags true
+      #   '';
+      # }
       {
-        plugin = dracula;
-        extraConfig = ''
-          set -g @dracula-plugins "cpu-usage ram-usage time"
-          set -g @dracula-show-battery false
-          set -g @dracula-show-powerline true
-          set -g @dracula-refresh-rate 10
-          set -g @dracula-show-flags true
+        plugin = catppuccin;
+        extraConfig = '' 
         '';
       }
+      vim-tmux-navigator
     ];
     extraConfig = ''
       #Configure True Colors
