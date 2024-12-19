@@ -76,6 +76,7 @@
       neofetch --disable packages
       export PATH="$PATH:/Users/jonathan/.aiken/bin"
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      tmux source-file ~/.config/tmux/tmux.conf
     '';
     plugins = [{
       name = "foreign-env";
