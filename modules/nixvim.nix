@@ -17,6 +17,10 @@ in
     # Create aliases for Vi and Vim commands
     viAlias = true;
     vimAlias = true;
+    diagnostics = {
+      virtual_text = false;
+      float = { border = "rounded"; };
+    };
 
     # Color Scheme
     # Use Catppuccin color scheme
@@ -125,6 +129,7 @@ in
           hls = {
             enable = true;
             installGhc = false;
+            package = null;
           };
           # TypeScript language server
           ts_ls.enable = true;

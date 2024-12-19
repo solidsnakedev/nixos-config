@@ -35,7 +35,7 @@ vim.opt.cursorline = true         -- Highlight cursor line
 vim.opt.shiftwidth = 2            -- Set shift width to 2 spaces
 vim.opt.tabstop = 2               -- Set tab width to 2 columns
 vim.opt.expandtab = true          -- Use spaces instead of tabs
-vim.opt.scrolloff = 10            -- Do not scroll below/above N lines
+vim.opt.scrolloff = 20            -- Do not scroll below/above N lines
 vim.opt.wrap = false              -- Do not wrap lines
 vim.opt.incsearch = true          -- Highlight matches as you type
 vim.opt.ignorecase = true         -- Ignore case in searches
@@ -65,6 +65,8 @@ map('n', '<S-Up>', 'yyddkP')
 map('n', '<S-Down>', 'yyddp')
 nmap('<Leader>h', ':nohl<cr>') -- Toggle highlight search
 
+-- Show all diagnostics on current line in floating window
+nmap("<Leader>d", ":lua vim.diagnostic.open_float()<cr>")
 nmap("<leader>n", ":Neotree toggle reveal<cr>")
 nmap("<leader>gg", ":LazyGit<cr>")
 nmap("<leader>ff", ":Telescope find_files<cr>")
@@ -129,3 +131,9 @@ require('dashboard').setup({
     },
   },
 })
+
+require('lspconfig').hls.setup {
+  cmd = (vim.fn.executable('haskell-language-server-wrapper') == 1 and { 'haskell-language-server-wrapper', '--lsp' })
+      or (vim.fn.executable('haskell-language-server') == 1 and { 'haskell-language-server', '--lsp' })
+      or nil,
+}
