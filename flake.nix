@@ -11,9 +11,12 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, vscode-server, nixvim, ... }: {
+  outputs = inputs@{ nixpkgs, nix-darwin, home-manager, vscode-server, nixvim, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -24,6 +27,14 @@
         ];
       };
     };
+
+    # Build darwin flake using:
+    # $ darwin-rebuild build --flake .#Jonathans-MacBook-Pro
+    darwinConfigurations."Jonathans-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      modules = [ ./hosts/mac/configuration.nix ];
+      specialArgs = { inherit inputs; };
+    };
+
 
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {

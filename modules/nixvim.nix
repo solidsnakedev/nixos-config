@@ -41,7 +41,29 @@ in
       # Add file type icons to various plugins
       web-devicons.enable = true;
       # Lightweight and customizable status line
-      lualine.enable = true;
+      lualine = {
+        enable = true;
+        # luaConfig.pre = ''
+        #   require("lualine").setup({
+        #     sections = {
+        #       lualine_x = {
+        #       'encoding', 'fileformat', 'filetype',
+        #         {
+        #           require("noice").api.statusline.mode.get,
+        #           cond = function()
+        #             local noice = require("noice")
+        #              if noice.api.statusline.mode.has() then
+        #                return noice.api.statusline.mode.get():lower():find("recording") ~= nil
+        #              end
+        #              return false
+        #           end,
+        #           color = { fg = "#ff9e64" },
+        #         }
+        #       },
+        #     },
+        #   })
+        # '';
+      };
       # Seamless navigation between tmux and vim panes
       tmux-navigator.enable = true;
       # Improved syntax highlighting and parsing
@@ -65,14 +87,15 @@ in
       # Display key binding hints and help
       which-key.enable = true;
       # Enhanced command-line completion
-      noice = {
-        enable = true;
-        settings = {
-          presets = {
-            lsp_doc_border = true;
-          };
-        };
-      };
+      # noice = {
+      #   enable = true;
+      #   settings = {
+      #     presets = {
+      #       lsp_doc_border = true;
+      #     };
+      #   };
+      # };
+      wilder.enable = true;
       # Powerful fuzzy finder and picker
       telescope.enable = true;
       # Improve the look of vim's native UI elements

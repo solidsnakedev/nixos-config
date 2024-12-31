@@ -27,4 +27,5 @@ shift + alt - k : yabai -m window --resize top:0:-20
 shift + alt - l : yabai -m window --resize right:-20:0; yabai -m window --resize left:20:0
 
 # open iterm
-alt - return : open -na /Applications/iTerm.app
+# alt - return : open -na /Applications/iTerm.app
+alt - return : open -na /Users/jonathan/.nix-profile/bin/alacritty

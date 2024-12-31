@@ -6,6 +6,7 @@
     mouse = true;
     keyMode = "vi";
     baseIndex = 1;
+    shell = "${pkgs.fish}/bin/fish";
     # customPaneNavigationAndResize = true;
     plugins = with pkgs.tmuxPlugins ; [
       # {
@@ -27,7 +28,8 @@
     ];
     extraConfig = ''
       #Configure True Colors
-      set -g default-terminal "screen-256color"
+      set -g default-terminal "tmux-256color"
+      set -ag terminal-overrides ",xterm-256color:RGB"
 
       #Add keybind for maximizing and minimizing tmux pane
       bind -r m resize-pane -Z
@@ -41,9 +43,16 @@
       bind -r k resize-pane -U 5
       bind -r l resize-pane -R 5
       bind -r h resize-pane -L 5
+      
+      # Rotate panes clockwise and keep focus on the pane
+      bind r rotate-window -U \; select-pane -t -
+
+      # Rotate panes counter-clockwise and keep focus on the pane
+      bind R rotate-window -D \; select-pane -t +
 
       # Renumber windows when adding a new one
       set -g renumber-windows on
     '';
   };
 }
+

@@ -10,6 +10,10 @@ local function imap(shortcut, command)
   map('i', shortcut, command)
 end
 
+local function vmap(shortcut, command)
+  map('v', shortcut, command)
+end
+
 vim.opt.updatetime = 100
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
@@ -57,6 +61,7 @@ vim.opt.list = true               -- Show whitespace characters
 vim.opt.listchars = { tab = '▸▸', trail = '·' }
 vim.opt.signcolumn = "yes"
 
+
 -- Key mappings
 imap('jk', '<Esc>') -- Escape using jk
 imap('kj', '<Esc>') -- Escape using kj
@@ -84,12 +89,17 @@ nmap("s", ":HopChar1<cr>")
 nmap("<S-L>", ":BufferLineCycleNext<cr>")
 nmap("<S-H>", ":BufferLineCyclePrev<cr>")
 nmap("<leader>c", ":Bdelete<cr>")
+vmap(">", ">gv")
+vmap("<", "<gv")
 
 require("neo-tree").setup({
   close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
   window = {
     position = "right",
-    auto_expand_width = true,
+    width = 40
+  },
+  file_size = {
+    enabled = false,
   },
   event_handlers = {
     {
@@ -105,24 +115,21 @@ require("neo-tree").setup({
   }
 })
 
--- local wilder = require('wilder')
--- wilder.setup({
---   modes = { ':', '/', '?' },
---   -- accept_key = '<Right>',
---   -- reject_key = '<Left>',
--- })
---
--- wilder.set_option('renderer', wilder.popupmenu_renderer(
---   wilder.popupmenu_border_theme({
---     highlighter = wilder.basic_highlighter(),
---     highlights = {
---       accent = wilder.make_hl('WilderAccent', 'Pmenu', { { a = 1 }, { a = 1 }, { foreground = '#f4468f' } }),
---     },
---     border = 'rounded',
---     left = { ' ', wilder.popupmenu_devicons() },
---     right = { ' ', wilder.popupmenu_scrollbar() },
---   })
--- ))
+local wilder = require('wilder')
+wilder.setup({
+  modes = { ':', '/', '?' },
+})
+wilder.set_option('renderer', wilder.popupmenu_renderer(
+  wilder.popupmenu_border_theme({
+    highlighter = wilder.basic_highlighter(),
+    highlights = {
+      accent = wilder.make_hl('WilderAccent', 'Pmenu', { { a = 1 }, { a = 1 }, { foreground = '#f4468f' } }),
+    },
+    border = 'rounded',
+    left = { ' ', wilder.popupmenu_devicons() },
+    right = { ' ', wilder.popupmenu_scrollbar() },
+  })
+))
 
 require('dashboard').setup({
   config = {
@@ -137,3 +144,24 @@ require('lspconfig').hls.setup {
       or (vim.fn.executable('haskell-language-server') == 1 and { 'haskell-language-server', '--lsp' })
       or nil,
 }
+
+-- require("noice").setup({
+--   routes = {
+--     {
+--       view = "notify",
+--       filter = { event = "msg_showmode" },
+--     },
+--   },
+-- })
+
+-- require("lualine").setup({
+--   sections = {
+--     lualine_x = {
+--       {
+--         require("noice").api.statusline.mode.get,
+--         cond = require("noice").api.statusline.mode.has,
+--         color = { fg = "#ff9e64" },
+--       }
+--     },
+--   },
+-- })
