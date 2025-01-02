@@ -114,7 +114,10 @@ in
       lastplace.enable = true;
       # Improved buffer deletion
       bufdelete.enable = true;
-      notify.enable = true;
+      notify = {
+        enable = true;
+        topDown = false;
+      };
       # Improved text wrapping
       wrapping.enable = true;
       # Automatically saves and restores session state
@@ -156,6 +159,7 @@ in
           };
           # TypeScript language server
           ts_ls.enable = true;
+          tinymist.enable = true;
         };
       };
       # Add icons to completion menu
@@ -244,6 +248,9 @@ in
     # Load additional Lua configuration from init.lua
     extraConfigLua = builtins.readFile ./init.lua;
     # Add extra plugins (in this case, aiken-vim)
-    extraPlugins = [ aiken-vim ];
+    extraPlugins = [
+      aiken-vim
+      pkgs.vimPlugins.typst-preview-nvim
+    ];
   };
 }
