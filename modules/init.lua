@@ -14,6 +14,10 @@ local function vmap(shortcut, command)
   map('v', shortcut, command)
 end
 
+local function tmap(shortcut, command)
+  map('t', shortcut, command)
+end
+
 vim.opt.updatetime = 100
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
@@ -91,6 +95,8 @@ nmap("<S-H>", ":BufferLineCyclePrev<cr>")
 nmap("<leader>c", ":Bdelete<cr>")
 vmap(">", ">gv")
 vmap("<", "<gv")
+tmap("<Esc>", "<C-\\><C-n>")
+
 
 require("neo-tree").setup({
   close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
