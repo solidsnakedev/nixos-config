@@ -39,7 +39,7 @@
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       "homeserver@nixos" = home-manager.lib.homeManagerConfiguration {
-        modules = [ ./home-manager/homeserver/home.nix ];
+        modules = [ ./home-manager/homeserver/home.nix nixvim.homeManagerModules.nixvim ];
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = { inherit inputs; };
       };
