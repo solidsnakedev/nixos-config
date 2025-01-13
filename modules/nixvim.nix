@@ -40,29 +40,10 @@ in
       # UI Enhancements
       # Add file type icons to various plugins
       web-devicons.enable = true;
+      colorizer.enable = true;
       # Lightweight and customizable status line
       lualine = {
         enable = true;
-        # luaConfig.pre = ''
-        #   require("lualine").setup({
-        #     sections = {
-        #       lualine_x = {
-        #       'encoding', 'fileformat', 'filetype',
-        #         {
-        #           require("noice").api.statusline.mode.get,
-        #           cond = function()
-        #             local noice = require("noice")
-        #              if noice.api.statusline.mode.has() then
-        #                return noice.api.statusline.mode.get():lower():find("recording") ~= nil
-        #              end
-        #              return false
-        #           end,
-        #           color = { fg = "#ff9e64" },
-        #         }
-        #       },
-        #     },
-        #   })
-        # '';
       };
       # Seamless navigation between tmux and vim panes
       tmux-navigator.enable = true;
@@ -87,15 +68,22 @@ in
       # Display key binding hints and help
       which-key.enable = true;
       # Enhanced command-line completion
-      # noice = {
-      #   enable = true;
-      #   settings = {
-      #     presets = {
-      #       lsp_doc_border = true;
-      #     };
-      #   };
-      # };
-      wilder.enable = true;
+      noice = {
+        enable = true;
+        settings = {
+          presets = {
+            lsp_doc_border = true;
+          };
+          routes = [{
+            view = "notify";
+            filter = {
+              event = "msg_showmode";
+              find = "recording";
+            };
+          }];
+        };
+      };
+      wilder.enable = false;
       # Powerful fuzzy finder and picker
       telescope.enable = true;
       # Improve the look of vim's native UI elements
@@ -159,7 +147,10 @@ in
           };
           # TypeScript language server
           ts_ls.enable = true;
+          jsonls.enable = true;
           tinymist.enable = true;
+          dockerls.enable = true;
+          docker_compose_language_service.enable = true;
         };
       };
       # Add icons to completion menu

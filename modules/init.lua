@@ -18,6 +18,20 @@ local function tmap(shortcut, command)
   map('t', shortcut, command)
 end
 
+-- Define the function as global
+function hover_and_diagnostics()
+  -- Check for diagnostics at the current cursor position
+  local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
+
+  if #diagnostics > 0 then
+    -- Show diagnostics if any exist
+    vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
+  else
+    -- Otherwise, show hover information
+    vim.lsp.buf.hover()
+  end
+end
+
 vim.opt.updatetime = 100
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
@@ -96,7 +110,8 @@ nmap("<leader>c", ":Bdelete<cr>")
 vmap(">", ">gv")
 vmap("<", "<gv")
 tmap("<Esc>", "<C-\\><C-n>")
-
+-- Map 'K' to hover_and_diagnostics
+-- vim.api.nvim_set_keymap('n', 'K', ':lua hover_and_diagnostics()<CR>', { noremap = true, silent = true })
 
 require("neo-tree").setup({
   close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
@@ -121,22 +136,6 @@ require("neo-tree").setup({
   }
 })
 
-local wilder = require('wilder')
-wilder.setup({
-  modes = { ':', '/', '?' },
-})
-wilder.set_option('renderer', wilder.popupmenu_renderer(
-  wilder.popupmenu_border_theme({
-    highlighter = wilder.basic_highlighter(),
-    highlights = {
-      accent = wilder.make_hl('WilderAccent', 'Pmenu', { { a = 1 }, { a = 1 }, { foreground = '#f4468f' } }),
-    },
-    border = 'rounded',
-    left = { ' ', wilder.popupmenu_devicons() },
-    right = { ' ', wilder.popupmenu_scrollbar() },
-  })
-))
-
 require('dashboard').setup({
   config = {
     week_header = {
@@ -146,28 +145,16 @@ require('dashboard').setup({
 })
 
 require('lspconfig').hls.setup {
-  cmd = (vim.fn.executable('haskell-language-server-wrapper') == 1 and { 'haskell-language-server-wrapper', '--lsp' })
+  cmd =
+      (vim.fn.executable('haskell-language-server-wrapper') == 1 and { 'haskell-language-server-wrapper', '--lsp' })
       or (vim.fn.executable('haskell-language-server') == 1 and { 'haskell-language-server', '--lsp' })
       or nil,
 }
 
--- require("noice").setup({
---   routes = {
---     {
---       view = "notify",
---       filter = { event = "msg_showmode" },
---     },
---   },
--- })
-
--- require("lualine").setup({
---   sections = {
---     lualine_x = {
---       {
---         require("noice").api.statusline.mode.get,
---         cond = require("noice").api.statusline.mode.has,
---         color = { fg = "#ff9e64" },
---       }
---     },
---   },
--- })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})

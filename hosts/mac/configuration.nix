@@ -44,6 +44,11 @@
       upgrade = true;
       cleanup = "zap";
     };
+    brews = [
+    ];
+    casks = [
+      "docker"
+    ];
   };
 
   # Global system settings

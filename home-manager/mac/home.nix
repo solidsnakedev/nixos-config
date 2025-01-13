@@ -41,6 +41,7 @@
       convco
       gh
       eza
+      lazygit
     ];
 
   programs.alacritty = {
@@ -109,6 +110,15 @@
       # eval "$(/opt/homebrew/bin/brew shellenv)"
       tmux source-file ~/.config/tmux/tmux.conf
     '';
+    # plugins = [{
+    #   name = "foreign-env";
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "oh-my-fish";
+    #     repo = "plugin-foreign-env";
+    #     rev = "7f0cf099ae1e1e4ab38f46350ed6757d54471de7";
+    #     sha256 = "sha256-4+k5rSoxkTtYFh/lEjhRkVYa2S4KEzJ/IJbyJl+rJjQ=";
+    #   };
+    # }];
   };
 
   xdg.configFile.yabai = {
