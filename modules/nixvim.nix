@@ -17,11 +17,15 @@ in
     # Create aliases for Vi and Vim commands
     viAlias = true;
     vimAlias = true;
-    diagnostics = {
-      virtual_text = false;
-      float = { border = "rounded"; };
-    };
-
+    diagnostic.settings =
+      {
+        virtual_text = {
+          enable = true;
+        };
+        float = {
+          border = "rounded";
+        };
+      };
     # Color Scheme
     # Use Catppuccin color scheme
     colorschemes.catppuccin = {
@@ -103,9 +107,10 @@ in
       # Improved buffer deletion
       bufdelete.enable = true;
       notify = {
+        settings.top_down = true;
         enable = true;
-        topDown = false;
       };
+      neoscroll.enable = true;
       # Improved text wrapping
       wrapping.enable = true;
       # Automatically saves and restores session state
@@ -121,7 +126,7 @@ in
             enable = true;
             cmd = [ "aiken" "lsp" ];
             filetypes = [ "aiken" ];
-            rootDir = "require('lspconfig.util').root_pattern('aiken.toml')";
+            rootMarkers = [ "aiken.toml" ];
           };
           # Nix language server with nixpkgs-fmt for formatting
           nil_ls = {

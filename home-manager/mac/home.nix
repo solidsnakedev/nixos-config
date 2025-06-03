@@ -46,12 +46,8 @@
 
   programs.alacritty = {
     enable = true;
+    theme = "catppuccin_mocha";
     settings = {
-      general = {
-        import = [
-          "${pkgs.alacritty-theme}/catppuccin_mocha.toml"
-        ];
-      };
       env = {
         TERM = "xterm-256color";
       };
@@ -101,7 +97,7 @@
     shellAliases = {
       l = "eza -lh --git --octal-permissions";
       ll = "eza -la --git --octal-permissions";
-      darwin-switch = "darwin-rebuild switch --flake ~/nixos-config";
+      darwin-switch = "sudo darwin-rebuild switch --flake ~/nixos-config";
       home-switch = "home-manager switch --flake ~/nixos-config";
     };
     interactiveShellInit = ''

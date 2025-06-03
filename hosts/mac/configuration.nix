@@ -13,16 +13,20 @@
   programs.fish.enable = true;
 
   # Enable TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   services = {
     yabai.enable = true;
     skhd.enable = true;
+    tailscale.enable = true;
   };
 
   fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono
   ];
+
+  # Set primary user
+  system.primaryUser = "jonathan";
 
   system.defaults = {
     dock =
@@ -35,6 +39,10 @@
           "/System/Applications/Launchpad.app"
         ];
       };
+    finder = {
+      AppleShowAllExtensions = true;
+      AppleShowAllFiles = true;
+    };
   };
 
   homebrew = {
@@ -48,6 +56,8 @@
     ];
     casks = [
       "docker"
+      "tailscale"
+      "postman"
     ];
   };
 
