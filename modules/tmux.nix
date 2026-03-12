@@ -6,7 +6,7 @@
     mouse = true;
     keyMode = "vi";
     baseIndex = 1;
-    shell = "${pkgs.fish}/bin/fish";
+    shell = "${pkgs.zsh}/bin/zsh";
     # customPaneNavigationAndResize = true;
     plugins = with pkgs.tmuxPlugins ; [
       # {

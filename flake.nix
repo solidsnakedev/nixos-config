@@ -43,8 +43,12 @@
       };
 
       "jonathan" = home-manager.lib.homeManagerConfiguration {
-        modules = [ ./home-manager/mac/home.nix nixvim.homeManagerModules.nixvim ];
-        pkgs = nixpkgs.legacyPackages.aarch64-darwin; # Home-manager requires 'pkgs' instance
+        modules = [ ./home-manager/mac/home.nix nixvim.homeModules.nixvim ];
+        # pkgs = nixpkgs.legacyPackages.aarch64-darwin; # Home-manager requires 'pkgs' instance
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+        };
         extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
       };
     };

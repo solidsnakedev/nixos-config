@@ -10,14 +10,13 @@
   nix.settings.experimental-features = "nix-command flakes";
 
   # Enable alternative shell support in nix-darwin.
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
 
   # Enable TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
   services = {
-    yabai.enable = true;
-    skhd.enable = true;
+    skhd.enable = false;
     tailscale.enable = true;
   };
 
@@ -53,11 +52,17 @@
       cleanup = "zap";
     };
     brews = [
+      "borders"
+    ];
+    taps = [
+      "nikitabobko/tap"
+      "FelixKratz/formulae"
     ];
     casks = [
       "docker"
       "tailscale"
       "postman"
+      "aerospace"
     ];
   };
 

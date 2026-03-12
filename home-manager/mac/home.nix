@@ -42,6 +42,8 @@
       gh
       eza
       lazygit
+      typst
+      claude-code
     ];
 
   programs.alacritty = {
@@ -51,7 +53,7 @@
       env = {
         TERM = "xterm-256color";
       };
-      terminal.shell = "${pkgs.fish}/bin/fish";
+      terminal.shell = "${pkgs.zsh}/bin/zsh";
       font = {
         size = 14;
         normal.family = "JetBrainsMono Nerd Font";
@@ -77,7 +79,7 @@
 
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;
+    enableZshIntegration = true;
     settings = {
       command_timeout = 1000;
       character = {
@@ -89,46 +91,29 @@
 
   programs.zoxide = {
     enable = true;
-    enableFishIntegration = true;
+    enableZshIntegration = true;
   };
 
-  programs.fish = {
+  programs.zsh = {
     enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
     shellAliases = {
       l = "eza -lh --git --octal-permissions";
       ll = "eza -la --git --octal-permissions";
       darwin-switch = "sudo darwin-rebuild switch --flake ~/nixos-config";
       home-switch = "home-manager switch --flake ~/nixos-config";
     };
-    interactiveShellInit = ''
+    initContent = ''
       neofetch --disable packages
-      # export PATH="$PATH:/Users/jonathan/.aiken/bin"
-      # eval "$(/opt/homebrew/bin/brew shellenv)"
       tmux source-file ~/.config/tmux/tmux.conf
     '';
-    # plugins = [{
-    #   name = "foreign-env";
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "oh-my-fish";
-    #     repo = "plugin-foreign-env";
-    #     rev = "7f0cf099ae1e1e4ab38f46350ed6757d54471de7";
-    #     sha256 = "sha256-4+k5rSoxkTtYFh/lEjhRkVYa2S4KEzJ/IJbyJl+rJjQ=";
-    #   };
-    # }];
   };
 
-  xdg.configFile.yabai = {
-    source = ../../config/yabai;
-    recursive = true;
-  };
-
-  xdg.configFile.skhd = {
-    source = ../../config/skhd;
-    recursive = true;
-  };
-
-  xdg.configFile.wezterm = {
-    source = ../../config/wezterm;
+  xdg.configFile.aerospace = {
+    source = ../../config/aerospace;
     recursive = true;
   };
 

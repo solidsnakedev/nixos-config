@@ -144,13 +144,6 @@ require('dashboard').setup({
   },
 })
 
-require('lspconfig').hls.setup {
-  cmd =
-      (vim.fn.executable('haskell-language-server-wrapper') == 1 and { 'haskell-language-server-wrapper', '--lsp' })
-      or (vim.fn.executable('haskell-language-server') == 1 and { 'haskell-language-server', '--lsp' })
-      or nil,
-}
-
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
