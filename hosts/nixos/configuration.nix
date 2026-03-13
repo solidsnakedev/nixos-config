@@ -76,7 +76,7 @@
   users.users.homeserver = {
     isNormalUser = true;
     description = "home-server";
-    extraGroups = [ "networkmanager" "wheel" "docker" "lxd" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
       #  thunderbird
@@ -149,10 +149,6 @@
 
   # Docker
   virtualisation.docker = {
-    enable = true;
-  };
-  # LXD
-  virtualisation.lxd = {
     enable = true;
   };
 
