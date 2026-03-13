@@ -54,7 +54,7 @@
     ./../../modules/git.nix
     ./../../modules/tmux.nix
     ./../../modules/bat.nix
-    ./../../modules/neovim.nix
+    ./../../modules/nixvim.nix
   ];
 
 }
