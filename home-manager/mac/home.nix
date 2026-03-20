@@ -67,12 +67,15 @@
         save_to_clipboard = true;
       };
       keyboard.bindings = [
-        # Delete entire line
-        { key = "Back"; mods = "Command"; chars = "\\u0015"; }
+        # Delete to beginning of line
+        { key = "Backspace"; mods = "Command"; chars = "\\u0015"; }
         # Move to end of line
         { key = "Right"; mods = "Command"; chars = "\\u0005"; }
         # Move to start of line
         { key = "Left"; mods = "Command"; chars = "\\u0001"; }
+        # Move word forward/backward (zsh emacs: \ef / \eb)
+        { key = "Right"; mods = "Option"; chars = "\\u001bf"; }
+        { key = "Left"; mods = "Option"; chars = "\\u001bb"; }
       ];
     };
   };
@@ -107,6 +110,8 @@
       home-switch = "home-manager switch --flake ~/nixos-config";
     };
     initContent = ''
+      bindkey "^U" backward-kill-line  # Cmd+Backspace: delete from cursor to beginning (not whole line)
+
       neofetch --disable packages
       tmux source-file ~/.config/tmux/tmux.conf
     '';
