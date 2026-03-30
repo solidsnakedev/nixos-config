@@ -1,36 +1,3 @@
-local function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
-end
-
-local function nmap(shortcut, command)
-  map('n', shortcut, command)
-end
-
-local function imap(shortcut, command)
-  map('i', shortcut, command)
-end
-
-local function vmap(shortcut, command)
-  map('v', shortcut, command)
-end
-
-local function tmap(shortcut, command)
-  map('t', shortcut, command)
-end
-
--- Define the function as global
-function hover_and_diagnostics()
-  -- Check for diagnostics at the current cursor position
-  local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
-
-  if #diagnostics > 0 then
-    -- Show diagnostics if any exist
-    vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
-  else
-    -- Otherwise, show hover information
-    vim.lsp.buf.hover()
-  end
-end
 
 vim.opt.updatetime = 100
 -- disable netrw at the very start of your init.lua (strongly advised)
@@ -81,37 +48,91 @@ vim.opt.signcolumn = "yes"
 
 
 -- Key mappings
-imap('jk', '<Esc>') -- Escape using jk
-imap('kj', '<Esc>') -- Escape using kj
--- Shift + Up/Down to move line up/down
-map('n', '<S-Up>', 'yyddkP')
-map('n', '<S-Down>', 'yyddp')
-nmap('<Leader>h', ':nohl<cr>') -- Toggle highlight search
+local km = vim.keymap.set
+local s = { noremap = true, silent = true }
 
--- Show all diagnostics on current line in floating window
-nmap("<Leader>d", ":lua vim.diagnostic.open_float()<cr>")
-nmap("<leader>n", ":Neotree toggle reveal<cr>")
-nmap("<leader>gg", ":LazyGit<cr>")
-nmap("<leader>ff", ":Telescope find_files<cr>")
-nmap("<leader>fg", ":Telescope live_grep<cr>")
-nmap("<leader>fb", ":Telescope buffers<cr>")
-nmap("<leader>fh", ":Telescope help_tags<cr>")
-nmap("gd", ":Telescope lsp_definitions<cr>")
-nmap("gr", ":Telescope lsp_reference<cr>")
-nmap("gi", ":Telescope lsp_implementations<cr>")
-nmap("<leader>ac", "<cmd>lua vim.lsp.buf.code_action()<cr>")
-nmap("gp", "<cmd>lua vim.diagnostic.open_float()<cr>")
-nmap("gk", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
-nmap("gj", "<cmd>lua vim.diagnostic.goto_next()<cr>")
-nmap("s", ":HopChar1<cr>")
-nmap("<S-L>", ":BufferLineCycleNext<cr>")
-nmap("<S-H>", ":BufferLineCyclePrev<cr>")
-nmap("<leader>c", ":Bdelete<cr>")
-vmap(">", ">gv")
-vmap("<", "<gv")
-tmap("<Esc>", "<C-\\><C-n>")
--- Map 'K' to hover_and_diagnostics
--- vim.api.nvim_set_keymap('n', 'K', ':lua hover_and_diagnostics()<CR>', { noremap = true, silent = true })
+-- Insert mode escapes
+km('i', 'jk', '<Esc>', s)
+km('i', 'kj', '<Esc>', s)
+
+-- Move lines up/down
+km('n', '<S-Up>',   'yyddkP', { desc = 'Move line up' })
+km('n', '<S-Down>', 'yyddp',  { desc = 'Move line down' })
+
+-- Search
+km('n', '<Leader>h', ':nohl<cr>', { desc = 'Clear highlight' })
+
+-- Diagnostics
+km('n', '<Leader>d', ':lua vim.diagnostic.open_float()<cr>', { desc = 'Show diagnostics' })
+km('n', 'gp', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = 'Diagnostics float' })
+km('n', 'gk', '<cmd>lua vim.diagnostic.goto_prev()<cr>',  { desc = 'Prev diagnostic' })
+km('n', 'gj', '<cmd>lua vim.diagnostic.goto_next()<cr>',  { desc = 'Next diagnostic' })
+
+-- File tree
+km('n', '<leader>n', ':Neotree toggle reveal<cr>', { desc = 'Toggle file tree' })
+
+-- Git
+km('n', '<leader>gg', ':LazyGit<cr>', { desc = 'LazyGit' })
+
+-- Find (Telescope)
+km('n', '<leader>ff', ':Telescope find_files<cr>', { desc = 'Files' })
+km('n', '<leader>fg', ':Telescope live_grep<cr>',  { desc = 'Grep' })
+km('n', '<leader>fb', ':Telescope buffers<cr>',    { desc = 'Buffers' })
+km('n', '<leader>fh', ':Telescope help_tags<cr>',  { desc = 'Help tags' })
+
+-- LSP
+km('n', 'gd', ':Telescope lsp_definitions<cr>',     { desc = 'Go to definition' })
+km('n', 'gr', ':Telescope lsp_reference<cr>',       { desc = 'References' })
+km('n', 'gi', ':Telescope lsp_implementations<cr>', { desc = 'Implementations' })
+km('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
+
+-- Navigation
+km('n', 's',    ':HopChar1<cr>',            { desc = 'Hop to char' })
+km('n', '<S-L>', ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
+km('n', '<S-H>', ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
+
+-- Buffer
+km('n', '<leader>c', ':Bdelete<cr>', { desc = 'Close buffer' })
+
+-- AI (CodeCompanion)
+km('n', '<leader>at', ':CodeCompanionChat Toggle<cr>',  { desc = 'Toggle AI chat' })
+km('n', '<leader>ai', ':CodeCompanion<cr>',             { desc = 'AI inline prompt' })
+km('v', '<leader>as', ':CodeCompanionChat Add<cr>',     { desc = 'Send selection to AI' })
+
+-- Visual indent
+km('v', '>', '>gv', s)
+km('v', '<', '<gv', s)
+
+-- Terminal
+km('t', '<Esc>', '<C-\\><C-n>', s)
+
+-- which-key group labels
+local wk = require('which-key')
+wk.add({
+  { '<leader>f', group = 'Find' },
+  { '<leader>g', group = 'Git' },
+  { '<leader>a', group = 'AI / Actions' },
+  { 'g',         group = 'Go to' },
+  { '<C-w>',     group = 'Windows' },
+  { ']',         group = 'Next' },
+  { '[',         group = 'Prev' },
+  { 'z',         group = 'Fold / View' },
+  -- Tmux navigator
+  { '<C-h>', desc = 'Window left (tmux)' },
+  { '<C-j>', desc = 'Window down (tmux)' },
+  { '<C-k>', desc = 'Window up (tmux)' },
+  { '<C-l>', desc = 'Window right (tmux)' },
+  { '<C-\\>', desc = 'Window prev (tmux)' },
+  -- LSP
+  { 'K', desc = 'Hover docs' },
+  -- Scrolling
+  { '<C-d>', desc = 'Scroll down half page' },
+  { '<C-u>', desc = 'Scroll up half page' },
+  { '<C-f>', desc = 'Scroll down full page' },
+  { '<C-b>', desc = 'Scroll up full page' },
+  { '<C-e>', desc = 'Scroll down line' },
+  { '<C-y>', desc = 'Scroll up line' },
+})
 
 require("neo-tree").setup({
   close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab

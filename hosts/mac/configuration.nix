@@ -59,10 +59,14 @@
       "FelixKratz/formulae"
     ];
     casks = [
-      "docker"
-      "tailscale"
+      "docker-desktop"
+      "tailscale-app"
       "postman"
       "aerospace"
+      "whatsapp"
+      "telegram"
+      "bitwarden"
+      "logi-options+"
     ];
   };
 

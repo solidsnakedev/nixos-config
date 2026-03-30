@@ -87,7 +87,6 @@ in
           }];
         };
       };
-      wilder.enable = false;
       # Powerful fuzzy finder and picker
       telescope.enable = true;
       # Improve the look of vim's native UI elements
@@ -160,8 +159,6 @@ in
       };
       # Add icons to completion menu
       lspkind.enable = true;
-      # Automatic code formatting
-      lsp-format.enable = true;
 
       # Code Formatting with conform-nvim
       conform-nvim = {
@@ -209,7 +206,6 @@ in
             { name = "luasnip"; }
             { name = "path"; }
             { name = "buffer"; }
-            { name = "friendly_snippets"; }
           ];
           # Completion key mappings
           mapping = {
@@ -229,14 +225,45 @@ in
         };
       };
 
+      # GitHub Copilot inline completions (ghost text)
+      copilot-lua = {
+        enable = true;
+        settings = {
+          suggestion = {
+            enabled = true;
+            auto_trigger = true;
+            keymap = {
+              accept = "<M-l>";
+              accept_word = "<M-w>";
+              next = "<M-]>";
+              prev = "<M-[>";
+              dismiss = "<C-]>";
+            };
+          };
+          panel.enabled = false;
+        };
+      };
+
+      # AI chat and inline edits with diff accept/deny
+      codecompanion = {
+        enable = true;
+        settings = {
+          strategies = {
+            chat.adapter = "copilot";
+            inline.adapter = "copilot";
+            agent.adapter = "copilot";
+          };
+        };
+      };
+
       # Snippets
       # Snippet engine with auto-snippet support
       luasnip = {
         enable = true;
         settings = {
-          # Enable automatic snippet expansion
           enable_autosnippets = true;
         };
+        fromVscode = [ { } ];
       };
       # Pre-configured Snippet Collection
       friendly-snippets.enable = true;
