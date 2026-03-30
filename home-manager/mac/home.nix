@@ -29,7 +29,7 @@
       nixpkgs-lint
       nixpkgs-fmt
       nil
-      neofetch
+      fastfetch
       onefetch
       docker-compose
       pciutils
@@ -112,7 +112,7 @@
     initContent = ''
       bindkey "^U" backward-kill-line  # Cmd+Backspace: delete from cursor to beginning (not whole line)
 
-      neofetch --disable packages
+      fastfetch
       tmux source-file ~/.config/tmux/tmux.conf
     '';
   };

@@ -30,7 +30,7 @@
       nixpkgs-lint
       nixpkgs-fmt
       nil
-      neofetch
+      fastfetch
       onefetch
       docker-compose
       pciutils

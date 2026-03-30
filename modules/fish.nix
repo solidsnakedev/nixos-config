@@ -3,7 +3,7 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      neofetch
+      fastfetch
     '';
     shellAliases = {
       l = "ls -la";
