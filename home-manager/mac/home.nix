@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 
 {
@@ -44,6 +44,7 @@
       lazygit
       typst
       claude-code
+      inputs.hermes-agent.packages.aarch64-darwin.default
     ];
 
   programs.alacritty = {
@@ -113,7 +114,6 @@
       bindkey "^U" backward-kill-line  # Cmd+Backspace: delete from cursor to beginning (not whole line)
 
       fastfetch
-      tmux source-file ~/.config/tmux/tmux.conf
     '';
   };
 

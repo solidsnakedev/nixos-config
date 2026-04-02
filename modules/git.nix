@@ -10,6 +10,11 @@
       core = {
         editor = "nvim";
       };
+      url = {
+        "git@github.com:" = {
+          insteadOf = "https://github.com/";
+        };
+      };
     };
   };
 }

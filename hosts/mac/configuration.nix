@@ -59,6 +59,7 @@
       "FelixKratz/formulae"
     ];
     casks = [
+      "claude"
       "docker-desktop"
       "tailscale-app"
       "postman"
