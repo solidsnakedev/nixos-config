@@ -1,5 +1,35 @@
 { pkgs, ... }:
 let
+  quint-language-server =
+    let
+      tarball = pkgs.fetchurl {
+        url = "https://registry.npmjs.org/@informalsystems/quint-language-server/-/quint-language-server-0.19.0.tgz";
+        hash = "sha256-gNoz7Pu+/TO/Vp86IB8tfZ9vHN78L7eRllITNtsnGFY=";
+      };
+      lockfile = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/informalsystems/quint/v0.32.0/vscode/quint-vscode/server/package-lock.json";
+        hash = "sha256-2Do+6Ww2SMN9JaH7Nf7yHATY7NJUJga6giTH6XgwQEE=";
+      };
+    in
+    pkgs.buildNpmPackage {
+      pname = "quint-language-server";
+      version = "0.19.0";
+      src = pkgs.runCommand "quint-language-server-src" { } ''
+        mkdir -p $out
+        tar -xzf ${tarball} -C $out --strip-components=1
+        cp ${lockfile} $out/package-lock.json
+      '';
+      npmDepsHash = "sha256-BT5KN9E5aRUIJQR0zGlT00tDmRpS2oFF/yOdQOPIGgQ=";
+      dontNpmBuild = true;
+      installPhase = ''
+        mkdir -p $out/bin $out/lib/quint-language-server
+        cp -r out package.json node_modules $out/lib/quint-language-server/
+        makeWrapper ${pkgs.nodejs}/bin/node $out/bin/quint-language-server \
+          --add-flags "$out/lib/quint-language-server/out/src/server.js" \
+          --add-flags "--stdio"
+      '';
+    };
+
   aiken-vim = pkgs.vimUtils.buildVimPlugin {
     pname = "aiken";
     version = "2024";
@@ -54,6 +84,9 @@ in
       # Improved syntax highlighting and parsing
       treesitter = {
         enable = true;
+        grammarPackages =
+          pkgs.vimPlugins.nvim-treesitter.allGrammars
+          ++ [ pkgs.tree-sitter-grammars.tree-sitter-quint ];
         settings = {
           highlight.enable = true;
           indent.enable = true;
@@ -268,8 +301,27 @@ in
       # Pre-configured Snippet Collection
       friendly-snippets.enable = true;
     };
+    filetype.extension.qnt = "quint";
+
     # Load additional Lua configuration from init.lua
-    extraConfigLua = builtins.readFile ./init.lua;
+    extraConfigLua = builtins.readFile ./init.lua + ''
+
+      -- Quint language server (custom lspconfig registration)
+      do
+        local configs = require('lspconfig.configs')
+        local lspconfig = require('lspconfig')
+        if not configs.quint_language_server then
+          configs.quint_language_server = {
+            default_config = {
+              cmd = { '${quint-language-server}/bin/quint-language-server', '--stdio' },
+              filetypes = { 'quint' },
+              root_dir = lspconfig.util.root_pattern('quint.json', '.git'),
+            },
+          }
+        end
+        lspconfig.quint_language_server.setup({})
+      end
+    '';
     # Add extra plugins (in this case, aiken-vim)
     extraPlugins = [
       aiken-vim
