@@ -13,9 +13,8 @@ vim.g.mapleader = " "
 -- Disable compatibility with vi which can cause unexpected issues.
 vim.opt.compatible = false
 
--- Enable type file detection, plugins, indent, and syntax highlighting
+-- Enable type file detection, plugins, and indent (syntax handled by treesitter)
 vim.cmd('filetype plugin indent on')
-vim.cmd('syntax on')
 
 -- Editor appearance and behavior settings
 vim.opt.number = true             -- Add numbers to each line
@@ -30,7 +29,7 @@ vim.opt.incsearch = true          -- Highlight matches as you type
 vim.opt.ignorecase = true         -- Ignore case in searches
 vim.opt.smartcase = true          -- Override ignorecase if uppercase is used
 vim.opt.showcmd = true            -- Show command in the last line
-vim.opt.showmode = true           -- Show mode in the last line
+vim.opt.showmode = false          -- Disabled: noice shows mode in its own UI
 vim.opt.showmatch = true          -- Show matching words during a search
 vim.opt.hlsearch = true           -- Highlight search results
 vim.opt.history = 1000            -- Set history size
@@ -163,6 +162,18 @@ require('dashboard').setup({
       enable = true,
     },
   },
+})
+
+-- Auto-reload files changed outside of Neovim
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
+  desc = 'Check if file has changed on disk',
+  group = vim.api.nvim_create_augroup('auto-reload', { clear = true }),
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd('checktime')
+    end
+  end,
 })
 
 vim.api.nvim_create_autocmd('TextYankPost', {

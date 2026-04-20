@@ -93,8 +93,31 @@ in
           incremental_selection.enable = true;
         };
       };
+      # Show current function/class context header while scrolling
+      treesitter-context = {
+        enable = true;
+        settings = {
+          max_lines = 3;
+        };
+      };
       # Git integration using lazygit
       lazygit.enable = true;
+      # Side-by-side diff viewer for git changes and PR review
+      diffview.enable = true;
+      # Git gutter signs, hunk navigation, and inline blame
+      gitsigns = {
+        enable = true;
+        settings = {
+          signs = {
+            add.text = "▎";
+            change.text = "▎";
+            delete.text = "";
+            topdelete.text = "";
+            changedelete.text = "▎";
+          };
+          current_line_blame = false;
+        };
+      };
       # Adds a buffer line with tab-like interface
       bufferline.enable = true;
       barbecue.enable = true;
