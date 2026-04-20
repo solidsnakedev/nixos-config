@@ -16,6 +16,9 @@
   # changes in each release.
   home.stateVersion = "23.05";
 
+  # ~/.local/bin for uv-installed tools (marker-pdf, etc.)
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -40,11 +43,47 @@
       commitizen
       convco
       gh
+      github-copilot-cli
       eza
       lazygit
       typst
       claude-code
       inputs.hermes-agent.packages.aarch64-darwin.default
+      inputs.opencode.packages.aarch64-darwin.default
+
+       # Python tool runner (for imperatively-installed ML CLIs like marker-pdf, mineru)
+       uv
+
+       # URL / content extraction toolkit
+       yt-dlp                       # video/audio downloader (1000+ sites)
+      ffmpeg                       # required by yt-dlp for audio/merge
+      pandoc                       # universal doc converter
+      whisper-cpp                  # local audio transcription
+      gitingest                    # github repo -> LLM-friendly text
+      python313Packages.trafilatura  # article/HTML extraction CLI
+      python3Packages.twscrape       # twitter/X scraping CLI
+      (pkgs.callPackage ../../pkgs/readability-cli { })
+      (pkgs.callPackage ../../pkgs/crawl4ai { })
+      # pdf2md: tiny CLI wrapper around pymupdf4llm (PDF -> markdown, no ML)
+      (pkgs.writers.writePython3Bin "pdf2md" {
+        libraries = [ pkgs.python3Packages.pymupdf4llm ];
+        flakeIgnore = [ "E501" "W503" ];
+      } ''
+        import sys
+        import pymupdf4llm
+
+        if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
+            print("usage: pdf2md <file.pdf> [output.md]")
+            print("  Converts PDF to markdown. Writes to stdout if output not given.")
+            sys.exit(0 if len(sys.argv) >= 2 else 1)
+
+        md = pymupdf4llm.to_markdown(sys.argv[1])
+        if len(sys.argv) >= 3:
+            with open(sys.argv[2], "w") as f:
+                f.write(md)
+        else:
+            sys.stdout.write(md)
+      '')
     ];
 
   programs.alacritty = {
@@ -89,6 +128,9 @@
       character = {
         success_symbol = "[𝝺](bold green)";
         error_symbol = "[𝝺](bold red)";
+      };
+      python = {
+        disabled = true;
       };
     };
   };
