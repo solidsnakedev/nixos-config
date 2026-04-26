@@ -40,7 +40,11 @@
       eza
       lazygit
       claude-code
+      magic-wormhole-rs
+      bore-cli
+      uv
       inputs.opencode.packages.x86_64-linux.default
+      (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
     ];
 
   programs.fzf = {

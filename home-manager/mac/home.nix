@@ -50,6 +50,7 @@
       claude-code
       inputs.hermes-agent.packages.aarch64-darwin.default
       inputs.opencode.packages.aarch64-darwin.default
+      (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
 
        # Python tool runner (for imperatively-installed ML CLIs like marker-pdf, mineru)
        uv
