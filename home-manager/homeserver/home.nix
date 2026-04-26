@@ -43,7 +43,7 @@
       magic-wormhole-rs
       bore-cli
       uv
-      inputs.opencode.packages.x86_64-linux.default
+      # inputs.opencode.packages.x86_64-linux.default  # disabled: upstream lockfile broken
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
     ];
 
