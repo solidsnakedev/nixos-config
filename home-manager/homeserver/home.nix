@@ -37,20 +37,48 @@
       bottom
       gnumake
       gh
+      eza
+      lazygit
+      claude-code
       inputs.opencode.packages.x86_64-linux.default
     ];
 
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;
-    enableZshIntegration = false;
+    enableZshIntegration = true;
     settings = {
       command_timeout = 1000;
     };
   };
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
+    shellAliases = {
+      l = "eza -lh --git --octal-permissions";
+      ll = "eza -la --git --octal-permissions";
+      nixos-switch = "sudo nixos-rebuild switch --flake ~/nixos-config";
+      home-switch = "home-manager switch --flake ~/nixos-config";
+    };
+    initContent = ''
+      fastfetch
+    '';
+  };
+
   imports = [
-    ./../../modules/fish.nix
     ./../../modules/direnv.nix
     ./../../modules/git.nix
     ./../../modules/tmux.nix
