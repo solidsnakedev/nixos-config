@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 
 {
@@ -37,6 +37,7 @@
       bottom
       gnumake
       gh
+      inputs.opencode.packages.x86_64-linux.default
     ];
 
   programs.starship = {
