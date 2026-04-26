@@ -43,7 +43,20 @@
       magic-wormhole-rs
       bore-cli
       uv
-      inputs.opencode.packages.x86_64-linux.default
+      (pkgs.stdenv.mkDerivation {
+        pname = "opencode";
+        version = "1.14.26";
+        src = pkgs.fetchurl {
+          url = "https://github.com/anomalyco/opencode/releases/download/v1.14.26/opencode-linux-x64.tar.gz";
+          hash = "sha256-ef7aebe6990540a8dd13f28a2eae476eeaefa6bad950fa5f23b733ef29fcb5d5";
+        };
+        sourceRoot = ".";
+        installPhase = ''
+          mkdir -p $out/bin
+          cp opencode $out/bin/
+          chmod +x $out/bin/opencode
+        '';
+      })
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
     ];
 
