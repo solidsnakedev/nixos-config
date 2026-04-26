@@ -43,7 +43,7 @@
       magic-wormhole-rs
       bore-cli
       uv
-      (writeShellScriptBin "opencode" ''exec npx opencode "$@"'')
+      inputs.opencode.packages.x86_64-linux.default
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
     ];
 
