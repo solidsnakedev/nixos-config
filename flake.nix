@@ -41,7 +41,10 @@
     homeConfigurations = {
       "homeserver@nixos" = home-manager.lib.homeManagerConfiguration {
         modules = [ ./home-manager/homeserver/home.nix nixvim.homeModules.nixvim ];
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
         extraSpecialArgs = { inherit inputs; };
       };
 
