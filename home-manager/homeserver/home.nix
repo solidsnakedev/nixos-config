@@ -19,6 +19,8 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
   home.packages =
     with pkgs; [
       wget
