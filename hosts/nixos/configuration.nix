@@ -81,7 +81,7 @@
       firefox
       #  thunderbird
     ];
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages
@@ -102,7 +102,7 @@
     grc
   ];
 
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -121,7 +121,10 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
