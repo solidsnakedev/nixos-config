@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/anomalyco/opencode/releases/download/v${version}/opencode-linux-x64.tar.gz";
-    hash = lib.fakeHash;
+    hash = "sha256-73rr5pkFQKjdE/KKLq5HburvprrZUPpfI7cz7yn8tdU=";
   };
 
   sourceRoot = ".";
