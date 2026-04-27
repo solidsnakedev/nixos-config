@@ -45,6 +45,7 @@
       magic-wormhole-rs
       bore-cli
       uv
+      (pkgs.callPackage ../../pkgs/opencode { })
 
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
     ];
