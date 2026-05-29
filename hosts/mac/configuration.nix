@@ -53,6 +53,7 @@
     };
     brews = [
       "borders"
+      "opencode"
     ];
     taps = [
       "nikitabobko/tap"

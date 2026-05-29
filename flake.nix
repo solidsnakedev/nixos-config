@@ -11,10 +11,11 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    hermes-agent.url = "github:solidsnakedev/hermes-agent";
-    opencode.url = "github:anomalyco/opencode";
-    opencode.inputs.nixpkgs.follows = "nixpkgs";
 
+    # herdr — agent multiplexer. Downstream fork carrying the nix flake on
+    # top of upstream. The fork's flake handles the ghostty/libghostty-vt
+    # pinning internally; this config just consumes the package.
+    herdr.url = "github:solidsnakedev/herdr/add-nix";
   };
 
   outputs = inputs@{ nixpkgs, nix-darwin, home-manager, vscode-server, nixvim, ... }: {
