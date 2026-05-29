@@ -47,7 +47,6 @@
       eza
       lazygit
       typst
-      claude-code
       inputs.herdr.packages.aarch64-darwin.default
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
 
