@@ -100,9 +100,20 @@
     fzf
     # fishPlugins.grc
     grc
+    kubectl
+    kubernetes-helm
+    k9s
   ];
 
   programs.zsh.enable = true;
+
+  # Stub loader for upstream dynamically-linked binaries (e.g. uv-downloaded
+  # Python interpreters, used by `uv tool install marker-pdf` and similar
+  # ML CLIs that can't be packaged in nixpkgs due to upstream dep
+  # incompatibilities). Provides /lib64/ld-linux-x86-64.so.2 + a generic
+  # glibc-flavored library path so non-Nix binaries can resolve their deps.
+  # See https://nix.dev/permalink/stub-ld
+  programs.nix-ld.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -123,7 +134,8 @@
   # Or disable the firewall altogether.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [ 22 6443 80 443 8642 ];
+    trustedInterfaces = [ "tailscale0" "cni0" "flannel.1" ];
   };
 
   # This value determines the NixOS release from which the default
@@ -159,4 +171,43 @@
   # "sudo tailscale up". If you don't use tailscale, you should comment
   # out or delete all of this.
   services.tailscale.enable = true;
+
+  # K3s
+  services.k3s = {
+    enable = true;
+    role = "server";
+    extraFlags = builtins.toString [
+      "--tls-san=100.119.235.28"
+      "--tls-san=nixos"
+    ];
+  };
+
+  # ── Kata Containers for k3s ────────────────────────────────────────────────
+  # Lets pods request VM-isolated execution via `runtimeClassName: kata-qemu`.
+  # Each Kata pod gets its own Linux kernel via QEMU/KVM (hardware-virtualized
+  # isolation), suitable for multi-tenant workloads.
+
+  boot.kernelModules = [ "vhost_net" "vhost_vsock" ];
+
+  systemd.services.k3s.path = [ pkgs.kata-runtime ];
+
+  systemd.services.k3s.serviceConfig.DeviceAllow = [
+    "/dev/kvm rwm"
+    "/dev/kmsg rwm"
+    "/dev/vhost-vsock rwm"
+    "/dev/vhost-net rwm"
+    "/dev/net/tun rwm"
+  ];
+
+  systemd.tmpfiles.settings."09-k3s"
+    ."/var/lib/rancher/k3s/agent/etc/containerd/config-v3.toml.tmpl"."L+".argument =
+    let template = ''
+      {{ template "base" . }}
+
+      [plugins.'io.containerd.cri.v1.runtime'.containerd.runtimes.'kata-qemu']
+        runtime_type = "io.containerd.kata-qemu.v2"
+        privileged_without_host_devices = true
+        pod_annotations = ["io.katacontainers.*"]
+        container_annotations = ["io.katacontainers.*"]
+    ''; in "${pkgs.writeText "config-v3.toml.tmpl" template}";
 }
