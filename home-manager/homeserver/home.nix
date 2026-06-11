@@ -41,11 +41,11 @@
       gh
       eza
       lazygit
-      claude-code
+      # claude-code installed via npm (~/.local) for faster updates than nixpkgs
       magic-wormhole-rs
       bore-cli
       uv
-      (pkgs.callPackage ../../pkgs/opencode { })
+      # opencode installed via npm (~/.local) for faster updates than nixpkgs
 
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
     ];
