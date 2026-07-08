@@ -261,3 +261,11 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.apple.TextEdit'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.electron.ollama'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.electron.dockerdesktop'
+run = 'layout floating'
