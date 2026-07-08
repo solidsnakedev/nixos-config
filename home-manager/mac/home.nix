@@ -16,8 +16,11 @@
   # changes in each release.
   home.stateVersion = "23.05";
 
-  # ~/.local/bin for uv-installed tools (marker-pdf, etc.)
-  home.sessionPath = [ "$HOME/.local/bin" "$HOME/nixos-config/scripts" "$HOME/.aiken/bin" "/opt/homebrew/bin" ];
+  # ~/.local/bin for uv-installed tools (marker-pdf, etc.); ~/.dpm/bin for the Daml dpm CLI
+  home.sessionPath = [ "$HOME/.local/bin" "$HOME/nixos-config/scripts" "$HOME/.aiken/bin" "$HOME/.dpm/bin" "/opt/homebrew/bin" ];
+
+  # JDK 17 for Canton/Daml (dpm). openjdk@17 is installed via homebrew (keg-only).
+  home.sessionVariables.JAVA_HOME = "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
