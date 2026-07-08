@@ -54,10 +54,12 @@
     brews = [
       "borders"
       "opencode"
-    ];
-    taps = [
-      "nikitabobko/tap"
-      "FelixKratz/formulae"
+      "openjdk@17" # Canton 3.5 / Daml dpm needs JDK 17 (NOT JDK 20); keg-only
+      # hermes-platform-cli (`box`) toolchain (uv stays standalone; docker via the cask below)
+      "kubectl" # talks to each box's cluster
+      "helm" # box create / box destroy
+      "rsync" # box image load (newer than macOS's built-in rsync)
+      "magic-wormhole" # wormhole send/receive , one-time E2E-encrypted transfers
     ];
     casks = [
       "claude"
@@ -70,6 +72,14 @@
       "bitwarden"
       "logi-options+"
     ];
+    # Third-party taps are declared here (not in the structured `taps` option)
+    # so they can be marked `trusted: true`. Homebrew 6 refuses to load formulae
+    # from untrusted taps (e.g. felixkratz/formulae -> borders), and nix-darwin's
+    # `taps` option can't emit that flag yet. This replaces a manual `brew trust`.
+    extraConfig = ''
+      tap "nikitabobko/tap", trusted: true
+      tap "felixkratz/formulae", trusted: true
+    '';
   };
 
   # Global system settings
