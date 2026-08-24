@@ -98,6 +98,21 @@ km('n', '<leader>at', ':CodeCompanionChat Toggle<cr>',  { desc = 'Toggle AI chat
 km('n', '<leader>ai', ':CodeCompanion<cr>',             { desc = 'AI inline prompt' })
 km('v', '<leader>as', ':CodeCompanionChat Add<cr>',     { desc = 'Send selection to AI' })
 
+-- Claude Code (agent runs in a tmux pane, diffs land here for review)
+km('n', '<leader>kb', '<cmd>ClaudeCodeAdd %<cr>',      { desc = 'Add buffer to Claude context' })
+km('v', '<leader>ks', '<cmd>ClaudeCodeSend<cr>',       { desc = 'Send selection to Claude' })
+km('n', '<leader>ka', '<cmd>ClaudeCodeDiffAccept<cr>', { desc = 'Accept Claude diff' })
+km('n', '<leader>kr', '<cmd>ClaudeCodeDiffDeny<cr>',   { desc = 'Reject Claude diff' })
+km('n', '<leader>kq', '<cmd>ClaudeCodeCloseAllDiffs<cr>', { desc = 'Close all Claude diffs' })
+km('n', '<leader>kS', '<cmd>ClaudeCodeStatus<cr>',     { desc = 'Claude connection status' })
+-- In neo-tree, <leader>kb adds the file under the cursor instead of the buffer
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'neo-tree',
+  callback = function(ev)
+    km('n', '<leader>kb', '<cmd>ClaudeCodeTreeAdd<cr>', { desc = 'Add tree file to Claude context', buffer = ev.buf })
+  end,
+})
+
 -- Visual indent
 km('v', '>', '>gv', s)
 km('v', '<', '<gv', s)
@@ -111,6 +126,7 @@ wk.add({
   { '<leader>f', group = 'Find' },
   { '<leader>g', group = 'Git' },
   { '<leader>a', group = 'AI / Actions' },
+  { '<leader>k', group = 'Claude Code' },
   { 'g',         group = 'Go to' },
   { '<C-w>',     group = 'Windows' },
   { ']',         group = 'Next' },

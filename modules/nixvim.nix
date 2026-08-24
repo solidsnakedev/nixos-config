@@ -74,6 +74,9 @@ in
         '';
       };
     };
+    # claude-code itself comes from the npm install in ~/.local, not nixpkgs.
+    dependencies.claude-code.enable = false;
+
     plugins = {
       # UI Enhancements
       # Add file type icons to various plugins
@@ -312,6 +315,28 @@ in
             chat.adapter = "copilot";
             inline.adapter = "copilot";
             agent.adapter = "copilot";
+          };
+        };
+      };
+
+      # Claude Code IDE integration: nvim runs the WebSocket/MCP server that the
+      # official VS Code extension speaks, so a `claude` session in a tmux pane
+      # can attach with /ide. Every edit Claude proposes then opens here as a
+      # side-by-side diff tab you accept (<leader>ka) or reject (<leader>kr),
+      # and the buffer/selection you are on is sent along as context.
+      claudecode = {
+        enable = true;
+        settings = {
+          auto_start = true;
+          # Claude lives in its own tmux pane; nvim manages no terminal for it.
+          terminal.provider = "none";
+          # Current buffer + visual selection are pushed to Claude as context.
+          track_selection = true;
+          diff_opts = {
+            layout = "vertical";
+            open_in_new_tab = true;
+            # Nothing to resize with provider = "none".
+            auto_resize_terminal = false;
           };
         };
       };
