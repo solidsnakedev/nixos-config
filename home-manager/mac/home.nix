@@ -148,6 +148,7 @@
     ./../../modules/direnv.nix
     ./../../modules/git.nix
     ./../../modules/tmux.nix
+    ./../../modules/herdr.nix
     ./../../modules/bat.nix
     # ./../../modules/neovim.nix
     ./../../modules/nixvim.nix
