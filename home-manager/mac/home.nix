@@ -129,8 +129,14 @@
     shellAliases = {
       l = "eza -lh --git --octal-permissions";
       ll = "eza -la --git --octal-permissions";
-      darwin-switch = "sudo darwin-rebuild switch --flake ~/nixos-config";
-      home-switch = "home-manager switch --flake ~/nixos-config";
+      # Pin the flake attribute. Without it darwin-rebuild picks the config by
+      # `scutil --get LocalHostName`, which macOS silently renames on a Bonjour
+      # name collision (Jonathans-MacBook-Pro -> ...-2) and the switch then
+      # fails with "does not provide attribute". networking.hostName in
+      # hosts/mac/configuration.nix resets the name on every switch, but this
+      # keeps the command working even before that lands.
+      darwin-switch = "sudo darwin-rebuild switch --flake ~/nixos-config#Jonathans-MacBook-Pro";
+      home-switch = "home-manager switch --flake ~/nixos-config#jonathan";
     };
     initContent = ''
       bindkey "^U" backward-kill-line  # Cmd+Backspace: delete from cursor to beginning (not whole line)

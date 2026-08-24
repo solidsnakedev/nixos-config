@@ -27,6 +27,15 @@
   # Set primary user
   system.primaryUser = "jonathan";
 
+  # Own the machine name declaratively. macOS appends a "-2" suffix to
+  # LocalHostName whenever it sees a Bonjour name collision, and
+  # darwin-rebuild selects the flake attribute with
+  # `scutil --get LocalHostName` -- so the drift breaks every bare
+  # `darwin-rebuild switch --flake ~/nixos-config`. Setting this re-asserts
+  # the name on each switch. localHostName defaults to hostName.
+  networking.hostName = "Jonathans-MacBook-Pro";
+  networking.computerName = "Jonathan's MacBook Pro";
+
   system.defaults = {
     dock =
       {
