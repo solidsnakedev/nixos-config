@@ -13,7 +13,7 @@
       name = "catppuccin"
 
       [keys]
-      # Keybinding v2 syntax (herdr >= 0.6.0, flake pins v0.7.3). Bare keys
+      # Keybinding v2 syntax (herdr >= 0.6.0; tracks nixpkgs). Bare keys
       # like "m" are DIRECT global bindings in v2 and would steal typing;
       # prefix-mode actions must be written as "prefix+...".
       # Same prefix as tmux.

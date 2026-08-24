@@ -50,7 +50,7 @@
       eza
       lazygit
       typst
-      inputs.herdr.packages.aarch64-darwin.default
+      herdr
       (writeShellScriptBin "pi" ''exec npx @mariozechner/pi-coding-agent "$@"'')
 
        # Python tool runner (ingest.py deps managed via uv inline metadata)
