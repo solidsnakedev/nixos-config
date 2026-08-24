@@ -72,6 +72,18 @@ km('n', '<leader>n', ':Neotree toggle reveal<cr>', { desc = 'Toggle file tree' }
 
 -- Git
 km('n', '<leader>gg', ':LazyGit<cr>', { desc = 'LazyGit' })
+-- Diffview: review everything changed in the working tree, close with <leader>gq
+km('n', '<leader>gd', ':DiffviewOpen<cr>',          { desc = 'Diff view (working tree)' })
+km('n', '<leader>gq', ':DiffviewClose<cr>',         { desc = 'Close diff view' })
+km('n', '<leader>gh', ':DiffviewFileHistory %<cr>', { desc = 'File history' })
+-- Gitsigns: per-hunk review, revert what you don't want to keep
+km('n', ']h', ':Gitsigns next_hunk<cr>',            { desc = 'Next changed hunk' })
+km('n', '[h', ':Gitsigns prev_hunk<cr>',            { desc = 'Prev changed hunk' })
+km('n', '<leader>gp', ':Gitsigns preview_hunk<cr>', { desc = 'Preview hunk diff' })
+km('n', '<leader>gr', ':Gitsigns reset_hunk<cr>',   { desc = 'Revert hunk' })
+km('v', '<leader>gr', ':Gitsigns reset_hunk<cr>',   { desc = 'Revert selected hunks' })
+km('n', '<leader>gs', ':Gitsigns stage_hunk<cr>',   { desc = 'Stage hunk' })
+km('n', '<leader>gb', ':Gitsigns blame_line<cr>',   { desc = 'Blame line' })
 
 -- Find (Telescope)
 km('n', '<leader>ff', ':Telescope find_files<cr>', { desc = 'Files' })
