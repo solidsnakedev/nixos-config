@@ -44,6 +44,10 @@ in
 {
   programs.nixvim = {
     enable = true;
+    # Reuse the host's nixpkgs instance (which sets allowUnfree) instead of
+    # letting nixvim re-import nixpkgs with an empty config. Without this,
+    # unfree plugin deps such as copilot-language-server fail to evaluate.
+    nixpkgs.pkgs = pkgs;
     # Create aliases for Vi and Vim commands
     viAlias = true;
     vimAlias = true;
