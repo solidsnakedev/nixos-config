@@ -12,10 +12,10 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    # herdr — agent multiplexer. Downstream fork carrying the nix flake on
-    # top of upstream. The fork's flake handles the ghostty/libghostty-vt
-    # pinning internally; this config just consumes the package.
-    herdr.url = "github:solidsnakedev/herdr/add-nix";
+    # herdr — agent multiplexer. Upstream now ships its own flake, so we
+    # consume it directly (no more solidsnakedev/add-nix fork). Bump the tag
+    # to update; this config just uses packages.<system>.default.
+    herdr.url = "github:ogulcancelik/herdr/v0.7.3";
   };
 
   outputs = inputs@{ nixpkgs, nix-darwin, home-manager, vscode-server, nixvim, ... }: {
