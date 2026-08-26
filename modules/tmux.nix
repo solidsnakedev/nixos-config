@@ -41,6 +41,16 @@ in
       bind -r l resize-pane -R 5
       bind -r h resize-pane -L 5
 
+      # aerospace-style direct swap: ctrl+shift+hjkl moves the pane the way
+      # alt+shift+hjkl moves a window (mirrors herdr's swap chords). Needs
+      # extended keys so ctrl+shift is distinguishable from plain ctrl.
+      set -s extended-keys on
+      set -as terminal-features 'alacritty*:extkeys'
+      bind -n C-S-h swap-pane -t '{left-of}'
+      bind -n C-S-j swap-pane -t '{down-of}'
+      bind -n C-S-k swap-pane -t '{up-of}'
+      bind -n C-S-l swap-pane -t '{right-of}'
+
       # Rotate panes clockwise and keep focus on the pane
       bind r rotate-window -U \; select-pane -t -
 

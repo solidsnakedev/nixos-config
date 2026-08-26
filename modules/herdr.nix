@@ -54,6 +54,15 @@
       resize_pane_up = "prefix+k"
       resize_pane_right = "prefix+l"
 
+      # aerospace-style direct swap: ctrl+shift+hjkl moves the pane the way
+      # alt+shift+hjkl moves a window. herdr's prefix+shift defaults stay as
+      # fallback; the direct chords need the host terminal to send distinct
+      # ctrl+shift codes (extended keyboard protocol).
+      swap_pane_left = ["prefix+shift+h", "ctrl+shift+h"]
+      swap_pane_down = ["prefix+shift+j", "ctrl+shift+j"]
+      swap_pane_up = ["prefix+shift+k", "ctrl+shift+k"]
+      swap_pane_right = ["prefix+shift+l", "ctrl+shift+l"]
+
       # Step through workspaces with hjkl-flavored direct chords: ctrl+alt+h/l
       # moves to the previous/next workspace and back, no prefix or navigate
       # mode needed. (ctrl+alt is free: aerospace uses plain alt, panes use
