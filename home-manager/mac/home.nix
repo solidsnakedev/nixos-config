@@ -77,6 +77,9 @@
         decorations = "Buttonless";
         padding = { x = 10; y = 10; };
         opacity = 0.95;
+        # Left option acts as Alt so ctrl+alt chords (herdr workspace keys)
+        # reach terminal apps; right option still composes characters.
+        option_as_alt = "OnlyLeft";
       };
       selection = {
         save_to_clipboard = true;
