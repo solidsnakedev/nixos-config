@@ -78,7 +78,9 @@ in
     dependencies.claude-code.enable = false;
 
     # Language servers via the top-level lsp module (vim.lsp.config/enable),
-    # replacing the deprecated plugins.lsp compat layer.
+    # replacing the deprecated plugins.lsp compat layer. Servers without an
+    # explicit config get their base cmd/filetypes from nvim-lspconfig,
+    # enabled via plugins.lspconfig below.
     lsp.servers = {
       # Aiken language server for Cardano smart contract development
       aiken = {
@@ -127,6 +129,9 @@ in
     };
 
     plugins = {
+      # Base server definitions (cmd/filetypes/root markers) for lsp.servers
+      # entries that don't set an explicit config.
+      lspconfig.enable = true;
       # UI Enhancements
       # Add file type icons to various plugins
       web-devicons.enable = true;
