@@ -13,7 +13,8 @@
       name = "catppuccin"
 
       [keys]
-      # Keybinding v2 syntax (herdr >= 0.6.0; tracks nixpkgs). Bare keys
+      # Keybinding v2 syntax (herdr >= 0.8, for resize_pane_*; tracks
+      # nixpkgs). Bare keys
       # like "m" are DIRECT global bindings in v2 and would steal typing;
       # prefix-mode actions must be written as "prefix+...".
       # Same prefix as tmux.
@@ -29,11 +30,18 @@
       # tmux: vim-tmux-navigator ctrl+h/j/k/l pane movement, same chords here.
       # Direct ctrl bindings steal backspace (ctrl+h), newline (ctrl+j), and
       # clear (ctrl+l) from pane apps, exactly like the tmux plugin does.
-      # Pane resizing stays on herdr's resize mode: prefix, then "r".
-      focus_pane_left = ["prefix+h", "ctrl+h"]
-      focus_pane_down = ["prefix+j", "ctrl+j"]
-      focus_pane_up = ["prefix+k", "ctrl+k"]
-      focus_pane_right = ["prefix+l", "ctrl+l"]
+      focus_pane_left = "ctrl+h"
+      focus_pane_down = "ctrl+j"
+      focus_pane_up = "ctrl+k"
+      focus_pane_right = "ctrl+l"
+
+      # tmux: bind -r h/j/k/l resize-pane. Direct resize actions exist since
+      # herdr 0.8, so prefix+hjkl resizes here too (herdr's resize mode stays
+      # on prefix+r as a fallback).
+      resize_pane_left = "prefix+h"
+      resize_pane_down = "prefix+j"
+      resize_pane_up = "prefix+k"
+      resize_pane_right = "prefix+l"
 
       # Step through workspaces with hjkl-flavored direct chords: ctrl+alt+h/l
       # moves to the previous/next workspace and back, no prefix or navigate
