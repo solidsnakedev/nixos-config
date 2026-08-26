@@ -102,9 +102,18 @@ km('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code a
 km('n', 's',    ':HopChar1<cr>',            { desc = 'Hop to char' })
 km('n', '<S-L>', ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
 km('n', '<S-H>', ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
+km('n', ']b',    ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
+km('n', '[b',    ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
 
--- Buffer
-km('n', '<leader>c', function() Snacks.bufdelete() end, { desc = 'Close buffer' })
+-- Buffers, LazyVim-style (Snacks.bufdelete keeps the window layout)
+km('n', '<leader>bb', '<cmd>e #<cr>',                        { desc = 'Switch to other buffer' })
+km('n', '<leader>bd', function() Snacks.bufdelete() end,     { desc = 'Delete buffer' })
+km('n', '<leader>bo', function() Snacks.bufdelete.other() end, { desc = 'Delete other buffers' })
+km('n', '<leader>bD', ':bd<cr>',                             { desc = 'Delete buffer and window' })
+km('n', '<leader>bp', ':BufferLineTogglePin<cr>',            { desc = 'Toggle pin' })
+km('n', '<leader>bP', ':BufferLineGroupClose ungrouped<cr>', { desc = 'Delete non-pinned buffers' })
+km('n', '<leader>br', ':BufferLineCloseRight<cr>',           { desc = 'Delete buffers to the right' })
+km('n', '<leader>bl', ':BufferLineCloseLeft<cr>',            { desc = 'Delete buffers to the left' })
 
 -- Reopen files at the last edit position (replaces the archived lastplace plugin)
 vim.api.nvim_create_autocmd('BufReadPost', {
@@ -147,6 +156,7 @@ km('t', '<Esc>', '<C-\\><C-n>', s)
 -- which-key group labels
 local wk = require('which-key')
 wk.add({
+  { '<leader>b', group = 'Buffer' },
   { '<leader>f', group = 'Find' },
   { '<leader>g', group = 'Git' },
   { '<leader>a', group = 'AI / Actions' },
