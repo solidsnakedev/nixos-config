@@ -99,7 +99,9 @@ km('n', 'gi', ':Telescope lsp_implementations<cr>', { desc = 'Implementations' }
 km('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
 
 -- Navigation
-km('n', 's',    ':HopChar1<cr>',            { desc = 'Hop to char' })
+-- Flash S is not mapped in visual mode; nvim-surround owns S there
+km({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end,       { desc = 'Flash jump' })
+km({ 'n', 'o' },      'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
 km('n', '<S-L>', ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
 km('n', '<S-H>', ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
 km('n', ']b',    ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
@@ -146,6 +148,13 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Diagnostics panels (Trouble, LazyVim-style)
+km('n', '<leader>xx', ':Trouble diagnostics toggle<cr>',              { desc = 'Diagnostics (Trouble)' })
+km('n', '<leader>xX', ':Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer diagnostics' })
+km('n', '<leader>xt', ':Trouble todo toggle<cr>',                     { desc = 'Todos (Trouble)' })
+km('n', '<leader>xq', ':Trouble qflist toggle<cr>',                   { desc = 'Quickfix list' })
+km('n', '<leader>xl', ':Trouble loclist toggle<cr>',                  { desc = 'Location list' })
+
 -- Visual indent
 km('v', '>', '>gv', s)
 km('v', '<', '<gv', s)
@@ -161,6 +170,7 @@ wk.add({
   { '<leader>g', group = 'Git' },
   { '<leader>a', group = 'AI / Actions' },
   { '<leader>k', group = 'Claude Code' },
+  { '<leader>x', group = 'Diagnostics' },
   { 'g',         group = 'Go to' },
   { '<C-w>',     group = 'Windows' },
   { ']',         group = 'Next' },
