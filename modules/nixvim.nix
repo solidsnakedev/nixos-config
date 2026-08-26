@@ -77,6 +77,55 @@ in
     # claude-code itself comes from the npm install in ~/.local, not nixpkgs.
     dependencies.claude-code.enable = false;
 
+    # Language servers via the top-level lsp module (vim.lsp.config/enable),
+    # replacing the deprecated plugins.lsp compat layer.
+    lsp.servers = {
+      # Aiken language server for Cardano smart contract development
+      aiken = {
+        enable = true;
+        config = {
+          cmd = [ "aiken" "lsp" ];
+          filetypes = [ "aiken" ];
+          root_markers = [ "aiken.toml" ];
+        };
+      };
+      # Nix language server with nixpkgs-fmt for formatting
+      nil_ls = {
+        enable = true;
+        config.settings."nil".formatting.command = [ "nixpkgs-fmt" ];
+      };
+      # Lua language server with vim global recognized
+      lua_ls = {
+        enable = true;
+        config.settings.Lua.diagnostics.globals = [ "vim" ];
+      };
+      # Rust language server (rust-analyzer only; cargo and rustc come from
+      # the project's devshell)
+      rust_analyzer.enable = true;
+      # Haskell language server from PATH (no GHC bundled)
+      hls = {
+        enable = true;
+        package = null;
+      };
+      # TypeScript language server (vtsls; better monorepo handling
+      # than the retired ts_ls default)
+      vtsls.enable = true;
+      jsonls.enable = true;
+      tinymist.enable = true;
+      dockerls.enable = true;
+      docker_compose_language_service.enable = true;
+      # Quint language server (custom package built above; freeform server
+      # name, so no lspconfig registration needed)
+      quint_language_server = {
+        enable = true;
+        config = {
+          cmd = [ "${quint-language-server}/bin/quint-language-server" "--stdio" ];
+          filetypes = [ "quint" ];
+          root_markers = [ "quint.json" ".git" ];
+        };
+      };
+    };
+
     plugins = {
       # UI Enhancements
       # Add file type icons to various plugins
@@ -197,48 +246,6 @@ in
       # Project-wide search and replace (ripgrep UI)
       grug-far.enable = true;
 
-      # Language Server Protocol (LSP)
-      lsp = {
-        enable = true;
-        servers = {
-          # Aiken language server for Cardano smart contract development
-          aiken = {
-            enable = true;
-            cmd = [ "aiken" "lsp" ];
-            filetypes = [ "aiken" ];
-            rootMarkers = [ "aiken.toml" ];
-          };
-          # Nix language server with nixpkgs-fmt for formatting
-          nil_ls = {
-            enable = true; # Enable nil_ls. You can use nixd or anything you want from the docs.
-            settings.formatting.command = [ "nixpkgs-fmt" ];
-          };
-          # Lua language server with vim global recognized
-          lua_ls = {
-            enable = true;
-            settings.diagnostics.globals = [ "vim" ];
-          };
-          # Rust language server without installing cargo and rustc
-          rust_analyzer = {
-            enable = true;
-            installCargo = false;
-            installRustc = false;
-          };
-          # Haskell language server without installing GHC
-          hls = {
-            enable = true;
-            installGhc = false;
-            package = null;
-          };
-          # TypeScript language server (vtsls; better monorepo handling
-          # than the retired ts_ls default)
-          vtsls.enable = true;
-          jsonls.enable = true;
-          tinymist.enable = true;
-          dockerls.enable = true;
-          docker_compose_language_service.enable = true;
-        };
-      };
       # Code Formatting with conform-nvim
       conform-nvim = {
         enable = true;
@@ -362,24 +369,7 @@ in
     filetype.extension.qnt = "quint";
 
     # Load additional Lua configuration from init.lua
-    extraConfigLua = builtins.readFile ./init.lua + ''
-
-      -- Quint language server (custom lspconfig registration)
-      do
-        local configs = require('lspconfig.configs')
-        local lspconfig = require('lspconfig')
-        if not configs.quint_language_server then
-          configs.quint_language_server = {
-            default_config = {
-              cmd = { '${quint-language-server}/bin/quint-language-server', '--stdio' },
-              filetypes = { 'quint' },
-              root_dir = lspconfig.util.root_pattern('quint.json', '.git'),
-            },
-          }
-        end
-        lspconfig.quint_language_server.setup({})
-      end
-    '';
+    extraConfigLua = builtins.readFile ./init.lua;
     # Add extra plugins (in this case, aiken-vim)
     extraPlugins = [
       aiken-vim
