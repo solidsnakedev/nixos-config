@@ -24,8 +24,11 @@
       split_vertical = "prefix+|"
       split_horizontal = "prefix+minus"
 
-      # tmux: bind m resize-pane -Z (maximize/minimize pane)
-      zoom = "prefix+m"
+      # tmux: bind m resize-pane -Z, plus tmux's default prefix+z
+      zoom = ["prefix+m", "prefix+z"]
+
+      # tmux: prefix+; toggles the last focused pane (tmux default)
+      last_pane = "prefix+;"
 
       # tmux: vim-tmux-navigator ctrl+h/j/k/l pane movement, same chords here.
       # Direct ctrl bindings steal backspace (ctrl+h), newline (ctrl+j), and
