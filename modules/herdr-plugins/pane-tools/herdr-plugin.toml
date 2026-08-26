@@ -1,0 +1,16 @@
+id = "pane-tools"
+name = "Pane Tools"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "tmux-style pane rotation for the current tab"
+platforms = ["macos", "linux"]
+
+[[actions]]
+id = "rotate"
+title = "Rotate panes"
+command = ["python3", "rotate.py"]
+
+[[actions]]
+id = "rotate-reverse"
+title = "Rotate panes (reverse)"
+command = ["python3", "rotate.py", "-r"]

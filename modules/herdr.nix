@@ -70,6 +70,27 @@
       navigate_pane_up = "ctrl+k"
       navigate_pane_down = "ctrl+j"
 
+      # tmux: bind r / R rotate panes, via the pane-tools plugin below.
+      # Frees prefix+r and prefix+shift+r by moving herdr's resize mode and
+      # config reload to ctrl variants (resize also lives on prefix+hjkl,
+      # reload also on `herdr server reload-config`).
+      resize_mode = "prefix+ctrl+r"
+      reload_config = "prefix+ctrl+shift+r"
+
+      # Plugin source: modules/herdr-plugins/pane-tools, registered once with
+      # `herdr plugin link ~/nixos-config/modules/herdr-plugins/pane-tools`.
+      [[keys.command]]
+      key = "prefix+r"
+      type = "plugin_action"
+      command = "pane-tools.rotate"
+      description = "Rotate panes"
+
+      [[keys.command]]
+      key = "prefix+shift+r"
+      type = "plugin_action"
+      command = "pane-tools.rotate-reverse"
+      description = "Rotate panes (reverse)"
+
       [ui]
       # tmux creates windows immediately without prompting for a name.
       prompt_new_tab_name = false
