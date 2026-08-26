@@ -35,8 +35,10 @@
       # tmux: bind m resize-pane -Z, plus tmux's default prefix+z
       zoom = ["prefix+m", "prefix+z"]
 
-      # tmux: prefix+; toggles the last focused pane (tmux default)
-      last_pane = "prefix+;"
+      # tmux: prefix+; toggles the last focused pane (tmux default).
+      # ctrl+alt+tab is the workspace back-and-forth chord, rhyming with
+      # aerospace's alt+tab and the ctrl+alt workspace family.
+      last_pane = ["prefix+;", "ctrl+alt+tab"]
 
       # tmux: vim-tmux-navigator ctrl+h/j/k/l pane movement, same chords here.
       # Direct ctrl bindings steal backspace (ctrl+h), newline (ctrl+j), and
