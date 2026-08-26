@@ -100,6 +100,15 @@
       command = "pane-tools.rotate-reverse"
       description = "Rotate panes (reverse)"
 
+      # Fuzzy workspace picker overlay (fzf), one chord instead of
+      # prefix+w and arrowing through the list. ctrl+alt matches the
+      # workspace chord family (ctrl+alt+h/l).
+      [[keys.command]]
+      key = "ctrl+alt+w"
+      type = "plugin_action"
+      command = "pane-tools.pick-workspace"
+      description = "Workspace picker"
+
       [ui]
       # tmux creates windows immediately without prompting for a name.
       prompt_new_tab_name = false

@@ -1,8 +1,8 @@
 id = "pane-tools"
 name = "Pane Tools"
-version = "0.1.0"
+version = "0.2.0"
 min_herdr_version = "0.8.0"
-description = "tmux-style pane rotation for the current tab"
+description = "tmux-style pane rotation and a fuzzy workspace picker"
 platforms = ["macos", "linux"]
 
 [[actions]]
@@ -14,3 +14,14 @@ command = ["python3", "rotate.py"]
 id = "rotate-reverse"
 title = "Rotate panes (reverse)"
 command = ["python3", "rotate.py", "-r"]
+
+[[actions]]
+id = "pick-workspace"
+title = "Workspace picker"
+command = ["bash", "picker-open.sh"]
+
+[[panes]]
+id = "picker"
+title = "Workspaces"
+placement = "overlay"
+command = ["bash", "picker.sh"]
