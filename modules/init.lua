@@ -89,6 +89,7 @@ km('n', '<leader>gb', ':Gitsigns blame_line<cr>',   { desc = 'Blame line' })
 km('n', '<leader>ff', ':Telescope find_files<cr>', { desc = 'Files' })
 km('n', '<leader>fg', ':Telescope live_grep<cr>',  { desc = 'Grep' })
 km('n', '<leader>fb', ':Telescope buffers<cr>',    { desc = 'Buffers' })
+km('n', '<leader>fr', ':GrugFar<cr>',              { desc = 'Find & replace (project)' })
 km('n', '<leader>fh', ':Telescope help_tags<cr>',  { desc = 'Help tags' })
 
 -- LSP
@@ -103,7 +104,18 @@ km('n', '<S-L>', ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
 km('n', '<S-H>', ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
 
 -- Buffer
-km('n', '<leader>c', ':Bdelete<cr>', { desc = 'Close buffer' })
+km('n', '<leader>c', function() Snacks.bufdelete() end, { desc = 'Close buffer' })
+
+-- Reopen files at the last edit position (replaces the archived lastplace plugin)
+vim.api.nvim_create_autocmd('BufReadPost', {
+  callback = function(ev)
+    local mark = vim.api.nvim_buf_get_mark(ev.buf, '"')
+    local lcount = vim.api.nvim_buf_line_count(ev.buf)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
 
 -- AI (CodeCompanion)
 km('n', '<leader>at', ':CodeCompanionChat Toggle<cr>',  { desc = 'Toggle AI chat' })

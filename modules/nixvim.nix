@@ -127,7 +127,8 @@ in
       };
       # Adds a buffer line with tab-like interface
       bufferline.enable = true;
-      barbecue.enable = true;
+      # Winbar breadcrumbs (replaces the archived barbecue)
+      dropbar.enable = true;
       # Automatically close brackets, parentheses, and quotes
       nvim-autopairs.enable = true;
       # Integrate with direnv for environment management
@@ -152,8 +153,16 @@ in
       };
       # Powerful fuzzy finder and picker
       telescope.enable = true;
-      # Improve the look of vim's native UI elements
-      dressing.enable = true;
+      # Improve the look of vim's native UI elements. Only the input and
+      # bufdelete modules are used (dressing.nvim and bufdelete.nvim are
+      # archived upstream); picker/dashboard/notifier stay with the
+      # dedicated plugins.
+      snacks = {
+        enable = true;
+        settings = {
+          input.enabled = true;
+        };
+      };
       # Start screen with recent files and shortcuts
       dashboard.enable = true;
       # Easy word and line navigation
@@ -162,12 +171,8 @@ in
       neo-tree.enable = true;
       # Highlight and list TODO and other special comments
       todo-comments.enable = true;
-      # Easily modify surrounding characters
-      vim-surround.enable = true;
-      # Reopen files at the last edit position
-      lastplace.enable = true;
-      # Improved buffer deletion
-      bufdelete.enable = true;
+      # Easily modify surrounding characters (lua successor to vim-surround)
+      nvim-surround.enable = true;
       notify = {
         settings.top_down = true;
         enable = true;
@@ -184,7 +189,11 @@ in
           close_filetypes_on_save = [ "checkhealth" "neo-tree" ];
         };
       };
-      markdown-preview.enable = true;
+      # In-buffer markdown rendering (replaces the dormant markdown-preview
+      # and its node build step); also styles codecompanion chat buffers.
+      render-markdown.enable = true;
+      # Project-wide search and replace (ripgrep UI)
+      grug-far.enable = true;
 
       # Language Server Protocol (LSP)
       lsp = {
@@ -219,17 +228,15 @@ in
             installGhc = false;
             package = null;
           };
-          # TypeScript language server
-          ts_ls.enable = true;
+          # TypeScript language server (vtsls; better monorepo handling
+          # than the retired ts_ls default)
+          vtsls.enable = true;
           jsonls.enable = true;
           tinymist.enable = true;
           dockerls.enable = true;
           docker_compose_language_service.enable = true;
         };
       };
-      # Add icons to completion menu
-      lspkind.enable = true;
-
       # Code Formatting with conform-nvim
       conform-nvim = {
         enable = true;
@@ -260,38 +267,28 @@ in
         };
       };
 
-      # Autocompletion engine configuration
-      cmp = {
+      # Autocompletion engine (blink.cmp; nvim-cmp is in maintenance mode).
+      # Kind icons are built in, so no lspkind. Snippets stay on luasnip.
+      blink-cmp = {
         enable = true;
-        autoEnableSources = true;
         settings = {
-          window =
-            {
-              completion.border = "rounded";
-              documentation.border = "rounded";
-            };
-          performance.max_view_entries = 20;
-          sources = [
-            { name = "nvim_lsp"; }
-            { name = "luasnip"; }
-            { name = "path"; }
-            { name = "buffer"; }
-          ];
-          # Completion key mappings
-          mapping = {
-            # Show completion menu
-            "<C-Space>" = "cmp.mapping.complete()";
-            # Scroll documentation up
-            "<S-k>" = "cmp.mapping.scroll_docs(-4)";
-            # Scroll documentation down
-            "<S-j>" = "cmp.mapping.scroll_docs(4)";
-            # Confirm selection
-            "<CR>" = "cmp.mapping.confirm({ select = true })";
-            # Navigate completion menu (previous item)
-            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-            # Navigate completion menu (next item)
-            "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+          # "enter" preset: <CR> accepts, <C-space> opens the menu
+          keymap = {
+            preset = "enter";
+            "<Tab>" = [ "select_next" "snippet_forward" "fallback" ];
+            "<S-Tab>" = [ "select_prev" "snippet_backward" "fallback" ];
+            "<S-k>" = [ "scroll_documentation_up" "fallback" ];
+            "<S-j>" = [ "scroll_documentation_down" "fallback" ];
           };
+          completion = {
+            menu.border = "rounded";
+            documentation = {
+              auto_show = true;
+              window.border = "rounded";
+            };
+          };
+          snippets.preset = "luasnip";
+          sources.default = [ "lsp" "snippets" "path" "buffer" ];
         };
       };
 
