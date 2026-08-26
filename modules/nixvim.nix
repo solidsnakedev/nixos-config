@@ -176,7 +176,14 @@ in
       # Improved text wrapping
       wrapping.enable = true;
       # Automatically saves and restores session state
-      auto-session.enable = true;
+      auto-session = {
+        enable = true;
+        settings = {
+          # A neo-tree window restored from a session comes back without its
+          # backing state and errors on interaction; close it before saving.
+          close_filetypes_on_save = [ "checkhealth" "neo-tree" ];
+        };
+      };
       markdown-preview.enable = true;
 
       # Language Server Protocol (LSP)
