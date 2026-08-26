@@ -1,5 +1,13 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  # tmux: bind r rotate-window. herdr has no rotate action or command
+  # keybindings, so this ships as a CLI (`herdr-rotate`, -r for the other
+  # direction) driving `herdr pane swap` over the current tab.
+  home.packages = [
+    (pkgs.writers.writePython3Bin "herdr-rotate" { flakeIgnore = [ "E501" ]; }
+      (builtins.readFile ./herdr-rotate.py))
+  ];
+
   # Mirror of modules/tmux.nix for herdr: same prefix-mode keybindings and
   # the Catppuccin Mocha theme the tmux chrome is modeled on.
   # Apply without restarting via `herdr server reload-config`.
