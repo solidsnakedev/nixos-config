@@ -36,9 +36,7 @@
       zoom = ["prefix+m", "prefix+z"]
 
       # tmux: prefix+; toggles the last focused pane (tmux default).
-      # ctrl+alt+tab is the workspace back-and-forth chord, rhyming with
-      # aerospace's alt+tab and the ctrl+alt workspace family.
-      last_pane = ["prefix+;", "ctrl+alt+tab"]
+      last_pane = "prefix+;"
 
       # tmux: vim-tmux-navigator ctrl+h/j/k/l pane movement, same chords here.
       # Direct ctrl bindings steal backspace (ctrl+h), newline (ctrl+j), and
@@ -110,6 +108,15 @@
       type = "plugin_action"
       command = "pane-tools.pick-workspace"
       description = "Workspace picker"
+
+      # Workspace back-and-forth like aerospace's alt+tab: jumps to the
+      # previously focused workspace (history tracked by the plugin's
+      # workspace.focused event handler).
+      [[keys.command]]
+      key = "ctrl+alt+tab"
+      type = "plugin_action"
+      command = "pane-tools.last-workspace"
+      description = "Toggle last workspace"
 
       [ui]
       # tmux creates windows immediately without prompting for a name.
