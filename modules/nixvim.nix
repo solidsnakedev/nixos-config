@@ -196,8 +196,28 @@ in
           presets = {
             lsp_doc_border = true;
           };
+          # Notification bar: messages render in a transient full-width bar
+          # just above the statusline (styled like it) and disappear after
+          # the timeout. No floating toasts covering code.
+          notify.view = "mini";
+          messages = {
+            view = "mini";
+            view_warn = "mini";
+            view_error = "mini";
+          };
+          views.mini = {
+            align = "message-left";
+            timeout = 4000;
+            position = { row = -2; col = 0; };
+            size = { width = "100%"; height = "auto"; };
+            border.style = "none";
+            win_options = {
+              winblend = 0;
+              winhighlight.Normal = "StatusLine";
+            };
+          };
           routes = [{
-            view = "notify";
+            view = "mini";
             filter = {
               event = "msg_showmode";
               find = "recording";
