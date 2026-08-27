@@ -208,7 +208,7 @@ in
           views.mini = {
             align = "message-left";
             timeout = 4000;
-            position = { row = -2; col = 0; };
+            position = { row = -1; col = 0; };
             size = { width = "100%"; height = "auto"; };
             border.style = "none";
             win_options = {
