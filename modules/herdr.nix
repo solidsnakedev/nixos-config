@@ -38,13 +38,14 @@
       # tmux: prefix+; toggles the last focused pane (tmux default).
       last_pane = "prefix+;"
 
-      # tmux: vim-tmux-navigator ctrl+h/j/k/l pane movement, same chords here.
-      # Direct ctrl bindings steal backspace (ctrl+h), newline (ctrl+j), and
-      # clear (ctrl+l) from pane apps, exactly like the tmux plugin does.
-      focus_pane_left = "ctrl+h"
-      focus_pane_down = "ctrl+j"
-      focus_pane_up = "ctrl+k"
-      focus_pane_right = "ctrl+l"
+      # ctrl+h/j/k/l pane movement lives on the vim-aware nav plugin
+      # actions below (keys.command), which forward into nvim panes the way
+      # vim-tmux-navigator does. The built-in focus actions get no direct
+      # chords; navigate mode still has pane focus.
+      focus_pane_left = []
+      focus_pane_down = []
+      focus_pane_up = []
+      focus_pane_right = []
 
       # tmux: bind -r h/j/k/l resize-pane. Direct resize actions exist since
       # herdr 0.8, so prefix+hjkl resizes here too (herdr's resize mode stays
@@ -117,6 +118,32 @@
       type = "plugin_action"
       command = "pane-tools.last-workspace"
       description = "Toggle last workspace"
+
+      # vim-aware pane navigation (vim-tmux-navigator equivalent): forwards
+      # the chord into nvim panes, focuses the herdr neighbor otherwise.
+      [[keys.command]]
+      key = "ctrl+h"
+      type = "plugin_action"
+      command = "pane-tools.nav-left"
+      description = "Navigate left (vim-aware)"
+
+      [[keys.command]]
+      key = "ctrl+j"
+      type = "plugin_action"
+      command = "pane-tools.nav-down"
+      description = "Navigate down (vim-aware)"
+
+      [[keys.command]]
+      key = "ctrl+k"
+      type = "plugin_action"
+      command = "pane-tools.nav-up"
+      description = "Navigate up (vim-aware)"
+
+      [[keys.command]]
+      key = "ctrl+l"
+      type = "plugin_action"
+      command = "pane-tools.nav-right"
+      description = "Navigate right (vim-aware)"
 
       [ui]
       # tmux creates windows immediately without prompting for a name.

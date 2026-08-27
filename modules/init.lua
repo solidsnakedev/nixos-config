@@ -104,6 +104,26 @@ km('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code a
 -- Flash S is not mapped in visual mode; nvim-surround owns S there
 km({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end,       { desc = 'Flash jump' })
 km({ 'n', 'o' },      'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
+
+-- herdr vim-navigator (mirror of vim-tmux-navigator): herdr's nav plugin
+-- forwards ctrl+hjkl here when this pane runs nvim; move between nvim
+-- windows first, cross to the neighboring herdr pane at the edge
+if vim.env.HERDR_PANE_ID then
+  vim.g.tmux_navigator_no_mappings = 1
+  local function nav(wincmd_dir, herdr_dir)
+    return function()
+      local before = vim.api.nvim_get_current_win()
+      vim.cmd('wincmd ' .. wincmd_dir)
+      if vim.api.nvim_get_current_win() == before then
+        vim.system({ 'herdr', 'pane', 'focus', '--direction', herdr_dir, '--pane', vim.env.HERDR_PANE_ID })
+      end
+    end
+  end
+  km('n', '<C-h>', nav('h', 'left'),  { desc = 'Window/pane left' })
+  km('n', '<C-j>', nav('j', 'down'),  { desc = 'Window/pane down' })
+  km('n', '<C-k>', nav('k', 'up'),    { desc = 'Window/pane up' })
+  km('n', '<C-l>', nav('l', 'right'), { desc = 'Window/pane right' })
+end
 km('n', '<S-L>', ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
 km('n', '<S-H>', ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
 km('n', ']b',    ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
