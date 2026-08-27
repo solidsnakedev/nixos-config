@@ -1,6 +1,6 @@
 id = "pane-tools"
 name = "Pane Tools"
-version = "0.4.0"
+version = "0.5.0"
 min_herdr_version = "0.8.0"
 description = "tmux-style pane rotation and a fuzzy workspace picker"
 platforms = ["macos", "linux"]
@@ -44,6 +44,26 @@ command = ["python3", "nav.py", "up"]
 id = "nav-right"
 title = "Navigate right (vim-aware)"
 command = ["python3", "nav.py", "right"]
+
+[[actions]]
+id = "move-left"
+title = "Move pane left (aerospace-style)"
+command = ["python3", "move.py", "left"]
+
+[[actions]]
+id = "move-down"
+title = "Move pane down (aerospace-style)"
+command = ["python3", "move.py", "down"]
+
+[[actions]]
+id = "move-up"
+title = "Move pane up (aerospace-style)"
+command = ["python3", "move.py", "up"]
+
+[[actions]]
+id = "move-right"
+title = "Move pane right (aerospace-style)"
+command = ["python3", "move.py", "right"]
 
 [[events]]
 on = "workspace.focused"

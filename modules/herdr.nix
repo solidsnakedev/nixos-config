@@ -55,14 +55,13 @@
       resize_pane_up = "prefix+k"
       resize_pane_right = "prefix+l"
 
-      # aerospace-style direct swap: ctrl+shift+hjkl moves the pane the way
-      # alt+shift+hjkl moves a window. herdr's prefix+shift defaults stay as
-      # fallback; the direct chords need the host terminal to send distinct
-      # ctrl+shift codes (extended keyboard protocol).
-      swap_pane_left = ["prefix+shift+h", "ctrl+shift+h"]
-      swap_pane_down = ["prefix+shift+j", "ctrl+shift+j"]
-      swap_pane_up = ["prefix+shift+k", "ctrl+shift+k"]
-      swap_pane_right = ["prefix+shift+l", "ctrl+shift+l"]
+      # ctrl+shift+hjkl is the aerospace-style move (pane-tools plugin,
+      # keys.command below): reorders along the layout axis, restructures
+      # across it. Plain swap stays on herdr's prefix+shift defaults.
+      swap_pane_left = "prefix+shift+h"
+      swap_pane_down = "prefix+shift+j"
+      swap_pane_up = "prefix+shift+k"
+      swap_pane_right = "prefix+shift+l"
 
       # Step through workspaces with hjkl-flavored direct chords: ctrl+alt+h/l
       # moves to the previous/next workspace and back, no prefix or navigate
@@ -144,6 +143,32 @@
       type = "plugin_action"
       command = "pane-tools.nav-right"
       description = "Navigate right (vim-aware)"
+
+      # aerospace-style pane move: swap along the axis, restructure across
+      # it (row to stack and back), mirroring alt+shift+hjkl for windows.
+      [[keys.command]]
+      key = "ctrl+shift+h"
+      type = "plugin_action"
+      command = "pane-tools.move-left"
+      description = "Move pane left"
+
+      [[keys.command]]
+      key = "ctrl+shift+j"
+      type = "plugin_action"
+      command = "pane-tools.move-down"
+      description = "Move pane down"
+
+      [[keys.command]]
+      key = "ctrl+shift+k"
+      type = "plugin_action"
+      command = "pane-tools.move-up"
+      description = "Move pane up"
+
+      [[keys.command]]
+      key = "ctrl+shift+l"
+      type = "plugin_action"
+      command = "pane-tools.move-right"
+      description = "Move pane right"
 
       [ui]
       # tmux creates windows immediately without prompting for a name.
