@@ -36,6 +36,9 @@ let
     backend = "mini";
     align = "message-left";
     timeout = 4000;
+    # Anchor the bar's bottom edge above the statusline so multi-line
+    # messages grow upward into the editor, never over the statusline.
+    anchor = "SW";
     position = { row = -1; col = 0; };
     size = { width = "100%"; height = "auto"; };
     border.style = "none";
