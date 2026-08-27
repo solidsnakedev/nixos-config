@@ -76,6 +76,8 @@ km('n', '<leader>gg', ':LazyGit<cr>', { desc = 'LazyGit' })
 km('n', '<leader>gd', ':DiffviewOpen<cr>',          { desc = 'Diff view (working tree)' })
 km('n', '<leader>gq', ':DiffviewClose<cr>',         { desc = 'Close diff view' })
 km('n', '<leader>gh', ':DiffviewFileHistory %<cr>', { desc = 'File history' })
+-- PR review after `gh pr checkout`: diff the branch against its merge base
+km('n', '<leader>gD', ':DiffviewOpen origin/main...HEAD<cr>', { desc = 'Diff view (vs origin/main)' })
 -- Gitsigns: per-hunk review, revert what you don't want to keep
 km('n', ']h', ':Gitsigns next_hunk<cr>',            { desc = 'Next changed hunk' })
 km('n', '[h', ':Gitsigns prev_hunk<cr>',            { desc = 'Prev changed hunk' })
