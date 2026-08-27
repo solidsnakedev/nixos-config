@@ -30,6 +30,21 @@ let
       '';
     };
 
+  # Notification-bar view for noice: full-width transient bar flush above
+  # the statusline; hl picks the severity tint (see catppuccin highlights).
+  noiceMiniView = hl: {
+    backend = "mini";
+    align = "message-left";
+    timeout = 4000;
+    position = { row = -1; col = 0; };
+    size = { width = "100%"; height = "auto"; };
+    border.style = "none";
+    win_options = {
+      winblend = 0;
+      winhighlight.Normal = hl;
+    };
+  };
+
   aiken-vim = pkgs.vimUtils.buildVimPlugin {
     pname = "aiken";
     version = "2024";
@@ -69,9 +84,11 @@ in
           function(colors)
             return {
               LineNr = { fg = colors.overlay2, style = {} },
-              -- Notification bar (noice mini view): lighter than the
-              -- statusline so transient messages stand out
-              NoiceMini = { bg = colors.surface1, fg = colors.text },
+              -- Notification bar (noice mini views): quiet surface, text
+              -- tinted by severity
+              NoiceMiniInfo = { bg = colors.surface0, fg = colors.blue },
+              NoiceMiniWarn = { bg = colors.surface0, fg = colors.yellow },
+              NoiceMiniError = { bg = colors.surface0, fg = colors.red },
             }
           end
         '';
@@ -200,32 +217,37 @@ in
             lsp_doc_border = true;
           };
           # Notification bar: messages render in a transient full-width bar
-          # just above the statusline (styled like it) and disappear after
-          # the timeout. No floating toasts covering code.
+          # just above the statusline and disappear after the timeout. No
+          # floating toasts covering code. Text color follows severity
+          # (blue info, yellow warn, red error) on one quiet surface.
           notify.view = "mini";
           messages = {
             view = "mini";
-            view_warn = "mini";
-            view_error = "mini";
+            view_warn = "mini_warn";
+            view_error = "mini_error";
           };
-          views.mini = {
-            align = "message-left";
-            timeout = 4000;
-            position = { row = -1; col = 0; };
-            size = { width = "100%"; height = "auto"; };
-            border.style = "none";
-            win_options = {
-              winblend = 0;
-              winhighlight.Normal = "NoiceMini";
-            };
+          views = {
+            mini = noiceMiniView "NoiceMiniInfo";
+            mini_warn = noiceMiniView "NoiceMiniWarn";
+            mini_error = noiceMiniView "NoiceMiniError";
           };
-          routes = [{
-            view = "mini";
-            filter = {
-              event = "msg_showmode";
-              find = "recording";
-            };
-          }];
+          routes = [
+            {
+              view = "mini_warn";
+              filter = { event = "notify"; warning = true; };
+            }
+            {
+              view = "mini_error";
+              filter = { event = "notify"; error = true; };
+            }
+            {
+              view = "mini";
+              filter = {
+                event = "msg_showmode";
+                find = "recording";
+              };
+            }
+          ];
         };
       };
       # Powerful fuzzy finder and picker
