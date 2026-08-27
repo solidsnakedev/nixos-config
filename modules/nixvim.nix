@@ -69,6 +69,9 @@ in
           function(colors)
             return {
               LineNr = { fg = colors.overlay2, style = {} },
+              -- Notification bar (noice mini view): lighter than the
+              -- statusline so transient messages stand out
+              NoiceMini = { bg = colors.surface1, fg = colors.text },
             }
           end
         '';
@@ -213,7 +216,7 @@ in
             border.style = "none";
             win_options = {
               winblend = 0;
-              winhighlight.Normal = "StatusLine";
+              winhighlight.Normal = "NoiceMini";
             };
           };
           routes = [{
