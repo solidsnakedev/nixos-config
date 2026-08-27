@@ -34,11 +34,14 @@ let
   # the statusline; hl picks the severity tint (see catppuccin highlights).
   noiceMiniView = hl: {
     backend = "mini";
+    # Custom-named views don't inherit the built-in mini defaults, so pin
+    # the coordinate space explicitly or row counts against the window.
+    relative = "editor";
+    zindex = 60;
     align = "message-left";
     timeout = 4000;
-    # Anchor the bar's bottom edge above the statusline so multi-line
-    # messages grow upward into the editor, never over the statusline.
-    anchor = "SW";
+    # Multi-line messages never render here (routed to a split instead),
+    # so the fixed row keeps single-line bars flush above the statusline.
     position = { row = -1; col = 0; };
     size = { width = "100%"; height = "auto"; };
     border.style = "none";
@@ -235,6 +238,19 @@ in
             mini_error = noiceMiniView "NoiceMiniError";
           };
           routes = [
+            # The mini backend misplaces multi-line messages (bottom edge
+            # lands on the statusline), so tall messages get a real bottom
+            # split instead: it can't overlap anything and closes with q.
+            {
+              view = "split";
+              filter = { min_height = 2; };
+            }
+            # notify messages aren't split into lines at routing time, so
+            # min_height misses them; match embedded newlines directly.
+            {
+              view = "split";
+              filter = { event = "notify"; find = "\n"; };
+            }
             {
               view = "mini_warn";
               filter = { event = "notify"; warning = true; };
