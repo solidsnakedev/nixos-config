@@ -228,6 +228,15 @@ require('dashboard').setup({
 
 -- Auto-reload files changed outside of Neovim
 vim.opt.autoread = true
+-- Fast CursorHold so the checktime autocmd (and gitsigns/LSP UI) reacts quickly
+vim.opt.updatetime = 300
+-- Poll for external changes too: agents write to disk while nvim is unfocused,
+-- and pane-switch focus events may not reach nvim through the multiplexer
+vim.uv.new_timer():start(2000, 2000, vim.schedule_wrap(function()
+  if vim.fn.mode() ~= 'c' and vim.fn.getcmdwintype() == '' then
+    vim.cmd('silent! checktime')
+  end
+end))
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
   desc = 'Check if file has changed on disk',
   group = vim.api.nvim_create_augroup('auto-reload', { clear = true }),

@@ -28,6 +28,9 @@ in
       set -g default-terminal "tmux-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
 
+      # Forward terminal focus to pane apps so nvim's autoread fires
+      set -g focus-events on
+
       #Add keybind for maximizing and minimizing tmux pane
       bind -r m resize-pane -Z
 
