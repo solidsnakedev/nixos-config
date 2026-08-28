@@ -134,6 +134,28 @@ in
       command = "jump.tabs"
       description = "Pick a tab"
 
+      # f for find: fuzzy-find a git repo under the configured roots and
+      # either focus its workspace or create one (tmux-sessionizer).
+      [[keys.command]]
+      key = "prefix+f"
+      type = "plugin_action"
+      command = "jump.projects"
+      description = "Find a project"
+
+      # i for inbox: which agents are waiting on me.
+      # u for urgent: take me straight to the one that is waiting.
+      [[keys.command]]
+      key = "prefix+i"
+      type = "plugin_action"
+      command = "jump.agents"
+      description = "Pick an agent"
+
+      [[keys.command]]
+      key = "prefix+u"
+      type = "plugin_action"
+      command = "jump.next-agent"
+      description = "Jump to the agent that needs you"
+
       # Same workspace picker on the ctrl+alt family, kept for muscle memory
       [[keys.command]]
       key = "ctrl+alt+w"

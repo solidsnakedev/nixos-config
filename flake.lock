@@ -42,11 +42,11 @@
     "herdr-jump": {
       "flake": false,
       "locked": {
-        "lastModified": 1787939342,
-        "narHash": "sha256-FYJ5sWsE4QGr4R+Uj3RyLrVmIecbocHqL8Zo/Ydbh04=",
+        "lastModified": 1787944392,
+        "narHash": "sha256-+TYcrfEDnwF6L6zyihWFEq6vmKITTGsIgckm4ZE+xuw=",
         "owner": "solidsnakedev",
         "repo": "herdr-jump",
-        "rev": "68e9d8ee5041b94470e96b2328f592e12c9bd04f",
+        "rev": "937955a1fb8303ee8bd3b2d8137a0e3a52674504",
         "type": "github"
       },
       "original": {
