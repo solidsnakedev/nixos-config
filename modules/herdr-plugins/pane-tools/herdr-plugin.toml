@@ -1,6 +1,6 @@
 id = "pane-tools"
 name = "Pane Tools"
-version = "0.5.0"
+version = "0.7.0"
 min_herdr_version = "0.8.0"
 description = "tmux-style pane rotation and a fuzzy workspace picker"
 platforms = ["macos", "linux"]
@@ -23,27 +23,27 @@ command = ["bash", "picker-open.sh"]
 [[actions]]
 id = "last-workspace"
 title = "Toggle last workspace"
-command = ["python3", "ws_toggle.py"]
+command = ["bash", "ws_toggle.sh"]
 
 [[actions]]
 id = "nav-left"
 title = "Navigate left (vim-aware)"
-command = ["python3", "nav.py", "left"]
+command = ["bash", "nav.sh", "left"]
 
 [[actions]]
 id = "nav-down"
 title = "Navigate down (vim-aware)"
-command = ["python3", "nav.py", "down"]
+command = ["bash", "nav.sh", "down"]
 
 [[actions]]
 id = "nav-up"
 title = "Navigate up (vim-aware)"
-command = ["python3", "nav.py", "up"]
+command = ["bash", "nav.sh", "up"]
 
 [[actions]]
 id = "nav-right"
 title = "Navigate right (vim-aware)"
-command = ["python3", "nav.py", "right"]
+command = ["bash", "nav.sh", "right"]
 
 [[actions]]
 id = "move-left"
@@ -67,7 +67,7 @@ command = ["python3", "move.py", "right"]
 
 [[events]]
 on = "workspace.focused"
-command = ["python3", "ws_track.py"]
+command = ["bash", "ws_track.sh"]
 
 [[panes]]
 id = "picker"
