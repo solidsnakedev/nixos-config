@@ -76,8 +76,10 @@
       # navigate-mode bindings conflict-check locally, so j/k can't do both).
       navigate_workspace_up = ["k", "up"]
       navigate_workspace_down = ["j", "down"]
-      navigate_pane_up = "ctrl+k"
+      navigate_pane_left = "ctrl+h"
       navigate_pane_down = "ctrl+j"
+      navigate_pane_up = "ctrl+k"
+      navigate_pane_right = "ctrl+l"
 
       # tmux: bind r / R rotate panes, via the pane-tools plugin below.
       # Frees prefix+r and prefix+shift+r by moving herdr's resize mode and

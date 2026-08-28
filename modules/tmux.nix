@@ -44,11 +44,19 @@ in
       bind -r l resize-pane -R 5
       bind -r h resize-pane -L 5
 
-      # aerospace-style direct swap: ctrl+shift+hjkl moves the pane the way
-      # alt+shift+hjkl moves a window (mirrors herdr's swap chords). Needs
-      # extended keys so ctrl+shift is distinguishable from plain ctrl.
+      # Directional swap on prefix+shift+hjkl, mirroring herdr's defaults
+      bind H swap-pane -t '{left-of}'
+      bind J swap-pane -t '{down-of}'
+      bind K swap-pane -t '{up-of}'
+      bind L swap-pane -t '{right-of}'
+
+      # ctrl+shift+hjkl approximates herdr's aerospace-style move actions
+      # with a plain swap (tmux cannot re-parent panes). Needs extended
+      # keys so ctrl+shift is distinguishable from plain ctrl.
       set -s extended-keys on
-      set -as terminal-features 'alacritty*:extkeys'
+      # Alacritty is pinned to TERM=xterm-256color (remote hosts lack
+      # alacritty terminfo), so declare extkeys for that TERM.
+      set -as terminal-features 'xterm-256color:extkeys'
       bind -n C-S-h swap-pane -t '{left-of}'
       bind -n C-S-j swap-pane -t '{down-of}'
       bind -n C-S-k swap-pane -t '{up-of}'

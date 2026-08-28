@@ -1,5 +1,6 @@
-# Place a copy of this config to ~/.aerospace.toml
-# After that, you can edit ~/.aerospace.toml to your liking
+# Managed by home-manager (xdg.configFile), deployed to
+# ~/.config/aerospace/aerospace.toml. Do NOT create ~/.aerospace.toml:
+# AeroSpace prefers that path and it would silently shadow this file.
 
 # It's not necessary to copy all keys to your config.
 # If the key is missing in your config, "default-config.toml" will serve as a fallback
