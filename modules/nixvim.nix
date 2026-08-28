@@ -272,16 +272,10 @@ in
       };
       # Powerful fuzzy finder and picker
       telescope.enable = true;
-      # Improve the look of vim's native UI elements. Only the input and
-      # bufdelete modules are used (dressing.nvim and bufdelete.nvim are
-      # archived upstream); picker/dashboard/notifier stay with the
-      # dedicated plugins.
-      snacks = {
-        enable = true;
-        settings = {
-          input.enabled = true;
-        };
-      };
+      # No snacks.nvim: merely loading it made scrolling ~4x slower in
+      # benchmarks (2026-08-27), even with every module disabled. Buffer
+      # deletion is a small lua function in init.lua; vim.ui.input stays
+      # native.
       # Start screen with recent files and shortcuts
       dashboard.enable = true;
       # Easy word and line navigation (flash; hop's original repo is gone)

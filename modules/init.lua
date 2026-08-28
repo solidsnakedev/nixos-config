@@ -129,10 +129,30 @@ km('n', '<S-H>', ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
 km('n', ']b',    ':BufferLineCycleNext<cr>', { desc = 'Next buffer' })
 km('n', '[b',    ':BufferLineCyclePrev<cr>', { desc = 'Prev buffer' })
 
--- Buffers, LazyVim-style (Snacks.bufdelete keeps the window layout)
+-- Buffers, LazyVim-style. Buffer deletion keeps the window layout by
+-- switching each window to another buffer first (snacks-free).
+local function bufdelete(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    vim.api.nvim_win_call(win, function()
+      local alt = vim.fn.bufnr('#')
+      if alt > 0 and alt ~= buf and vim.fn.buflisted(alt) == 1 then
+        vim.cmd('buffer #')
+      else
+        vim.cmd('silent! bprevious')
+      end
+    end)
+  end
+  pcall(vim.api.nvim_buf_delete, buf, {})
+end
 km('n', '<leader>bb', '<cmd>e #<cr>',                        { desc = 'Switch to other buffer' })
-km('n', '<leader>bd', function() Snacks.bufdelete() end,     { desc = 'Delete buffer' })
-km('n', '<leader>bo', function() Snacks.bufdelete.other() end, { desc = 'Delete other buffers' })
+km('n', '<leader>bd', bufdelete,                             { desc = 'Delete buffer' })
+km('n', '<leader>bo', function()
+  local cur = vim.api.nvim_get_current_buf()
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    if b ~= cur and vim.bo[b].buflisted then bufdelete(b) end
+  end
+end, { desc = 'Delete other buffers' })
 km('n', '<leader>bD', ':bd<cr>',                             { desc = 'Delete buffer and window' })
 km('n', '<leader>bp', ':BufferLineTogglePin<cr>',            { desc = 'Toggle pin' })
 km('n', '<leader>bP', ':BufferLineGroupClose ungrouped<cr>', { desc = 'Delete non-pinned buffers' })
