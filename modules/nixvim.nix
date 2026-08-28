@@ -207,8 +207,9 @@ in
       };
       # Adds a buffer line with tab-like interface
       bufferline.enable = true;
-      # Winbar breadcrumbs (replaces the archived barbecue)
-      dropbar.enable = true;
+      # No winbar breadcrumbs: dropbar (barbecue's successor) made
+      # scrolling ~2-4x slower even debounced, and treesitter-context
+      # already shows the enclosing function. Benchmarked 2026-08-27.
       # Automatically close brackets, parentheses, and quotes
       nvim-autopairs.enable = true;
       # Integrate with direnv for environment management
