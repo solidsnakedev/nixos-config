@@ -270,6 +270,8 @@ require('dashboard').setup({
 vim.opt.autoread = true
 -- Fast CursorHold so the checktime autocmd (and gitsigns/LSP UI) reacts quickly
 vim.opt.updatetime = 300
+-- Resolve ambiguous mappings (ys vs yss, leader menus) after 300ms, not 1s
+vim.opt.timeoutlen = 300
 -- Poll for external changes too: agents write to disk while nvim is unfocused,
 -- and pane-switch focus events may not reach nvim through the multiplexer
 vim.uv.new_timer():start(2000, 2000, vim.schedule_wrap(function()
