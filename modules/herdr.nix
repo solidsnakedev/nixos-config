@@ -1,12 +1,7 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  # tmux: bind r rotate-window. herdr has no rotate action or command
-  # keybindings, so this ships as a CLI (`herdr-rotate`, -r for the other
-  # direction) driving `herdr pane swap` over the current tab.
-  home.packages = [
-    (pkgs.writers.writePython3Bin "herdr-rotate" { flakeIgnore = [ "E501" ]; }
-      (builtins.readFile ./herdr-rotate.py))
-  ];
+  # Plugin actions come from the herdr-jump and herdr-pane-tools flake
+  # inputs, registered by modules/herdr-registry.nix.
 
   # Mirror of modules/tmux.nix for herdr: same prefix-mode keybindings and
   # the Catppuccin Mocha theme the tmux chrome is modeled on.
@@ -70,10 +65,16 @@
       previous_workspace = "ctrl+alt+h"
       next_workspace = "ctrl+alt+l"
 
-      # Navigate mode (prefix+w): vim-style j/k over the workspace list instead
-      # of the default arrow keys. Pane focus inside navigate mode moves to
-      # ctrl+j/k to free the plain keys (matches the global ctrl+hjkl chords;
-      # navigate-mode bindings conflict-check locally, so j/k can't do both).
+      # The jump plugin takes prefix+w and prefix+p for its pickers, so the
+      # herdr defaults they displace move onto ctrl variants.
+      workspace_picker = "prefix+ctrl+w"
+      previous_tab = "prefix+ctrl+p"
+
+      # Navigate mode (now prefix+ctrl+w): vim-style j/k over the workspace
+      # list instead of the default arrow keys. Pane focus inside navigate
+      # mode moves to ctrl+j/k to free the plain keys (matches the global
+      # ctrl+hjkl chords; navigate-mode bindings conflict-check locally, so
+      # j/k can't do both).
       navigate_workspace_up = ["k", "up"]
       navigate_workspace_down = ["j", "down"]
       navigate_pane_left = "ctrl+h"
@@ -102,14 +103,34 @@
       command = "pane-tools.rotate-reverse"
       description = "Rotate panes (reverse)"
 
-      # Fuzzy workspace picker overlay (fzf), one chord instead of
-      # prefix+w and arrowing through the list. ctrl+alt matches the
-      # workspace chord family (ctrl+alt+h/l).
+      # Fuzzy pickers, nvim-leader style: prefix then one mnemonic letter,
+      # the way <leader>ff and <leader>fb work in nvim. w workspaces,
+      # p panes, t tabs. The displaced herdr defaults move to ctrl
+      # variants below, so navigate mode and prev-tab are still reachable.
+      [[keys.command]]
+      key = "prefix+w"
+      type = "plugin_action"
+      command = "jump.workspaces"
+      description = "Pick a workspace"
+
+      [[keys.command]]
+      key = "prefix+p"
+      type = "plugin_action"
+      command = "jump.panes"
+      description = "Pick a pane"
+
+      [[keys.command]]
+      key = "prefix+t"
+      type = "plugin_action"
+      command = "jump.tabs"
+      description = "Pick a tab"
+
+      # Same workspace picker on the ctrl+alt family, kept for muscle memory
       [[keys.command]]
       key = "ctrl+alt+w"
       type = "plugin_action"
-      command = "pane-tools.pick-workspace"
-      description = "Workspace picker"
+      command = "jump.workspaces"
+      description = "Pick a workspace"
 
       # Workspace back-and-forth like aerospace's alt+tab: jumps to the
       # previously focused workspace (history tracked by the plugin's
@@ -117,7 +138,7 @@
       [[keys.command]]
       key = "ctrl+alt+tab"
       type = "plugin_action"
-      command = "pane-tools.last-workspace"
+      command = "jump.last-workspace"
       description = "Toggle last workspace"
 
       # vim-aware pane navigation (vim-tmux-navigator equivalent): forwards

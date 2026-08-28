@@ -39,6 +39,38 @@
         "type": "github"
       }
     },
+    "herdr-jump": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787939342,
+        "narHash": "sha256-FYJ5sWsE4QGr4R+Uj3RyLrVmIecbocHqL8Zo/Ydbh04=",
+        "owner": "solidsnakedev",
+        "repo": "herdr-jump",
+        "rev": "68e9d8ee5041b94470e96b2328f592e12c9bd04f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "solidsnakedev",
+        "repo": "herdr-jump",
+        "type": "github"
+      }
+    },
+    "herdr-pane-tools": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787938900,
+        "narHash": "sha256-PDlA8vs7a02ZqJHO8Zgxnr+OU1JN5Q2OQc0K0FNb8Rc=",
+        "owner": "solidsnakedev",
+        "repo": "herdr-pane-tools",
+        "rev": "df0136622824a5733f12ed1456945a58131d34b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "solidsnakedev",
+        "repo": "herdr-pane-tools",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -134,6 +166,8 @@
     },
     "root": {
       "inputs": {
+        "herdr-jump": "herdr-jump",
+        "herdr-pane-tools": "herdr-pane-tools",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",

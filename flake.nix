@@ -11,6 +11,14 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # herdr plugins. They carry no nix code, so they are consumed as plain
+    # source trees: modules/herdr-registry.nix reads each herdr-plugin.toml
+    # and generates herdr's plugins.json from it.
+    herdr-jump.url = "github:solidsnakedev/herdr-jump";
+    herdr-jump.flake = false;
+    herdr-pane-tools.url = "github:solidsnakedev/herdr-pane-tools";
+    herdr-pane-tools.flake = false;
   };
 
   outputs = inputs@{ nixpkgs, nix-darwin, home-manager, vscode-server, nixvim, ... }: {

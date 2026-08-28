@@ -158,6 +158,7 @@
     ./../../modules/git.nix
     ./../../modules/tmux.nix
     ./../../modules/herdr.nix
+    ./../../modules/herdr-registry.nix
     ./../../modules/bat.nix
     # ./../../modules/neovim.nix
     ./../../modules/nixvim.nix
