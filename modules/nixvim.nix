@@ -278,8 +278,8 @@ in
       # native.
       # Start screen with recent files and shortcuts
       dashboard.enable = true;
-      # Easy word and line navigation (flash; hop's original repo is gone)
-      flash.enable = true;
+      # Easy word and line navigation (smoka7's maintained hop fork)
+      hop.enable = true;
       # Project-wide diagnostics, references, and quickfix panel
       trouble.enable = true;
       # File tree explorer with git integration
