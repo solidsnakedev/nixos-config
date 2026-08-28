@@ -1,5 +1,4 @@
 
-vim.opt.updatetime = 100
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -10,13 +9,8 @@ vim.opt.termguicolors = true
 -- Set leader key
 vim.g.mapleader = " "
 
--- Disable compatibility with vi which can cause unexpected issues.
-vim.opt.compatible = false
-
--- Enable type file detection, plugins, and indent (syntax handled by treesitter)
-vim.cmd('filetype plugin indent on')
-
--- Editor appearance and behavior settings
+-- Editor appearance and behavior settings (options that match nvim
+-- defaults are omitted)
 vim.opt.number = true             -- Add numbers to each line
 vim.opt.relativenumber = true     -- Add relative numbers
 vim.opt.cursorline = true         -- Highlight cursor line
@@ -25,22 +19,13 @@ vim.opt.tabstop = 2               -- Set tab width to 2 columns
 vim.opt.expandtab = true          -- Use spaces instead of tabs
 vim.opt.scrolloff = 20            -- Do not scroll below/above N lines
 vim.opt.wrap = false              -- Do not wrap lines
-vim.opt.incsearch = true          -- Highlight matches as you type
 vim.opt.ignorecase = true         -- Ignore case in searches
 vim.opt.smartcase = true          -- Override ignorecase if uppercase is used
-vim.opt.showcmd = true            -- Show command in the last line
 vim.opt.showmode = false          -- Disabled: noice shows mode in its own UI
-vim.opt.showmatch = true          -- Show matching words during a search
-vim.opt.hlsearch = true           -- Highlight search results
-vim.opt.history = 1000            -- Set history size
-vim.opt.wildmenu = true           -- Enable wildmenu for auto-completion
-vim.opt.backup = false            -- Do not save backup files
 vim.opt.swapfile = false          -- Disable swap files
 vim.opt.softtabstop = 2           -- Treat spaces as tabstops
-vim.opt.autoindent = true         -- Auto-indent new lines
 vim.opt.mouse = 'a'               -- Enable mouse support
 vim.opt.clipboard = 'unnamedplus' -- Use system clipboard
-vim.opt.ttyfast = true            -- Speed up scrolling
 vim.opt.list = true               -- Show whitespace characters
 vim.opt.listchars = { tab = '▸▸', trail = '·' }
 vim.opt.signcolumn = "yes"
@@ -50,9 +35,8 @@ vim.opt.signcolumn = "yes"
 local km = vim.keymap.set
 local s = { noremap = true, silent = true }
 
--- Insert mode escapes
-km('i', 'jk', '<Esc>', s)
-km('i', 'kj', '<Esc>', s)
+-- Insert-mode jk escape is handled by better-escape.nvim (see nixvim.nix);
+-- no sequence mapping here, so typed j renders instantly
 
 -- Move lines up/down
 km('n', '<S-Up>',   'yyddkP', { desc = 'Move line up' })
@@ -63,9 +47,8 @@ km('n', '<Leader>h', ':nohl<cr>', { desc = 'Clear highlight' })
 
 -- Diagnostics
 km('n', '<Leader>d', ':lua vim.diagnostic.open_float()<cr>', { desc = 'Show diagnostics' })
-km('n', 'gp', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = 'Diagnostics float' })
-km('n', 'gk', '<cmd>lua vim.diagnostic.goto_prev()<cr>',  { desc = 'Prev diagnostic' })
-km('n', 'gj', '<cmd>lua vim.diagnostic.goto_next()<cr>',  { desc = 'Next diagnostic' })
+km('n', 'gk', function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = 'Prev diagnostic' })
+km('n', 'gj', function() vim.diagnostic.jump({ count = 1, float = true }) end,  { desc = 'Next diagnostic' })
 
 -- File tree
 km('n', '<leader>n', ':Neotree toggle reveal<cr>', { desc = 'Toggle file tree' })
@@ -96,9 +79,14 @@ km('n', '<leader>fh', ':Telescope help_tags<cr>',  { desc = 'Help tags' })
 
 -- LSP
 km('n', 'gd', ':Telescope lsp_definitions<cr>',     { desc = 'Go to definition' })
-km('n', 'gr', ':Telescope lsp_reference<cr>',       { desc = 'References' })
+km('n', 'gr', ':Telescope lsp_references<cr>',      { desc = 'References' })
 km('n', 'gi', ':Telescope lsp_implementations<cr>', { desc = 'Implementations' })
 km('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
+-- nvim 0.12 ships builtin grn/grr/gra/gri/grx/grt maps; delete them so a
+-- bare gr press fires without waiting out timeoutlen
+for _, l in ipairs({ 'grn', 'grr', 'gra', 'gri', 'grx', 'grt' }) do
+  pcall(vim.keymap.del, 'n', l)
+end
 
 -- Navigation
 km('n', 's', ':HopChar1<cr>', { desc = 'Hop to char' })
@@ -156,6 +144,15 @@ km('n', '<leader>bp', ':BufferLineTogglePin<cr>',            { desc = 'Toggle pi
 km('n', '<leader>bP', ':BufferLineGroupClose ungrouped<cr>', { desc = 'Delete non-pinned buffers' })
 km('n', '<leader>br', ':BufferLineCloseRight<cr>',           { desc = 'Delete buffers to the right' })
 km('n', '<leader>bl', ':BufferLineCloseLeft<cr>',            { desc = 'Delete buffers to the left' })
+
+-- Snippet engine loads on first insert; eager loading cost ~20ms of startup
+vim.api.nvim_create_autocmd('InsertEnter', {
+  once = true,
+  callback = function()
+    require('luasnip').setup({ enable_autosnippets = true })
+    require('luasnip.loaders.from_vscode').lazy_load()
+  end,
+})
 
 -- Reopen files at the last edit position (replaces the archived lastplace plugin)
 vim.api.nvim_create_autocmd('BufReadPost', {
@@ -239,8 +236,8 @@ require("neo-tree").setup({
     position = "right",
     width = 40
   },
-  file_size = {
-    enabled = false,
+  default_component_configs = {
+    file_size = { enabled = false },
   },
   event_handlers = {
     {
@@ -266,7 +263,7 @@ require('dashboard').setup({
 
 -- Auto-reload files changed outside of Neovim
 vim.opt.autoread = true
--- Fast CursorHold so the checktime autocmd (and gitsigns/LSP UI) reacts quickly
+-- Fast CursorHold so gitsigns and LSP UI react quickly
 vim.opt.updatetime = 300
 -- Resolve ambiguous mappings (ys vs yss, leader menus) after 300ms, not 1s
 vim.opt.timeoutlen = 300
@@ -277,12 +274,14 @@ vim.uv.new_timer():start(2000, 2000, vim.schedule_wrap(function()
     vim.cmd('silent! checktime')
   end
 end))
-vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
+-- Instant check on focus/buffer entry; the timer above covers idle, so no
+-- CursorHold events here (those re-checked every 300ms pause)
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   desc = 'Check if file has changed on disk',
   group = vim.api.nvim_create_augroup('auto-reload', { clear = true }),
   callback = function()
     if vim.fn.mode() ~= 'c' then
-      vim.cmd('checktime')
+      vim.cmd('silent! checktime')
     end
   end,
 })
@@ -291,6 +290,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })

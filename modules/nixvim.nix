@@ -74,9 +74,7 @@ in
     vimAlias = true;
     diagnostic.settings =
       {
-        virtual_text = {
-          enable = true;
-        };
+        virtual_text = true;
         float = {
           border = "rounded";
         };
@@ -210,6 +208,16 @@ in
       # No winbar breadcrumbs: dropbar (barbecue's successor) made
       # scrolling ~2-4x slower even debounced, and treesitter-context
       # already shows the enclosing function. Benchmarked 2026-08-27.
+      # jk escapes insert mode without holding the typed j back (a plain
+      # jk sequence map stalls every j for timeoutlen)
+      better-escape = {
+        enable = true;
+        settings = {
+          default_mappings = false;
+          timeout = 200;
+          mappings.i.j.k = "<Esc>";
+        };
+      };
       # Automatically close brackets, parentheses, and quotes
       nvim-autopairs.enable = true;
       # Integrate with direnv for environment management
@@ -316,8 +324,8 @@ in
         settings = {
           notify_on_error = true;
           format_on_save = {
-            lspFallback = true;
-            timeoutMs = 500;
+            lsp_format = "fallback";
+            timeout_ms = 500;
           };
           formatters_by_ft = {
             javascript = {
@@ -350,8 +358,8 @@ in
             preset = "enter";
             "<Tab>" = [ "select_next" "snippet_forward" "fallback" ];
             "<S-Tab>" = [ "select_prev" "snippet_backward" "fallback" ];
-            "<S-k>" = [ "scroll_documentation_up" "fallback" ];
-            "<S-j>" = [ "scroll_documentation_down" "fallback" ];
+            # Doc scrolling stays on the preset's C-b/C-f; shift+k/j maps
+            # would swallow typed capital K and J while the menu is open.
           };
           completion = {
             menu.border = "rounded";
@@ -418,17 +426,10 @@ in
         };
       };
 
-      # Snippets
-      # Snippet engine with auto-snippet support
-      luasnip = {
-        enable = true;
-        settings = {
-          enable_autosnippets = true;
-        };
-        fromVscode = [ { } ];
-      };
-      # Pre-configured Snippet Collection
-      friendly-snippets.enable = true;
+      # Snippets: luasnip and friendly-snippets are installed via
+      # extraPlugins and set up on first InsertEnter (see init.lua); eager
+      # loading cost ~20ms of startup and snippets are unusable before
+      # insert mode anyway.
     };
     filetype.extension.qnt = "quint";
 
@@ -438,6 +439,16 @@ in
     extraPlugins = [
       aiken-vim
       pkgs.vimPlugins.typst-preview-nvim
+      # Set up lazily on first InsertEnter in init.lua
+      pkgs.vimPlugins.luasnip
+      pkgs.vimPlugins.friendly-snippets
     ];
+
+    # Byte-compile the generated config and plugin lua so nvim skips
+    # parsing lua text at every start.
+    performance.byteCompileLua = {
+      enable = true;
+      plugins = true;
+    };
   };
 }
