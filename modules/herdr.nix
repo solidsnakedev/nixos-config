@@ -1,4 +1,13 @@
-{ config, ... }:
+{ pkgs, ... }:
+let
+  # Metal Gear codec ring, fetched and pinned by hash rather than committed:
+  # this repo is public and the audio is Konami's. A copy also sits in
+  # ~/.local/share/herdr-sounds as a fallback if this host ever drops it.
+  mgsCodec = pkgs.fetchurl {
+    url = "https://www.myinstants.com/media/sounds/codec.mp3";
+    hash = "sha256-w1y6g5qEyU4vnsE3BEBwXyPVOxhF57CJt7aQK6ecDkE=";
+  };
+in
 {
   # Plugin actions come from the herdr-jump and herdr-pane-tools flake
   # inputs, registered by modules/herdr-registry.nix.
@@ -198,12 +207,10 @@
       prompt_new_tab_name = false
 
       [ui.sound]
-      # The Metal Gear codec ring for "an agent is calling you", which only
-      # fires for agents in background workspaces. Completions keep the
-      # stock sound so the ring stays rare enough to mean something.
-      # The file lives outside this repo on purpose: it is Konami's audio
-      # and this repo is public.
-      request_path = "${config.home.homeDirectory}/.local/share/herdr-sounds/mgs-codec.mp3"
+      # The codec ring for "an agent is calling you", which only fires for
+      # agents in background workspaces. Completions keep the stock sound
+      # so the ring stays rare enough to mean something.
+      request_path = "${mgsCodec}"
     '';
   };
 }
