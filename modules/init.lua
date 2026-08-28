@@ -102,8 +102,14 @@ km('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code a
 
 -- Navigation
 -- Flash S is not mapped in visual mode; nvim-surround owns S there
-km({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end,       { desc = 'Flash jump' })
-km({ 'n', 'o' },      'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
+km({ 'n', 'x' }, 's', function() require('flash').jump() end,       { desc = 'Flash jump' })
+km('n',          'S', function() require('flash').treesitter() end, { desc = 'Flash treesitter' })
+
+-- Flash in operator-pending mode lives on r/R (LazyVim convention), NOT
+-- s/S: after `y` + a pause, `s` would otherwise trigger flash instead of
+-- letting `ys`/`yS` surround.
+km('o', 'r', function() require('flash').remote() end,            { desc = 'Flash remote' })
+km({ 'o', 'x' }, 'R', function() require('flash').treesitter_search() end, { desc = 'Flash treesitter search' })
 
 -- herdr vim-navigator (mirror of vim-tmux-navigator): herdr's nav plugin
 -- forwards ctrl+hjkl here when this pane runs nvim; move between nvim
