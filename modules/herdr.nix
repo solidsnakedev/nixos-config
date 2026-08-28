@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   # Plugin actions come from the herdr-jump and herdr-pane-tools flake
   # inputs, registered by modules/herdr-registry.nix.
@@ -196,6 +196,14 @@
       [ui]
       # tmux creates windows immediately without prompting for a name.
       prompt_new_tab_name = false
+
+      [ui.sound]
+      # The Metal Gear codec ring for "an agent is calling you", which only
+      # fires for agents in background workspaces. Completions keep the
+      # stock sound so the ring stays rare enough to mean something.
+      # The file lives outside this repo on purpose: it is Konami's audio
+      # and this repo is public.
+      request_path = "${config.home.homeDirectory}/.local/share/herdr-sounds/mgs-codec.mp3"
     '';
   };
 }
