@@ -142,6 +142,14 @@ in
       command = "jump.projects"
       description = "Find a project"
 
+      # / for search, as in vim and fzf: the keymap as a picker, since
+      # herdr's own prefix+? panel is not fuzzy-searchable.
+      [[keys.command]]
+      key = "prefix+/"
+      type = "plugin_action"
+      command = "jump.keys"
+      description = "Which key was that?"
+
       # i for inbox: which agents are waiting on me.
       # u for urgent: take me straight to the one that is waiting.
       [[keys.command]]
