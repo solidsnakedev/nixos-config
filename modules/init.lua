@@ -89,7 +89,11 @@ for _, l in ipairs({ 'grn', 'grr', 'gra', 'gri', 'grx', 'grt' }) do
 end
 
 -- Navigation
-km('n', 's', ':HopChar1<cr>', { desc = 'Hop to char' })
+km({ 'n', 'x' }, 's', '<cmd>HopChar1<cr>', { desc = 'Hop to char' })
+-- Operator-pending jump on r, not s: y+s is nvim-surround's ys, so hop
+-- would steal ysiw". Gives yr/dr/cr followed by a hop label. <cmd> rather
+-- than : because a colon cancels the pending operator.
+km('o', 'r', '<cmd>HopChar1<cr>', { desc = 'Hop to char (operator)' })
 
 -- herdr vim-navigator (mirror of vim-tmux-navigator): herdr's nav plugin
 -- forwards ctrl+hjkl here when this pane runs nvim; move between nvim
