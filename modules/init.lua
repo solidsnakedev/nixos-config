@@ -47,6 +47,26 @@ km('n', '<Leader>h', ':nohl<cr>', { desc = 'Clear highlight' })
 
 -- Diagnostics
 km('n', '<Leader>d', ':lua vim.diagnostic.open_float()<cr>', { desc = 'Show diagnostics' })
+
+-- UI toggles for built-ins that are great while reading and noisy while
+-- writing, so neither is on by default
+km('n', '<Leader>uh', function()
+  local on = vim.lsp.inlay_hint.is_enabled({})
+  vim.lsp.inlay_hint.enable(not on)
+  vim.notify('Inlay hints ' .. (on and 'off' or 'on'))
+end, { desc = 'Toggle inlay hints' })
+
+-- Swaps between the two, rather than stacking them: virtual_text is the
+-- compact default, virtual_lines shows messages long enough to be cut off
+local diag_lines = false
+km('n', '<Leader>uv', function()
+  diag_lines = not diag_lines
+  vim.diagnostic.config({
+    virtual_text = not diag_lines,
+    virtual_lines = diag_lines,
+  })
+  vim.notify('Diagnostics: ' .. (diag_lines and 'full lines' or 'inline text'))
+end, { desc = 'Toggle full diagnostic lines' })
 km('n', 'gk', function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = 'Prev diagnostic' })
 km('n', 'gj', function() vim.diagnostic.jump({ count = 1, float = true }) end,  { desc = 'Next diagnostic' })
 
@@ -212,6 +232,7 @@ wk.add({
   { '<leader>a', group = 'AI / Actions' },
   { '<leader>k', group = 'Claude Code' },
   { '<leader>x', group = 'Diagnostics' },
+  { '<leader>u', group = 'UI toggles' },
   { 'g',         group = 'Go to' },
   { '<C-w>',     group = 'Windows' },
   { ']',         group = 'Next' },
