@@ -356,8 +356,12 @@ in
           # "enter" preset: <CR> accepts, <C-space> opens the menu
           keymap = {
             preset = "enter";
-            "<Tab>" = [ "select_next" "snippet_forward" "fallback" ];
-            "<S-Tab>" = [ "select_prev" "snippet_backward" "fallback" ];
+            # Tab accepts the highlighted item, the way it does in VSCode and
+            # most editors, rather than walking the list. Navigation stays on
+            # the arrows and ctrl+n/p from the preset. With no menu open Tab
+            # advances a snippet, then falls back to a real tab.
+            "<Tab>" = [ "accept" "snippet_forward" "fallback" ];
+            "<S-Tab>" = [ "snippet_backward" "fallback" ];
             # Doc scrolling stays on the preset's C-b/C-f; shift+k/j maps
             # would swallow typed capital K and J while the menu is open.
           };
