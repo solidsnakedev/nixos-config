@@ -9,10 +9,10 @@ let
   };
 
   # herdr has no volume setting, so the gain lives in the file. The source
-  # averages -28.7 dB, about as loud as macOS Submarine. 0.1 is far below
-  # every system sound, which is deliberate: the ring is two seconds long,
-  # so it holds attention far longer than a click at the same level.
-  codecVolume = "0.1";
+  # averages -28.7 dB, about as loud as macOS Submarine. 0.05 is roughly
+  # 26 dB below that: a background cue, audible only in a quiet room, which
+  # suits a two-second ring better than an alert-level one would.
+  codecVolume = "0.05";
   mgsCodec = pkgs.runCommand "mgs-codec.mp3"
     { nativeBuildInputs = [ pkgs.ffmpeg-headless ]; } ''
     ffmpeg -loglevel error -i ${codecSrc} \
