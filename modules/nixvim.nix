@@ -250,9 +250,15 @@ in
             # The mini backend misplaces multi-line messages (bottom edge
             # lands on the statusline), so tall messages get a real bottom
             # split instead: it can't overlap anything and closes with q.
+            # LSP is excluded: hover and signature help are usually two or
+            # more lines, and they belong in a popup at the cursor, not in
+            # a split at the bottom of the screen.
             {
               view = "split";
-              filter = { min_height = 2; };
+              filter = {
+                min_height = 2;
+                "not" = { event = "lsp"; };
+              };
             }
             # notify messages aren't split into lines at routing time, so
             # min_height misses them; match embedded newlines directly.
