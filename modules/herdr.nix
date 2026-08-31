@@ -3,10 +3,20 @@ let
   # Metal Gear codec ring, fetched and pinned by hash rather than committed:
   # this repo is public and the audio is Konami's. A copy also sits in
   # ~/.local/share/herdr-sounds as a fallback if this host ever drops it.
-  mgsCodec = pkgs.fetchurl {
+  codecSrc = pkgs.fetchurl {
     url = "https://www.myinstants.com/media/sounds/codec.mp3";
     hash = "sha256-w1y6g5qEyU4vnsE3BEBwXyPVOxhF57CJt7aQK6ecDkE=";
   };
+
+  # herdr has no volume setting, so the gain lives in the file. Measured
+  # against macOS notification sounds: the source averages -28.7 dB, about
+  # as loud as Submarine, and 0.6 lands between Glass and Ping.
+  codecVolume = "0.6";
+  mgsCodec = pkgs.runCommand "mgs-codec.mp3"
+    { nativeBuildInputs = [ pkgs.ffmpeg-headless ]; } ''
+    ffmpeg -loglevel error -i ${codecSrc} \
+      -filter:a "volume=${codecVolume}" -c:a libmp3lame -q:a 5 "$out"
+  '';
 in
 {
   # Plugin actions come from the herdr-jump and herdr-pane-tools flake
