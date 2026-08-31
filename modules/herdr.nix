@@ -237,10 +237,13 @@ in
       prompt_new_tab_name = false
 
       [ui.sound]
-      # The codec ring for "an agent is calling you", which only fires for
-      # agents in background workspaces. Completions keep the stock sound
-      # so the ring stays rare enough to mean something.
+      # The codec ring for both agent events, and only for agents in
+      # background workspaces. request alone was too rare to ever hear:
+      # herdr infers "needs input" from the screen unless the Claude
+      # integration hook is installed, and done is the event that actually
+      # fires when an agent finishes.
       request_path = "${mgsCodec}"
+      done_path = "${mgsCodec}"
     '';
   };
 }
