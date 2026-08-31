@@ -245,6 +245,15 @@ in
       # tmux creates windows immediately without prompting for a name.
       prompt_new_tab_name = false
 
+      # Metal Gear codec styling, colours left on catppuccin for now.
+      # Distinct symbols rather than coloured dots for agent state: an
+      # agent waiting on you reads as an alert marker, which is both
+      # clearer and on theme.
+      status_indicators = "symbols"
+      # The outer terminal title becomes the codec caller. Drops the
+      # hostname the default showed, which only matters over --remote.
+      window_title = "CODEC {workspace}"
+
       [ui.sound]
       # The codec ring for both agent events, and only for agents in
       # background workspaces. request alone was too rare to ever hear:
@@ -256,6 +265,15 @@ in
       path = "${mgsCodec}"
       request_path = "${mgsCodec}"
       done_path = "${mgsCodec}"
+
+      # Codec frequency parked in the top right, with the clock beside it.
+      # Array-of-tables, so this has to come after every plain [ui] key.
+      [[ui.tab_bar_right]]
+      type = "text"
+      text = "140.85"
+
+      [[ui.tab_bar_right]]
+      type = "datetime"
     '';
   };
 }
