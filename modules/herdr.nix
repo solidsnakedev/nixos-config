@@ -9,10 +9,8 @@ let
   };
 
   # herdr has no volume setting, so the gain lives in the file. The source
-  # averages -28.7 dB, about as loud as macOS Submarine. 0.05 is roughly
-  # 26 dB below that: a background cue, audible only in a quiet room, which
-  # suits a two-second ring better than an alert-level one would.
-  codecVolume = "0.05";
+  # averages -28.7 dB, about as loud as macOS Submarine.
+  codecVolume = "0.02";
   mgsCodec = pkgs.runCommand "mgs-codec.mp3"
     { nativeBuildInputs = [ pkgs.ffmpeg-headless ]; } ''
     ffmpeg -loglevel error -i ${codecSrc} \
@@ -253,6 +251,9 @@ in
       # herdr infers "needs input" from the screen unless the Claude
       # integration hook is installed, and done is the event that actually
       # fires when an agent finishes.
+      # path is the catch-all: without it, any sound event other than done
+      # and request still plays herdr's stock sound at full volume.
+      path = "${mgsCodec}"
       request_path = "${mgsCodec}"
       done_path = "${mgsCodec}"
     '';
