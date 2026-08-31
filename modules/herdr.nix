@@ -8,10 +8,11 @@ let
     hash = "sha256-w1y6g5qEyU4vnsE3BEBwXyPVOxhF57CJt7aQK6ecDkE=";
   };
 
-  # herdr has no volume setting, so the gain lives in the file. Measured
-  # against macOS notification sounds: the source averages -28.7 dB, about
-  # as loud as Submarine, and 0.6 lands between Glass and Ping.
-  codecVolume = "0.6";
+  # herdr has no volume setting, so the gain lives in the file. The source
+  # averages -28.7 dB, about as loud as macOS Submarine. 0.2 sits well below
+  # every system sound, which is deliberate: the ring is two seconds long,
+  # so it holds attention far longer than a click at the same level.
+  codecVolume = "0.2";
   mgsCodec = pkgs.runCommand "mgs-codec.mp3"
     { nativeBuildInputs = [ pkgs.ffmpeg-headless ]; } ''
     ffmpeg -loglevel error -i ${codecSrc} \
